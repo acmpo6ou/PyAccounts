@@ -2,6 +2,16 @@
 <!-- Generated with glade 3.39.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkImage" id="add">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">edit-add</property>
+  </object>
+  <object class="GtkImage" id="remove">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">remove</property>
+  </object>
   <object class="GtkBox" id="create_edit_database">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -20,7 +30,7 @@
       </packing>
     </child>
     <child>
-      <!-- n-columns=3 n-rows=10 -->
+      <!-- n-columns=3 n-rows=12 -->
       <object class="GtkGrid">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
@@ -123,7 +133,7 @@
           </object>
           <packing>
             <property name="left-attach">1</property>
-            <property name="top-attach">9</property>
+            <property name="top-attach">11</property>
           </packing>
         </child>
         <child>
@@ -141,7 +151,7 @@
           </object>
           <packing>
             <property name="left-attach">2</property>
-            <property name="top-attach">9</property>
+            <property name="top-attach">11</property>
           </packing>
         </child>
         <child>
@@ -204,39 +214,172 @@
           </object>
           <packing>
             <property name="left-attach">0</property>
-            <property name="top-attach">3</property>
+            <property name="top-attach">6</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">01.01.2000</property>
-            <property name="xalign">1</property>
+            <property name="label" translatable="yes">To copy:</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkRadioButton" id="copy_email">
+            <property name="label" translatable="yes">Email</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="active">True</property>
+            <property name="draw-indicator">True</property>
           </object>
           <packing>
             <property name="left-attach">1</property>
             <property name="top-attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkRadioButton">
+            <property name="label" translatable="yes">Username</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <property name="group">copy_email</property>
+          </object>
+          <packing>
+            <property name="left-attach">2</property>
+            <property name="top-attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEventBox" id="birth_box">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="birth_date">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">01.01.2000</property>
+                    <property name="xalign">1</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="margin-start">8</property>
+                    <property name="pixel-size">50</property>
+                    <property name="icon-name">calendar</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">6</property>
             <property name="width">2</property>
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Notes:</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">7</property>
+            <property name="width">3</property>
+          </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkTextView" id="notes">
+            <property name="height-request">200</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="valign">start</property>
+            <property name="vexpand">False</property>
+            <property name="wrap-mode">word</property>
+            <property name="monospace">True</property>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">8</property>
+            <property name="width">3</property>
+          </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Attach files:</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">9</property>
+            <property name="width">2</property>
+          </packing>
         </child>
         <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkButton">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">remove</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack-type">end</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">add</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack-type">end</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">2</property>
+            <property name="top-attach">9</property>
+          </packing>
         </child>
         <child>
           <placeholder/>
