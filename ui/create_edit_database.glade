@@ -20,18 +20,20 @@
       </packing>
     </child>
     <child>
-      <!-- n-columns=3 n-rows=3 -->
+      <!-- n-columns=3 n-rows=4 -->
       <object class="GtkGrid">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="margin-start">8</property>
         <property name="margin-end">8</property>
+        <property name="margin-bottom">8</property>
         <property name="column-homogeneous">True</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">Database name: </property>
+            <property name="mnemonic-widget">name</property>
             <property name="xalign">0</property>
           </object>
           <packing>
@@ -73,6 +75,7 @@
             <property name="visibility">False</property>
             <property name="secondary-icon-name">visibility</property>
             <property name="input-purpose">password</property>
+            <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
           </object>
           <packing>
             <property name="left-attach">1</property>
@@ -100,12 +103,50 @@
             <property name="visibility">False</property>
             <property name="secondary-icon-name">visibility</property>
             <property name="input-purpose">password</property>
+            <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
           </object>
           <packing>
             <property name="left-attach">1</property>
             <property name="top-attach">2</property>
             <property name="width">2</property>
           </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="generate">
+            <property name="label" translatable="yes">_Generate</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="tooltip-text" translatable="yes">Generate password</property>
+            <property name="margin-end">8</property>
+            <property name="use-underline">True</property>
+            <signal name="clicked" handler="on_generate_password" swapped="no"/>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="apply">
+            <property name="label" translatable="yes">_Create</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="margin-start">8</property>
+            <property name="use-underline">True</property>
+            <signal name="clicked" handler="on_apply" swapped="no"/>
+            <style>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left-attach">2</property>
+            <property name="top-attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
         </child>
       </object>
       <packing>
