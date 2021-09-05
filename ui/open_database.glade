@@ -2,12 +2,12 @@
 <!-- Generated with glade 3.39.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkBox">
+  <object class="GtkBox" id="open_database">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkLabel">
+      <object class="GtkLabel" id="title">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label" translatable="yes">Open database</property>
@@ -19,7 +19,7 @@
       </packing>
     </child>
     <child>
-      <object class="GtkButton">
+      <object class="GtkButton" id="open_button">
         <property name="label" translatable="yes">Open database</property>
         <property name="visible">True</property>
         <property name="can-focus">True</property>
@@ -27,6 +27,7 @@
         <property name="margin-start">8</property>
         <property name="margin-end">8</property>
         <property name="margin-bottom">8</property>
+        <signal name="clicked" handler="on_open_database" swapped="no"/>
       </object>
       <packing>
         <property name="expand">False</property>
@@ -54,7 +55,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry">
+          <object class="GtkEntry" id="password">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="margin-start">8</property>
@@ -62,6 +63,8 @@
             <property name="visibility">False</property>
             <property name="secondary-icon-name">visibility</property>
             <property name="input-purpose">password</property>
+            <signal name="activate" handler="on_open_database" swapped="no"/>
+            <signal name="icon-press" handler="on_toggle_pass" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>
