@@ -54,6 +54,7 @@
                         <property name="use-underline">True</property>
                         <property name="image">image1</property>
                         <property name="use-stock">False</property>
+                        <signal name="activate" handler="on_import_database" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -64,6 +65,7 @@
                         <property name="use-underline">True</property>
                         <property name="image">image2</property>
                         <property name="use-stock">False</property>
+                        <signal name="activate" handler="on_export_database" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -80,6 +82,7 @@
                         <property name="use-underline">True</property>
                         <property name="image">image3</property>
                         <property name="use-stock">False</property>
+                        <signal name="activate" handler="app.quit" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -105,6 +108,7 @@
                         <property name="use-underline">True</property>
                         <property name="image">image4</property>
                         <property name="use-stock">False</property>
+                        <signal name="activate" handler="on_preferences" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -128,6 +132,7 @@
                         <property name="can-focus">False</property>
                         <property name="use-underline">True</property>
                         <property name="use-stock">True</property>
+                        <signal name="activate" handler="on_about" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -142,7 +147,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar">
+          <object class="GtkToolbar" id="toolbar">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="valign">start</property>
@@ -154,6 +159,7 @@
                 <property name="label" translatable="yes">_New</property>
                 <property name="use-underline">True</property>
                 <property name="icon-name">filenew</property>
+                <signal name="clicked" handler="on_create_database" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -167,6 +173,7 @@
                 <property name="tooltip-text" translatable="yes">Edit currently selected database</property>
                 <property name="label" translatable="yes">Edit</property>
                 <property name="icon-name">document-edit</property>
+                <signal name="clicked" handler="on_edit_database" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -180,6 +187,7 @@
                 <property name="tooltip-text" translatable="yes">Delete currently selected database</property>
                 <property name="label" translatable="yes">Delete</property>
                 <property name="icon-name">edit-delete</property>
+                <signal name="clicked" handler="on_delete_database" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
