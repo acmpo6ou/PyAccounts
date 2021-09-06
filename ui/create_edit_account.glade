@@ -121,7 +121,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="generate">
+          <object class="GtkButton">
             <property name="label" translatable="yes">_Generate</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
@@ -315,26 +315,10 @@
           </packing>
         </child>
         <child>
-          <object class="GtkTextView" id="notes">
-            <property name="height-request">200</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="valign">start</property>
-            <property name="vexpand">False</property>
-            <property name="wrap-mode">word</property>
-            <property name="monospace">True</property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">8</property>
-            <property name="width">3</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Attach files:</property>
+            <property name="label" translatable="yes">Attached files</property>
             <property name="xalign">0</property>
           </object>
           <packing>
@@ -347,12 +331,14 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-top">8</property>
             <child>
               <object class="GtkButton">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="image">remove</property>
+                <signal name="clicked" handler="on_detach_file" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -366,7 +352,9 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="margin-end">8</property>
                 <property name="image">add</property>
+                <signal name="clicked" handler="on_attach_file" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -382,13 +370,40 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkScrolledWindow">
+            <property name="height-request">200</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="shadow-type">in</property>
+            <child>
+              <object class="GtkTextView" id="notes">
+                <property name="height-request">200</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="valign">start</property>
+                <property name="monospace">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">8</property>
+            <property name="width">3</property>
+          </packing>
         </child>
         <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
+          <object class="GtkListBox" id="attached_files">
+            <property name="height-request">200</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">8</property>
+            <property name="margin-bottom">8</property>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">10</property>
+            <property name="width">3</property>
+          </packing>
         </child>
         <child>
           <placeholder/>
