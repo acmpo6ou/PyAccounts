@@ -12,7 +12,7 @@
     <property name="can-focus">False</property>
     <property name="icon-name">remove</property>
   </object>
-  <object class="GtkBox" id="create_edit_database">
+  <object class="GtkBox" id="create_edit_account">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="orientation">vertical</property>
