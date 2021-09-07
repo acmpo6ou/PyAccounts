@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.39.0
+<!-- Generated with glade 3.39.0 
 
 Copyright (C) 2021. Bohdan Kolvakh
 
@@ -26,7 +26,7 @@ Author: Bohdan Kolvakh
   <!-- interface-css-provider-path global.css -->
   <!-- interface-license-type gplv3 -->
   <!-- interface-name PyAccounts -->
-  <!-- interface-description PyAccounts is a simple accounts database manager for Linux.  -->
+  <!-- interface-description PyAccounts is a simple accounts database manager for Linux. -->
   <!-- interface-copyright 2021. Bohdan Kolvakh -->
   <!-- interface-authors Bohdan Kolvakh -->
   <object class="GtkAboutDialog" id="about_dialog">
@@ -39,7 +39,7 @@ Author: Bohdan Kolvakh
     <property name="version">1.0.0</property>
     <property name="copyright" translatable="yes">Copyright (c) 2021. Bohdan Kolvakh</property>
     <property name="comments" translatable="yes">PyAccounts is a simple accounts database manager for Linux. </property>
-    <property name="website">https://github.com/Acmpo6ou/PyAccounts</property>
+    <property name="website">https://github.com/acmpo6ou/PyAccounts</property>
     <property name="website-label" translatable="yes">GitHub</property>
     <property name="authors">Bohdan Kolvakh</property>
     <property name="logo">../img/icon.svg</property>
