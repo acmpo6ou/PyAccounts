@@ -1,0 +1,13 @@
+*
+!.gitignore
+
+!changelog
+!compat
+!control
+!copyright
+!rules
+
+!postinst
+!preinst
+!prerm
+!postrm

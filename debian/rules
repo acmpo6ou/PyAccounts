@@ -1,0 +1,19 @@
+#!/usr/bin/make -f  
+%:  
+	dh $@
+override_dh_auto_install:
+	install -D -m 0755 deb/pyaccounts.sh $$(pwd)/debian/pyaccounts/usr/bin/pyaccounts
+	mkdir -p $$(pwd)/debian/pyaccounts/usr/share/icons/Mint-Y-Dark/
+	cp -r deb/mimetypes $$(pwd)/debian/pyaccounts/usr/share/icons/Mint-Y-Dark/
+	cp -r deb/pyaccounts $$(pwd)/debian/pyaccounts/usr/share/
+	mkdir $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts
+	cp -r core $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts
+	cp -r img $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts
+	cp -r ui $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts
+	cp PyAccounts.py $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/PyAccounts.py
+	cp COPYING $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/COPYING
+	cp README.md $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/README.md
+	cp requirements.txt $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/requirements.txt
+	install -D deb/pyaccounts.svg $$(pwd)/debian/pyaccounts/usr/share/pixmaps/pyaccounts.svg
+	install -D -m 0755 deb/pyaccounts.desktop $$(pwd)/debian/pyaccounts/usr/share/applications/pyaccounts.desktop
+	install -D deb/application-account-database.xml $$(pwd)/debian/pyaccounts/usr/share/mime/packages/application-account-database.xml
