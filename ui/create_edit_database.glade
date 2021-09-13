@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.39.0
+<!-- Generated with glade 3.39.0 
 
 Copyright (C) 2021. Bohdan Kolvakh
 
@@ -26,7 +26,7 @@ Author: Bohdan Kolvakh
   <!-- interface-css-provider-path global.css -->
   <!-- interface-license-type gplv3 -->
   <!-- interface-name PyAccounts -->
-  <!-- interface-description PyAccounts is a simple accounts database manager for Linux.  -->
+  <!-- interface-description PyAccounts is a simple accounts database manager for Linux. -->
   <!-- interface-copyright 2021. Bohdan Kolvakh -->
   <!-- interface-authors Bohdan Kolvakh -->
   <object class="GtkBox" id="create_edit_database">
@@ -47,7 +47,7 @@ Author: Bohdan Kolvakh
       </packing>
     </child>
     <child>
-      <!-- n-columns=3 n-rows=4 -->
+      <!-- n-columns=3 n-rows=7 -->
       <object class="GtkGrid">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
@@ -91,7 +91,7 @@ Author: Bohdan Kolvakh
           </object>
           <packing>
             <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
+            <property name="top-attach">2</property>
           </packing>
         </child>
         <child>
@@ -106,7 +106,7 @@ Author: Bohdan Kolvakh
           </object>
           <packing>
             <property name="left-attach">1</property>
-            <property name="top-attach">1</property>
+            <property name="top-attach">2</property>
             <property name="width">2</property>
           </packing>
         </child>
@@ -119,7 +119,7 @@ Author: Bohdan Kolvakh
           </object>
           <packing>
             <property name="left-attach">0</property>
-            <property name="top-attach">2</property>
+            <property name="top-attach">4</property>
           </packing>
         </child>
         <child>
@@ -134,7 +134,7 @@ Author: Bohdan Kolvakh
           </object>
           <packing>
             <property name="left-attach">1</property>
-            <property name="top-attach">2</property>
+            <property name="top-attach">4</property>
             <property name="width">2</property>
           </packing>
         </child>
@@ -151,7 +151,7 @@ Author: Bohdan Kolvakh
           </object>
           <packing>
             <property name="left-attach">1</property>
-            <property name="top-attach">3</property>
+            <property name="top-attach">6</property>
           </packing>
         </child>
         <child>
@@ -169,7 +169,57 @@ Author: Bohdan Kolvakh
           </object>
           <packing>
             <property name="left-attach">2</property>
+            <property name="top-attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="name_error">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-bottom">8</property>
+            <property name="label" translatable="yes">Please, provide a name!</property>
+            <property name="xalign">1</property>
+            <style>
+              <class name="error"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">1</property>
+            <property name="width">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="password_error">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-bottom">8</property>
+            <property name="label" translatable="yes">Please, provide a password!</property>
+            <property name="xalign">1</property>
+            <style>
+              <class name="error"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
             <property name="top-attach">3</property>
+            <property name="width">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="passwords_diff_error">
+            <property name="can-focus">False</property>
+            <property name="margin-bottom">8</property>
+            <property name="label" translatable="yes">Passwords do not match!</property>
+            <property name="xalign">1</property>
+            <style>
+              <class name="error"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">5</property>
+            <property name="width">3</property>
           </packing>
         </child>
         <child>
