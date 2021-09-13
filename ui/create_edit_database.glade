@@ -75,6 +75,7 @@ Author: Bohdan Kolvakh
             <property name="tooltip-text" translatable="yes">Only latin symbols, numbers and .()-_ are allowed. All unallowed characters are automatically removed.</property>
             <property name="margin-bottom">8</property>
             <property name="input-purpose">name</property>
+            <signal name="changed" handler="on_apply_enabled" swapped="no"/>
           </object>
           <packing>
             <property name="left-attach">1</property>
@@ -102,6 +103,7 @@ Author: Bohdan Kolvakh
             <property name="visibility">False</property>
             <property name="secondary-icon-name">visibility</property>
             <property name="input-purpose">password</property>
+            <signal name="changed" handler="on_apply_enabled" swapped="no"/>
             <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
           </object>
           <packing>
@@ -130,6 +132,7 @@ Author: Bohdan Kolvakh
             <property name="visibility">False</property>
             <property name="secondary-icon-name">visibility</property>
             <property name="input-purpose">password</property>
+            <signal name="changed" handler="on_apply_enabled" swapped="no"/>
             <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
           </object>
           <packing>
@@ -158,6 +161,7 @@ Author: Bohdan Kolvakh
           <object class="GtkButton" id="apply">
             <property name="label" translatable="yes">_Create</property>
             <property name="visible">True</property>
+            <property name="sensitive">False</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="margin-start">8</property>
