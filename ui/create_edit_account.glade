@@ -47,6 +47,7 @@ Author: Bohdan Kolvakh
       <object class="GtkLabel" id="title">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="margin-bottom">8</property>
         <property name="label" translatable="yes">&lt;b&gt;&lt;big&gt;Create account&lt;/big&gt;&lt;/b&gt;</property>
         <property name="use-markup">True</property>
       </object>
@@ -65,94 +66,6 @@ Author: Bohdan Kolvakh
         <property name="margin-end">8</property>
         <property name="margin-bottom">8</property>
         <property name="column-homogeneous">True</property>
-        <child>
-          <object class="GtkLabel" id="accname">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Account name: </property>
-            <property name="mnemonic-widget">accountname</property>
-            <property name="xalign">0</property>
-            <style>
-              <class name="myentry"/>
-            </style>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="accountname">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-bottom">8</property>
-            <property name="input-purpose">name</property>
-            <signal name="changed" handler="on_apply_enabled" swapped="no"/>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">0</property>
-            <property name="width">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Password: </property>
-            <property name="xalign">0</property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">4</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="password">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-bottom">8</property>
-            <property name="visibility">False</property>
-            <property name="secondary-icon-name">visibility</property>
-            <property name="input-purpose">password</property>
-            <signal name="changed" handler="on_apply_enabled" swapped="no"/>
-            <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">4</property>
-            <property name="width">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Repeat password: </property>
-            <property name="xalign">0</property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">5</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="repeat_password">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-bottom">8</property>
-            <property name="visibility">False</property>
-            <property name="secondary-icon-name">visibility</property>
-            <property name="input-purpose">password</property>
-            <signal name="changed" handler="on_apply_enabled" swapped="no"/>
-            <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">5</property>
-            <property name="width">2</property>
-          </packing>
-        </child>
         <child>
           <object class="GtkButton">
             <property name="label" translatable="yes">_Generate</property>
@@ -442,6 +355,183 @@ Author: Bohdan Kolvakh
           <packing>
             <property name="left-attach">0</property>
             <property name="top-attach">10</property>
+            <property name="width">3</property>
+          </packing>
+        </child>
+        <child>
+          <!-- n-columns=3 n-rows=2 -->
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="column-homogeneous">True</property>
+            <child>
+              <object class="GtkLabel" id="accname">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Account name: </property>
+                <property name="mnemonic-widget">accountname</property>
+                <property name="xalign">0</property>
+                <style>
+                  <class name="myentry"/>
+                </style>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="accountname">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="margin-bottom">8</property>
+                <property name="input-purpose">name</property>
+                <signal name="changed" handler="on_apply_enabled" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="name_error">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-bottom">8</property>
+                <property name="label" translatable="yes">Please, provide a name!</property>
+                <property name="xalign">1</property>
+                <style>
+                  <class name="error"/>
+                </style>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+                <property name="width">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">0</property>
+            <property name="width">3</property>
+          </packing>
+        </child>
+        <child>
+          <!-- n-columns=3 n-rows=2 -->
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="column-homogeneous">True</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Password: </property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="password">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="margin-bottom">8</property>
+                <property name="visibility">False</property>
+                <property name="secondary-icon-name">visibility</property>
+                <property name="input-purpose">password</property>
+                <signal name="changed" handler="on_apply_enabled" swapped="no"/>
+                <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="password_error">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-bottom">8</property>
+                <property name="label" translatable="yes">Please, provide a password!</property>
+                <property name="xalign">1</property>
+                <style>
+                  <class name="error"/>
+                </style>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+                <property name="width">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">4</property>
+            <property name="width">3</property>
+          </packing>
+        </child>
+        <child>
+          <!-- n-columns=3 n-rows=2 -->
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="column-homogeneous">True</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Repeat password: </property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="repeat_password">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="margin-bottom">8</property>
+                <property name="visibility">False</property>
+                <property name="secondary-icon-name">visibility</property>
+                <property name="input-purpose">password</property>
+                <signal name="changed" handler="on_apply_enabled" swapped="no"/>
+                <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="passwords_diff_error">
+                <property name="can-focus">False</property>
+                <property name="margin-bottom">8</property>
+                <property name="label" translatable="yes">Passwords do not match!</property>
+                <property name="xalign">1</property>
+                <style>
+                  <class name="error"/>
+                </style>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+                <property name="width">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">5</property>
             <property name="width">3</property>
           </packing>
         </child>
