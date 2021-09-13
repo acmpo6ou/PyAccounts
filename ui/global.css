@@ -13,3 +13,8 @@ toolbar {
 textview {
     font: 35px "Ubuntu Mono";
 }
+
+.error {
+    color: #f04a50;
+    font: 30px "Ubuntu Mono";
+}
