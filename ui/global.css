@@ -6,10 +6,6 @@ entry {
     font: 30px "Ubuntu Mono";
 }
 
-toolbar {
-    background: #2f2f2f;
-}
-
 textview {
     font: 35px "Ubuntu Mono";
 }
