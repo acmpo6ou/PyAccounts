@@ -19,3 +19,18 @@
 """
 Utilities for working with databases such as opening, encrypting, serializing them, etc...
 """
+from dataclasses import dataclass, field
+
+from typing import Dict
+
+
+@dataclass
+class Account:
+    accountname: str
+    username: str
+    email: str
+    password: str
+    date: str
+    comment: str
+    copy_email: bool = True
+    attached_files: Dict[str, str] = field(default_factory=dict)
