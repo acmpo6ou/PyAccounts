@@ -40,3 +40,12 @@ class Account:
         """
         # TODO: use Account.__dict__ method to convert it to dict
         # TODO: rename `notes` and `username` fields
+
+
+@dataclass
+class Database:
+    name: str
+    password: Optional[str] = None
+    salt: Optional[bytes] = None
+    accounts: Dict[str, Account] = field(default_factory=dict)
+    # TODO: implement `opened` and `saved` fields
