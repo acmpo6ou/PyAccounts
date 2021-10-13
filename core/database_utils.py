@@ -48,4 +48,19 @@ class Database:
     password: Optional[str] = None
     salt: Optional[bytes] = None
     accounts: Dict[str, Account] = field(default_factory=dict)
-    # TODO: implement `opened` and `saved` fields
+
+    @property
+    def opened(self):
+        """
+        Represents whether database is opened or not, the database is
+        considered opened when password is not None.
+        """
+        return False  # TODO: implement
+
+    @property
+    def saved(self):
+        """
+        Represents whether in-memory database is same as database on the disk.
+        Used to check whether database needs to be saved.
+        """
+        return False  # TODO: implement
