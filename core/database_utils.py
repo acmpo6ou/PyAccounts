@@ -82,6 +82,21 @@ class Database:
         # TODO: use to_dict of Account to convert it to dict, serialize resulting dict of account
         #  dicts
 
+    def gensalt(self):
+        """
+        Fills salt field with 16 purely random bytes.
+        """
+
+    def encrypt(self, string):
+        """
+        Encrypts given string using database password and salt.
+        """
+
+    def decrypt(self, string):
+        """
+        Decrypts given string using database password and salt.
+        """
+
     def open(self):
         """
         Opens database using its name, password and salt.
