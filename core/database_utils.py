@@ -61,6 +61,8 @@ class Database:
     def saved(self):
         """
         Represents whether in-memory database is same as database on the disk.
-        Used to check whether database needs to be saved.
+        Used to check whether database needs to be saved. It is needed when closing
+        database, with it we can determine whether to show confirmation dialog about unsaved
+        data to user or not.
         """
         return False  # TODO: implement
