@@ -17,10 +17,10 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-Utilities for working with databases such as opening, encrypting, serializing them, etc...
+Defines most fundamental classes for PyAccounts: Account and Database.
 """
 from dataclasses import dataclass, field
-from typing import Dict
+from typing import Dict, Optional
 
 
 @dataclass
