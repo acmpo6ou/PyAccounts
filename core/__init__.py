@@ -19,3 +19,7 @@
 """
 This package contains core PyAccounts functionality.
 """
+import os
+
+# directory containing database and config files
+SRC_DIR = f"{os.environ['HOME']}/.PyAccounts/"
