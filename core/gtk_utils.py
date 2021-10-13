@@ -67,7 +67,7 @@ def _setattr(self, item, value):
         original_setattr(self, item, value)
 
 
-# save real __setattr__
+# save original __setattr__
 original_setattr = GObject.Object.__setattr__
 
 # replace __getattr__ and __setattr__ with our methods that provide fluent API
@@ -84,18 +84,18 @@ class IconDialog(Gtk.Dialog):
 
     def __init__(self, title, message, icon, *args, **kwargs):
         super().__init__(self, title=title, *args, **kwargs)
-        self.vbox = self.get_content_area()
+        self.vbox = self.content_area
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.vbox.add(box)
 
         icon_theme = Gtk.IconTheme.get_default()
         icon = icon_theme.load_icon(icon, 48, Gtk.IconLookupFlags.FORCE_SVG)
         image = Gtk.Image.new_from_pixbuf(icon)
-        image.props.margin = 10
+        image.margin = 10
         box.add(image)
 
         label = Gtk.Label(message)
-        label.props.margin = 10
+        label.margin = 10
         box.add(label)
 
     def run(self):
