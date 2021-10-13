@@ -20,7 +20,6 @@
 Utilities for working with databases such as opening, encrypting, serializing them, etc...
 """
 from dataclasses import dataclass, field
-
 from typing import Dict
 
 
@@ -34,3 +33,10 @@ class Account:
     notes: str
     copy_email: bool = True
     attached_files: Dict[str, str] = field(default_factory=dict)
+
+    def to_dict(self):
+        """
+        Converts Account to dict renaming some fields.
+        """
+        # TODO: use Account.__dict__ method to convert it to dict
+        # TODO: rename `notes` and `username` fields
