@@ -66,3 +66,18 @@ class Database:
         data to user or not.
         """
         return False  # TODO: implement
+
+    def loads(self, string):
+        """
+        Deserializes json string to dict of accounts.
+        """
+        # TODO: use json to deserialize string, then replace dicts inside accounts dict with
+        #  corresponding Account instances.
+        #  Possibly set `accounts` field to resulting dict
+
+    def dumps(self, accounts):
+        """
+        Serializes accounts dict to json.
+        """
+        # TODO: use to_dict of Account to convert it to dict, serialize resulting dict of account
+        #  dicts
