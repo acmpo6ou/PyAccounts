@@ -16,6 +16,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
+"""
+Contains various utilities to simplify development with GTK.
+"""
+
 import gi
 
 gi.require_version("Gtk", "3.0")
