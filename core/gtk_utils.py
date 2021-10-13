@@ -36,18 +36,18 @@ class IconDialog(Gtk.Dialog):
     def __init__(self, title, message, icon, *args, **kwargs):
         super().__init__(self, title=title, *args, **kwargs)
         self.vbox = self.get_content_area()
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        self.vbox.add(hbox)
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        self.vbox.add(box)
 
         icon_theme = Gtk.IconTheme.get_default()
         icon = icon_theme.load_icon(icon, 48, Gtk.IconLookupFlags.FORCE_SVG)
         image = Gtk.Image.new_from_pixbuf(icon)
         image.props.margin = 10
-        hbox.add(image)
+        box.add(image)
 
         label = Gtk.Label(message)
         label.props.margin = 10
-        hbox.add(label)
+        box.add(label)
 
     def run(self):
         self.show_all()
