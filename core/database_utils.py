@@ -31,6 +31,6 @@ class Account:
     email: str
     password: str
     date: str
-    comment: str
+    notes: str
     copy_email: bool = True
     attached_files: Dict[str, str] = field(default_factory=dict)
