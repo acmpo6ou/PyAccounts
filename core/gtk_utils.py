@@ -23,7 +23,56 @@ Contains various utilities to simplify development with GTK.
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import GObject, Gtk
+
+
+def _getattr(self, item):
+    """
+    A fluent API to get GTK object's attributes.
+
+    Instead of writing:
+    >>> label.get_text()
+    >>> label.props.angle
+    This method allows us to write:
+    >>> label.text
+    >>> label.angle
+    Which is a more pythonic API.
+    """
+    try:
+        return getattr(self.props, item)
+    except AttributeError:
+        return getattr(self, f"get_{item}")()
+
+
+def _setattr(self, item, value):
+    """
+    A fluent API to set GTK object's attributes.
+
+    Instead of writing:
+    >>> label.set_text("test")
+    >>> label.props.angle = 90
+    This method allows us to write:
+    >>> label.text = "test"
+    >>> label.angle = 90
+    Which is a more pythonic API.
+    """
+    try:
+        return setattr(self.props, item, value)
+    except AttributeError:
+        pass
+
+    try:
+        getattr(self, f"set_{item}")(value)
+    except AttributeError:
+        original_setattr(self, item, value)
+
+
+# save real __setattr__
+original_setattr = GObject.Object.__setattr__
+
+# replace __getattr__ and __setattr__ with our methods that provide fluent API
+GObject.Object.__getattr__ = _getattr
+GObject.Object.__setattr__ = _setattr
 
 
 class IconDialog(Gtk.Dialog):
