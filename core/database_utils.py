@@ -81,3 +81,29 @@ class Database:
         """
         # TODO: use to_dict of Account to convert it to dict, serialize resulting dict of account
         #  dicts
+
+    def open(self):
+        """
+        Opens database using its name, password and salt.
+
+        In particular opening database means reading content of corresponding .dba file,
+        decrypting and deserializing it, then assigning deserialized accounts dict to `accounts`
+        field of Database.
+        """
+
+    def create(self):
+        """
+        Creates .dba file for database using its name, password and salt.
+        """
+
+    def delete(self):
+        """
+        Deletes .dba file associated with this Database instance.
+        """
+
+    def save(self, oldname):
+        """
+        Deletes old database and creates new one, more specifically:
+        it replaces old database with a new one.
+        :param oldname: old name of the database.
+        """
