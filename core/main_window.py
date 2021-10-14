@@ -23,3 +23,19 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
             css_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
+
+    def on_import_database(self, _):
+        """
+        Displays import database dialog.
+        """
+
+    def on_export_database(self, _):
+        """
+        Displays export database dialog.
+        """
+
+    def on_quit(self, _):
+        """
+        Checks if all databases are closed, if they are – quits, if they aren't – displays
+        confirmation dialog.
+        """
