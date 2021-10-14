@@ -24,10 +24,26 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
+    def import_database(self, path):
+        """
+        Imports given database handling all errors.
+        :param path: path to database file we're trying to import.
+        """
+        # TODO: show success and error messages
+        # TODO: validate database file size, whether database already exists
+
     def on_import_database(self, _):
         """
         Displays import database dialog.
         """
+        # TODO: allow only .dba files
+
+    def export_database(self, name):
+        """
+        Exports given database handling all errors.
+        :param name: name of the database we're trying to export.
+        """
+        # TODO: show success and error messages
 
     def on_export_database(self, _):
         """
@@ -49,3 +65,28 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         """
         Displays about dialog.
         """
+
+    def on_create_database(self, _):
+        """
+        Displays create database form.
+        """
+
+    def on_edit_database(self, _):
+        """
+        Displays edit database form for selected database.
+        """
+        # TODO: show warning in statusbar if there is no database selected
+
+    def delete_database(self, name):
+        """
+        Deletes given database from disk and database list handling all errors.
+        :param name: name of the database to delete.
+        """
+        # TODO: show success message in statusbar if database is deleted successfully
+        # TODO: show error message if there is an error
+
+    def on_delete_database(self, _):
+        """
+        Displays confirmation dialog asking user if he really want's to delete selected database.
+        """
+        # TODO: show warning in statusbar if there is no database selected
