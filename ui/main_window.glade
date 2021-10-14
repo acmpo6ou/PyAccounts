@@ -109,7 +109,7 @@ Author: Bohdan Kolvakh
                         <property name="use-underline">True</property>
                         <property name="image">image3</property>
                         <property name="use-stock">False</property>
-                        <signal name="activate" handler="app.quit" swapped="no"/>
+                        <signal name="activate" handler="on_quit" swapped="no"/>
                       </object>
                     </child>
                   </object>
