@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 from gi.repository import Gtk, Gdk
+from core.gtk_utils import GladeTemplate
 
 
-class MainWindow(Gtk.ApplicationWindow):
+class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(Gtk.ApplicationWindow, self).__init__(*args, **kwargs)
+        GladeTemplate.__init__(self, "main_window")
         self.load_css()
 
     @staticmethod
