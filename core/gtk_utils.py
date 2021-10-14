@@ -26,6 +26,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, Gtk
 
 
+# noinspection PyUnresolvedReferences
 def _getattr(self, item):
     """
     A fluent API to get GTK object's attributes.
@@ -44,6 +45,7 @@ def _getattr(self, item):
         return object.__getattribute__(self, f"get_{item}")()
 
 
+# noinspection PyUnresolvedReferences
 def _setattr(self, item, value):
     """
     A fluent API to set GTK object's attributes.
