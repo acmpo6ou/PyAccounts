@@ -83,6 +83,17 @@ class GladeTemplate(Gtk.Viewport):
         parent = self.builder.get_object(template)
         self.add(parent)
 
+    def __getattr__(self, item):
+        builder = object.__getattribute__(self, "builder")
+        widget = builder.get_object(item)
+
+        if widget:
+            d = object.__getattribute__(self, "__dict__")
+            d[item] = widget
+            return widget
+
+        return object.__getattribute__(self, item)
+
 
 class IconDialog(Gtk.Dialog):
     """
