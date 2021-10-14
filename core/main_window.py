@@ -30,7 +30,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
     @staticmethod
     def load_css():
         """
-        Loads styles from global.css.
+        Loads styles from global.css
         """
         css_provider = Gtk.CssProvider()
         css_provider.load_from_path("ui/global.css")
@@ -92,6 +92,8 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         Displays edit database form for selected database.
         """
         # TODO: show warning in statusbar if there is no database selected
+        #  or if database is closed
+        # TODO: call form.set_database(name)
 
     def delete_database(self, name):
         """
@@ -100,6 +102,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         """
         # TODO: show success message in statusbar if database is deleted successfully
         # TODO: show error message if there is an error
+        # TODO: deselect any database
 
     def on_delete_database(self, _):
         """
