@@ -51,3 +51,24 @@ class IconDialog(Gtk.Dialog):
         response = super().run()
         self.destroy()
         return response
+
+
+class StatusBar:
+    """
+    A wrapper for Gtk.Statusbar to display messages that disappear in 15 seconds.
+    """
+
+    def __init__(self, statusbar):
+        self.statusbar = statusbar
+
+    def success(self, message):
+        """
+        Displays a success message.
+        """
+        # TODO: display ✔ before the message
+
+    def warning(self, message):
+        """
+        Displays a warning.
+        """
+        # TODO: display ✘ before the message
