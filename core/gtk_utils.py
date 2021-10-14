@@ -39,9 +39,9 @@ def _getattr(self, item):
     Which is a more pythonic API.
     """
     try:
-        return getattr(self.props, item)
+        return object.__getattribute__(self.props, item)
     except AttributeError:
-        return getattr(self, f"get_{item}")()
+        return object.__getattribute__(self, f"get_{item}")()
 
 
 def _setattr(self, item, value):
@@ -79,8 +79,8 @@ class GladeTemplate(Gtk.Viewport):
     def __init__(self, template: str, *args, **kwargs):
         Gtk.Viewport.__init__(self, *args, **kwargs)
 
-        builder = Gtk.Builder.new_from_file(f"ui/{template}.glade")
-        parent = builder.get_object(template)
+        self.builder = Gtk.Builder.new_from_file(f"ui/{template}.glade")
+        parent = self.builder.get_object(template)
         self.add(parent)
 
 
