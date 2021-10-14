@@ -27,7 +27,10 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
     def __init__(self, *args, **kwargs):
         super(Gtk.ApplicationWindow, self).__init__(*args, **kwargs)
         GladeTemplate.__init__(self, "main_window")
+
         self.load_css()
+        self.load_settings()
+
         self.set_default_size(1280, 720)
         self.set_icon_from_file("img/icon.svg")
 
@@ -43,6 +46,11 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
             css_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
+
+    def load_settings(self):
+        """
+        Loads settings on app startup.
+        """
 
     def import_database(self, path):
         """
