@@ -17,6 +17,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
+from gi.repository.Gtk import Statusbar
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
@@ -33,6 +34,8 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
 
         self.set_default_size(1280, 720)
         self.set_icon_from_file("img/icon.svg")
+
+        self.statusbar = Statusbar(self.statusbar)
 
     @staticmethod
     def load_css():
@@ -51,6 +54,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         """
         Loads settings on app startup.
         """
+        # TODO: load separator position
 
     def import_database(self, path):
         """
