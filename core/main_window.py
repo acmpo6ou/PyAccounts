@@ -16,6 +16,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
+import gi
+
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 from core.gtk_utils import GladeTemplate
 
@@ -26,6 +29,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         GladeTemplate.__init__(self, "main_window")
         self.load_css()
         self.set_default_size(1280, 720)
+        self.set_icon_from_file("img/icon.svg")
 
     @staticmethod
     def load_css():
