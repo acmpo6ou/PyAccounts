@@ -75,6 +75,15 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
+class GladeTemplate(Gtk.Viewport):
+    def __init__(self, template: str, *args, **kwargs):
+        Gtk.Viewport.__init__(self, *args, **kwargs)
+
+        builder = Gtk.Builder.new_from_file(f"ui/{template}.glade")
+        parent = builder.get_object(template)
+        self.add(parent)
+
+
 class IconDialog(Gtk.Dialog):
     """
     Dialog containing icon and message.
