@@ -84,14 +84,22 @@ class GladeTemplate(Gtk.Viewport):
         self.add(parent)
 
     def __getattr__(self, item):
+        """
+        Simplifies widget access, instead of making builder.get_object() calls we can
+        access widgets directly as attributes.
+        :param item: id of the widget.
+        """
+        # try to get widget from builder
         builder = object.__getattribute__(self, "builder")
         widget = builder.get_object(item)
 
+        # if worked, return the widget
         if widget:
             d = object.__getattribute__(self, "__dict__")
             d[item] = widget
             return widget
 
+        # else, attribute we're trying to get is not a widget, so we return it the normal way
         return object.__getattribute__(self, item)
 
 
