@@ -39,3 +39,13 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         Checks if all databases are closed, if they are – quits, if they aren't – displays
         confirmation dialog.
         """
+
+    def on_preferences(self, _):
+        """
+        Displays preferences dialog.
+        """
+
+    def on_about(self, _):
+        """
+        Displays about dialog.
+        """
