@@ -109,33 +109,3 @@ class GladeTemplate(Gtk.Viewport):
 
         # else, attribute we're trying to get is not a widget, so we return it the normal way
         return object.__getattribute__(self, item)
-
-
-class IconDialog(Gtk.Dialog):
-    """
-    Dialog containing icon and message.
-    """
-
-    vbox = None
-
-    def __init__(self, title, message, icon, *args, **kwargs):
-        super().__init__(self, title=title, *args, **kwargs)
-        self.vbox = self.content_area
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        self.vbox.add(box)
-
-        icon_theme = Gtk.IconTheme.get_default()
-        icon = icon_theme.load_icon(icon, 48, Gtk.IconLookupFlags.FORCE_SVG)
-        image = Gtk.Image.new_from_pixbuf(icon)
-        image.margin = 10
-        box.add(image)
-
-        label = Gtk.Label(message)
-        label.margin = 10
-        box.add(label)
-
-    def run(self):
-        self.show_all()
-        response = super().run()
-        self.destroy()
-        return response

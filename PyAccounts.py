@@ -20,7 +20,7 @@ import sys
 
 import gi
 
-from core.gtk_utils import IconDialog
+from core.widgets import IconDialog
 from core.main_window import MainWindow
 
 gi.require_version("Gtk", "3.0")
