@@ -9,6 +9,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         super(Gtk.ApplicationWindow, self).__init__(*args, **kwargs)
         GladeTemplate.__init__(self, "main_window")
         self.load_css()
+        self.set_default_size(1280, 720)
 
     @staticmethod
     def load_css():
