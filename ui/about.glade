@@ -29,7 +29,7 @@ Author: Bohdan Kolvakh
   <!-- interface-description PyAccounts is a simple accounts database manager for Linux. -->
   <!-- interface-copyright 2021. Bohdan Kolvakh -->
   <!-- interface-authors Bohdan Kolvakh -->
-  <object class="GtkAboutDialog" id="about_dialog">
+  <object class="GtkAboutDialog" id="about">
     <property name="can-focus">False</property>
     <property name="modal">True</property>
     <property name="window-position">center</property>
