@@ -21,28 +21,10 @@ import sys
 import gi
 
 from core.gtk_utils import IconDialog
+from core.main_window import MainWindow
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk
-
-
-class MainWindow(Gtk.ApplicationWindow):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.load_css()
-
-    @staticmethod
-    def load_css():
-        """
-        Loads styles from global.css.
-        """
-        css_provider = Gtk.CssProvider()
-        css_provider.load_from_path("ui/global.css")
-        Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(),
-            css_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_USER,
-        )
+from gi.repository import Gtk
 
 
 class Application(Gtk.Application):
