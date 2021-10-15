@@ -89,6 +89,7 @@ class GladeTemplate(Gtk.Bin):
         self.builder = Gtk.Builder.new_from_file(f"ui/{template}.glade")
         parent = self.builder.get_object(template)
         self.add(parent)
+        self.parent_widget = parent
         self.builder.connect_signals(self)
 
     def __getattr__(self, item):
