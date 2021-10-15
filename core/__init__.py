@@ -23,3 +23,6 @@ import os
 
 # directory containing database and config files
 SRC_DIR = f"{os.environ['HOME']}/.PyAccounts/"
+
+# current app version
+APP_VERSION = "1.0.0"
