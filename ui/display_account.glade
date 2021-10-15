@@ -110,6 +110,9 @@ Author: Bohdan Kolvakh
         <property name="margin-bottom">8</property>
         <property name="label" translatable="yes">To copy: e-mail</property>
         <property name="xalign">0</property>
+        <attributes>
+          <attribute name="font-desc" value="Ubuntu Mono 18"/>
+        </attributes>
       </object>
       <packing>
         <property name="expand">False</property>
