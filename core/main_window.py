@@ -121,7 +121,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         """
         # TODO: show warning in statusbar if there is no database selected
         #  or if database is closed
-        # TODO: call form.set_database(name)
+        # TODO: call form.database = name
 
     def delete_database(self, name):
         """
