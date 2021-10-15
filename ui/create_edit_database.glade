@@ -213,6 +213,7 @@ Author: Bohdan Kolvakh
         <child>
           <object class="GtkLabel" id="passwords_diff_error">
             <property name="can-focus">False</property>
+            <property name="no-show-all">True</property>
             <property name="margin-bottom">8</property>
             <property name="label" translatable="yes">Passwords do not match!</property>
             <property name="xalign">1</property>
