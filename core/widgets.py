@@ -104,6 +104,12 @@ class StatusBar:
     def __init__(self, statusbar):
         self.statusbar = statusbar
 
+    def message(self, message):
+        """
+        Displays message that disappears in 15 seconds on status bar.
+        """
+        # TODO: use GObject.timeout_add() to add callback to clear status bar in 15 seconds.
+
     def success(self, message):
         """
         Displays a success message.
