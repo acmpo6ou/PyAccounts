@@ -77,7 +77,7 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
-class GladeTemplate(Gtk.Widget):
+class GladeTemplate(Gtk.Bin):
     """
     Simplifies loading of glade ui files.
     This class should be subclassed to automatically load needed ui file.
