@@ -77,14 +77,14 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
-class GladeTemplate(Gtk.Viewport):
+class GladeTemplate(Gtk.Widget):
     """
     Simplifies loading of glade ui files.
     This class should be subclassed to automatically load needed ui file.
     """
 
     def __init__(self, template: str, *args, **kwargs):
-        Gtk.Viewport.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.builder = Gtk.Builder.new_from_file(f"ui/{template}.glade")
         parent = self.builder.get_object(template)
