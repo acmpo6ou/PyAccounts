@@ -56,6 +56,23 @@ class IconDialog(Gtk.Dialog):
         return response
 
 
+class WarningDialog(IconDialog):
+    """
+    Dialog with warning icon and 2 buttons: `Yes` and `No`.
+    """
+
+    def __init__(self, message, *args, **kwargs):
+        super().__init__(
+            title="Warning!",
+            message=message,
+            icon="dialog-warning",
+            modal=True,
+            buttons=("No", Gtk.ResponseType.NO, "_Yes", Gtk.ResponseType.YES),
+            *args,
+            **kwargs
+        )
+
+
 class StatusBar:
     """
     A wrapper for Gtk.Statusbar to display messages that disappear in 15 seconds.
