@@ -56,6 +56,11 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         """
         # TODO: load separator position
 
+    def on_separator_moved(self, separator, _):
+        """
+        Saves separator position to settings.json
+        """
+
     def import_database(self, path):
         """
         Imports given database handling all errors.
