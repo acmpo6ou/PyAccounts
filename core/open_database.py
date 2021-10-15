@@ -26,9 +26,25 @@ class OpenDatabaseForm(GladeTemplate):
     def __init__(self):
         super().__init__("open_database")
         self.vexpand = True
+        self.database = None
+
+    def clear(self):
+        """
+        Clears the form: clears password field and makes password invisible.
+        """
 
     def on_open_database(self, _):
         """
-        Tries to open database with password from password field, if there is an error decrypting
-        the database – displays `incorrect password` tip.
+        Tries to open database with password from password field,
+        if there is an error decrypting the database – displays incorrect_password tip.
+        Opens database window on success.
         """
+        # TODO: clear and hide form on success
+
+    def on_password_changed(self, _):
+        """
+        Hides incorrect_password tip.
+        """
+
+    def on_toggle_password_visibility(self, _):
+        ...
