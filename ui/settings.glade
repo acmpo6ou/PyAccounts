@@ -147,7 +147,7 @@ Author: Bohdan Kolvakh
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <property name="font">Sans 12</property>
+                <property name="font">Ubuntu 30</property>
                 <property name="language">en-us</property>
                 <property name="preview-text">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</property>
                 <property name="use-font">True</property>
@@ -177,7 +177,7 @@ Author: Bohdan Kolvakh
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <property name="font">Sans 12</property>
+                <property name="font">Ubuntu Mono 35</property>
                 <property name="language">en-us</property>
                 <property name="preview-text">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</property>
                 <property name="title" translatable="yes">Pick a Monospace Font</property>
