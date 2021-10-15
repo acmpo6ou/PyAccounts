@@ -90,6 +90,9 @@ class ErrorDialog(IconDialog):
         details_label = Gtk.Label()
         details_label.markup = f"<span font_desc='Ubuntu Mono 20'>{details}</span>"
         details_label.selectable = True
+        details_label.xalign = 0
+        details_label.margin_start = 5
+        details_label.margin_end = 5
 
         expander = Gtk.Expander.new_with_mnemonic("_Details")
         expander.add(details_label)
