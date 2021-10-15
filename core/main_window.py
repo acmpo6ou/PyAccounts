@@ -61,6 +61,12 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         Saves separator position to settings.json
         """
 
+    def on_database_selected(self, db_list, row):
+        """
+        If database closed – display open database form.
+        :param row: row containing selected database name.
+        """
+
     def import_database(self, path):
         """
         Imports given database handling all errors.
