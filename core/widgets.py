@@ -73,6 +73,27 @@ class WarningDialog(IconDialog):
         )
 
 
+class ErrorDialog(IconDialog):
+    """
+    Dialog with error icon, error message and details.
+    """
+
+    def __init__(self, message, details, *args, **kwargs):
+        super().__init__(
+            title="Error!",
+            message=message,
+            icon="dialog-error",
+            modal=True,
+            *args,
+            **kwargs
+        )
+        expander = Gtk.Expander.new_with_mnemonic("_Details")
+        details = Gtk.Label(details)
+        details.selectable = True
+        expander.add(details)
+        self.vbox.add(expander)
+
+
 class StatusBar:
     """
     A wrapper for Gtk.Statusbar to display messages that disappear in 15 seconds.
