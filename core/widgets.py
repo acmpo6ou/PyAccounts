@@ -69,7 +69,7 @@ class WarningDialog(IconDialog):
             modal=True,
             buttons=("No", Gtk.ResponseType.NO, "_Yes", Gtk.ResponseType.YES),
             *args,
-            **kwargs
+            **kwargs,
         )
 
 
@@ -85,12 +85,14 @@ class ErrorDialog(IconDialog):
             icon="dialog-error",
             modal=True,
             *args,
-            **kwargs
+            **kwargs,
         )
+        details_label = Gtk.Label()
+        details_label.markup = f"<span font_desc='Ubuntu Mono 20'>{details}</span>"
+        details_label.selectable = True
+
         expander = Gtk.Expander.new_with_mnemonic("_Details")
-        details = Gtk.Label(details)
-        details.selectable = True
-        expander.add(details)
+        expander.add(details_label)
         self.vbox.add(expander)
 
 
