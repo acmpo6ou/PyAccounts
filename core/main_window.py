@@ -108,6 +108,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         """
         Displays about dialog.
         """
+        # TODO: set dialog version to current app version
 
     def on_create_database(self, _):
         """
