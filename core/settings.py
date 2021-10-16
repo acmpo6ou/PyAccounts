@@ -59,6 +59,9 @@ class Settings:
     general_font = "Ubuntu 30"
     monospace_font = "Ubuntu Mono 35"
 
+    def __post_init__(self):
+        self.load()
+
     def load(self):
         """
         Loads settings from settings.json
