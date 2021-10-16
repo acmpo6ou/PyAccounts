@@ -18,6 +18,8 @@
 
 import gi
 
+from core.database_utils import Database
+
 gi.require_version("Gtk", "3.0")
 from core.gtk_utils import GladeTemplate
 
@@ -28,7 +30,7 @@ class OpenDatabaseForm(GladeTemplate):
         self.vexpand = True
         self.database = None
 
-    def set_database(self, database):
+    def set_database(self, database: Database):
         """
         Saves given database.
         """
