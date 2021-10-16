@@ -18,7 +18,6 @@
 
 import gi
 
-from core.database_window import DatabaseWindow
 from core.widgets import Window
 
 gi.require_version("Gtk", "3.0")
@@ -104,7 +103,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         # TODO: show warning in statusbar if there is no database selected
         #  or if database is closed
-        # TODO: call form.database = name
+        # TODO: call form.set_database()
 
     def delete_database(self, name):
         """
