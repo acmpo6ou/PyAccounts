@@ -25,10 +25,13 @@ from core.gtk_utils import GladeTemplate
 
 
 class DatabaseWindow(Window):
-    def __init__(self, main_window):
+    def __init__(self, database, main_window):
         GladeTemplate.__init__(self, "database_window")
         Window.__init__(self)
+
         self.main_window = main_window
+        self.database = database
+        # TODO: set title to database name
 
     def on_save(self, _):
         """
