@@ -17,26 +17,23 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-from core.widgets import StatusBar
+
+from core.database_window import DatabaseWindow
+from core.widgets import Window
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 from core.gtk_utils import GladeTemplate
 
 
-class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
+class MainWindow(Gtk.ApplicationWindow, Window):
     def __init__(self, *args, **kwargs):
-        super(Gtk.ApplicationWindow, self).__init__(*args, **kwargs)
+        Gtk.ApplicationWindow.__init__(self, *args, **kwargs)
         GladeTemplate.__init__(self, "main_window")
+        Window.__init__(self)
 
         self.load_css()
-        self.load_separator()
         self.select_main_database()
-
-        self.set_default_size(1280, 720)
-        self.set_icon_from_file("img/icon.svg")
-
-        self.statusbar = StatusBar(self.statusbar)
 
     @staticmethod
     def load_css():
@@ -52,21 +49,11 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
-    def load_separator(self):
-        """
-        Loads separator position from settings.json
-        """
-
     def select_main_database(self):
         """
         If there is a database called `main` auto selects it.
         """
         # TODO: call on_database_selected or send select event to db_list
-
-    def on_separator_moved(self, separator, _):
-        """
-        Saves separator position to settings.json
-        """
 
     def on_database_selected(self, db_list, row):
         """
@@ -105,17 +92,6 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         Checks if all databases are closed, if they are – quits, if they aren't – displays
         confirmation dialog.
         """
-
-    def on_preferences(self, _):
-        """
-        Displays preferences dialog.
-        """
-
-    def on_about(self, _):
-        """
-        Displays about dialog.
-        """
-        # TODO: set dialog version to current app version
 
     def on_create_database(self, _):
         """

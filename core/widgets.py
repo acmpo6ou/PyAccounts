@@ -22,6 +22,8 @@ Contains custom GTK widgets.
 
 import gi
 
+from core.gtk_utils import GladeTemplate
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -124,3 +126,37 @@ class StatusBar:
         Displays a warning.
         """
         # TODO: display ✘ before the message
+
+
+class Window(Gtk.Window, GladeTemplate):
+    """
+    Super class for MainWindow and DatabaseWindow.
+    """
+
+    def __init__(self):
+        Gtk.Window.__init__(self)
+        self.set_default_size(1280, 720)
+        self.set_icon_from_file("img/icon.svg")
+        self.load_separator()
+        self.statusbar = StatusBar(self.statusbar)
+
+    def load_separator(self):
+        """
+        Loads separator position from settings.json
+        """
+
+    def on_separator_moved(self, separator, _):
+        """
+        Saves separator position to settings.json
+        """
+
+    def on_preferences(self, _):
+        """
+        Displays preferences dialog.
+        """
+
+    def on_about(self, _):
+        """
+        Displays about dialog.
+        """
+        # TODO: set dialog version to current app version
