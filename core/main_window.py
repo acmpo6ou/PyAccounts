@@ -18,6 +18,7 @@
 
 import gi
 
+from core.settings import Settings
 from core.widgets import Window
 
 gi.require_version("Gtk", "3.0")
@@ -31,6 +32,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         GladeTemplate.__init__(self, "main_window")
         Window.__init__(self)
         self.main_window = self
+        self.settings = Settings()
 
         self.load_css()
         self.select_main_database()
