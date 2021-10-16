@@ -30,7 +30,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         GladeTemplate.__init__(self, "main_window")
 
         self.load_css()
-        self.load_settings()
+        self.load_separator()
 
         self.set_default_size(1280, 720)
         self.set_icon_from_file("img/icon.svg")
@@ -50,11 +50,10 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
-    def load_settings(self):
+    def load_separator(self):
         """
-        Loads settings on app startup.
+        Loads separator position from settings.json
         """
-        # TODO: load separator position
 
     def on_separator_moved(self, separator, _):
         """
