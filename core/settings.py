@@ -38,9 +38,11 @@ class SettingsDialog(GladeTemplate):
         """
         Loads font settings from settings.json
         """
+        # TODO: use main_window.settings
 
     def on_save(self, _):
         """
         Saves fonts to settings.json and applies changes.
         """
         # TODO: call main_window.load_css() to apply changes.
+        # TODO: use main_window.settings.save()
