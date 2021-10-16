@@ -42,6 +42,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         """
         Loads styles from global.css
         """
+        # TODO: substitute font from settings.json
         css_provider = Gtk.CssProvider()
         css_provider.load_from_path("ui/global.css")
         Gtk.StyleContext.add_provider_for_screen(
