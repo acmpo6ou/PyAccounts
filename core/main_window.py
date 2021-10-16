@@ -31,6 +31,7 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
 
         self.load_css()
         self.load_separator()
+        self.select_main_database()
 
         self.set_default_size(1280, 720)
         self.set_icon_from_file("img/icon.svg")
@@ -55,6 +56,12 @@ class MainWindow(Gtk.ApplicationWindow, GladeTemplate):
         """
         Loads separator position from settings.json
         """
+
+    def select_main_database(self):
+        """
+        If there is a database called `main` auto selects it.
+        """
+        # TODO: call on_database_selected or send select event to db_list
 
     def on_separator_moved(self, separator, _):
         """
