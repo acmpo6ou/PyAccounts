@@ -27,18 +27,39 @@ class CreateDatabaseForm(GladeTemplate):
         super().__init__("create_edit_database")
         self.vexpand = True
 
-    def on_validate_name(self, name):
+    def on_filter_name(self, name):
         """
-        Auto removes unallowed characters from database name.
+        Removes unallowed characters from database name.
+
         Shows a warning explaining the user that he's trying to enter unallowed characters.
         :param name: name field containing database name.
         """
 
+    def validate_name(self):
+        """
+        Validates name field, displaying error tip if database name is invalid.
+
+        Possible problems with database name:
+        * name field is empty
+        * name field contains name that is already taken
+        :return: True if name is valid.
+        """
+
+    def validate_passwords(self):
+        """
+        Validates password fields, displaying error tips if passwords are invalid.
+
+        Possible problems with passwords:
+        * password fields are empty
+        * passwords from password fields don't match
+        :return: True if passwords are valid.
+        """
+
     def on_apply_enabled(self, _):
         """
-        Enables or disables apply button depending on whether there are errors in the form
-        (i.e. no password entered, passwords do not match, etc...)
+        Enables or disables apply button depending on whether there are errors in the form.
         """
+        # TODO: use validate_passwords and validate_name
 
     def on_pass_toggle(self, _, __, ___):
         """
@@ -47,12 +68,12 @@ class CreateDatabaseForm(GladeTemplate):
 
     def on_generate_password(self, _):
         """
-        Display dialog to generate password.
+        Displays dialog to generate password.
         """
 
     def on_apply(self, _):
         """
-        Creates database from form's data
+        Creates database using form data.
         """
         # TODO: create database, add it to databases list, update list of databases,
         #  open database window
