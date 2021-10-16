@@ -28,6 +28,12 @@ class OpenDatabaseForm(GladeTemplate):
         self.vexpand = True
         self.database = None
 
+    def set_database(self, database):
+        """
+        Saves given database.
+        """
+        self.database = database
+
     def clear(self):
         """
         Clears the form: clears password field and makes password invisible.
