@@ -31,6 +31,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Gtk.ApplicationWindow.__init__(self, *args, **kwargs)
         GladeTemplate.__init__(self, "main_window")
         Window.__init__(self)
+
         self.main_window = self
         self.settings = Settings()
 
