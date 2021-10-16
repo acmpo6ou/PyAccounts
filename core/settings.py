@@ -23,9 +23,10 @@ from core.gtk_utils import GladeTemplate
 
 
 class SettingsDialog(GladeTemplate):
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__("settings")
         self.load_fonts()
+        self.main_window = main_window
 
     def run(self):
         self.parent_widget.run()
@@ -38,7 +39,7 @@ class SettingsDialog(GladeTemplate):
         Loads font settings from settings.json
         """
 
-    def on_save(self):
+    def on_save(self, _):
         """
         Saves fonts to settings.json and applies changes.
         """

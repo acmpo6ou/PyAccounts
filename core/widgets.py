@@ -23,6 +23,7 @@ Contains custom GTK widgets.
 import gi
 
 from core.gtk_utils import GladeTemplate
+from core.settings import SettingsDialog
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -154,6 +155,7 @@ class Window(Gtk.Window, GladeTemplate):
         """
         Displays preferences dialog.
         """
+        SettingsDialog(self.main_window).run()
 
     def on_about(self, _):
         """

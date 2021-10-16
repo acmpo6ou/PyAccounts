@@ -25,9 +25,10 @@ from core.gtk_utils import GladeTemplate
 
 
 class DatabaseWindow(Window):
-    def __init__(self):
+    def __init__(self, main_window):
         GladeTemplate.__init__(self, "database_window")
         Window.__init__(self)
+        self.main_window = main_window
 
     def on_save(self, _):
         """
