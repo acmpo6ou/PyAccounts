@@ -17,6 +17,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
+from attr import dataclass
 
 gi.require_version("Gtk", "3.0")
 from core.gtk_utils import GladeTemplate
@@ -46,3 +47,25 @@ class SettingsDialog(GladeTemplate):
         """
         # TODO: call main_window.load_css() to apply changes.
         # TODO: use main_window.settings.save()
+
+
+@dataclass
+class Settings:
+    """
+    Represents app settings.
+    """
+
+    separator_position = 1000
+    general_font = "Ubuntu 30"
+    monospace_font = "Ubuntu Mono 35"
+
+    def load(self):
+        """
+        Loads settings from settings.json
+        """
+        # TODO: set fields to loaded settings
+
+    def save(self):
+        """
+        Saves settings to settings.json
+        """
