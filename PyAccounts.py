@@ -36,6 +36,8 @@ class Application(Gtk.Application):
         if not self.window:
             self.window = MainWindow(application=self, title="PyAccounts")
             self.window.show_all()
+
+            self.check_paste_shortcut()
         else:
             dialog = IconDialog(
                 "PyAccounts is already running",
@@ -43,6 +45,17 @@ class Application(Gtk.Application):
                 icon="dialog-warning",
             )
             dialog.show_all()
+
+    def check_paste_shortcut(self):
+        """
+        Checks if there is a system shortcut to paste password, if there isn't creates this
+        shortcut.
+        """
+
+    def create_paste_shortcut(self):
+        """
+        Creates system shortcut to paste password.
+        """
 
 
 if __name__ == "__main__":
