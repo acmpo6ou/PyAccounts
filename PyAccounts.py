@@ -46,6 +46,17 @@ class Application(Gtk.Application):
             )
             dialog.show_all()
 
+    def fix_src_dir(self):
+        """
+        Creates the SRC_DIR folder if it's absent.
+        """
+        # TODO: also call fix_settings
+
+    def fix_settings(self):
+        """
+        Creates empty settings.json if it's absent.
+        """
+
     def check_paste_shortcut(self):
         """
         Checks if there is a system shortcut to paste password, if there isn't creates this
