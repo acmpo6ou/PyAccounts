@@ -291,7 +291,7 @@ Author: Bohdan Kolvakh
           </object>
           <packing>
             <property name="resize">False</property>
-            <property name="shrink">True</property>
+            <property name="shrink">False</property>
           </packing>
         </child>
       </object>
