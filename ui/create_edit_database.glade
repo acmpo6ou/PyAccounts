@@ -76,6 +76,7 @@ Author: Bohdan Kolvakh
             <property name="margin-bottom">8</property>
             <property name="input-purpose">name</property>
             <signal name="changed" handler="on_apply_enabled" swapped="no"/>
+            <signal name="changed" handler="on_validate_name" swapped="no"/>
           </object>
           <packing>
             <property name="left-attach">1</property>
