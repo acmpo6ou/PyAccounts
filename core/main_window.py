@@ -36,6 +36,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.settings = Settings()
 
         self.load_css()
+        self.load_databases()
         self.select_main_database()
 
     @staticmethod
