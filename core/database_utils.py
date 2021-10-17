@@ -38,7 +38,7 @@ class Account:
         """
         Converts Account to dict renaming some fields.
         """
-        # TODO: use Account.__dict__ method to convert it to dict
+        # TODO: use Account.__dict__ method to convert it to dict (use dict comprehension)
         # TODO: rename `notes` and `username` fields
 
 
