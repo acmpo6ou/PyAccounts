@@ -19,6 +19,7 @@
 """
 Defines most fundamental classes for PyAccounts: Account and Database.
 """
+
 from dataclasses import dataclass, field
 from typing import Dict, Optional
 
@@ -47,7 +48,6 @@ class Database:
     name: str
     password: Optional[str] = None
     accounts: Dict[str, Account] = field(default_factory=dict)
-    _salt: Optional[bytes] = None
 
     @property
     def opened(self):
@@ -83,17 +83,19 @@ class Database:
         # TODO: use to_dict of Account to convert it to dict, serialize resulting dict of account
         #  dicts
 
-    def gensalt(self):
+    @staticmethod
+    def gensalt():
         """
-        Fills salt field with 16 purely random bytes.
+        Generates 16 purely random bytes of salt.
         """
+        return b""
 
-    def encrypt(self, string):
+    def encrypt(self, string, salt):
         """
         Encrypts given string using database password and salt.
         """
 
-    def decrypt(self, string):
+    def decrypt(self, string, salt):
         """
         Decrypts given string using database password and salt.
         """
@@ -108,7 +110,7 @@ class Database:
         :param password: password to open the database.
         """
         # TODO: save password to `password` field
-        # TODO: read .dba file; assign first 16 bytes to `_salt` and decrypt remaining bytes,
+        # TODO: read .dba file; assign first 16 bytes to `salt` and decrypt remaining bytes,
         #  fill accounts property
 
     def create(self):
@@ -131,4 +133,3 @@ class Database:
         :param password: new password for the database.
         :param accounts: new accounts dict for the database.
         """
-        # TODO: use salt from the _salt property (no need to generate salt again)
