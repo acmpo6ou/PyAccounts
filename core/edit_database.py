@@ -35,17 +35,20 @@ class EditDatabaseForm(CreateDatabaseForm):
         Populates form fields with data from database.
         """
 
-    def on_apply_enabled(self, _):
+    def validate_name(self):
         """
-        Enables or disables apply button depending on whether there are errors in the form
-        (i.e. no password entered, passwords do not match, etc...).
-        Hides/shows error tips.
+        Validates name field, displaying error tip if database name is invalid.
+
+        Possible problems with database name:
+        * name field is empty
+        * name field contains name that is already taken; it's OK, however if database name
+        hasn't changed throughout editing
+        :return: True if name is valid.
         """
-        # TODO: allow database name be unchanged
 
     def on_apply(self, _):
         """
         Applies changes to database using form data.
         """
-        # TODO: save database, update `databases` list, update list of databases (widget)
+        # TODO: save database, update list of databases
         # TODO: show success/error message
