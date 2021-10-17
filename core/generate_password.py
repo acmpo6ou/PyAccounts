@@ -42,13 +42,19 @@ class GenPassDialog(GladeTemplate):
         Generates random password.
 
         :param length: length of password to generate.
-        :param chars: characters from which to generate password.
-        :return: generated random password.
+        :param chars: list of strings with characters from which to generate password.
         """
+        # TODO: uncomment this
+        # concatenate all character strings from `chars` into one big string
+        # chars_str = "".join(chars)
+        # generate purely random password from characters of chars_str
+        # "".join(secrets.choice(chars_str) for _ in range(length))
+
         # Because password generates randomly it won't necessarily contain all characters that
         # are specified in `chars`.
         # So here we check that generated password contains at least one character from each string
         # specified in `chars` and if it doesn't, we regenerate password
+        # TODO: implement password regeneration
 
     def on_generate(self, _):
         """
