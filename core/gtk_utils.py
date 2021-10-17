@@ -87,15 +87,21 @@ class GladeTemplate(Gtk.Bin):
         super().__init__(*args, **kwargs)
 
         self.builder = Gtk.Builder.new_from_file(f"ui/{template}.glade")
-        parent = self.builder.get_object(template)
-        self.add(parent)
-        self.parent_widget = parent
+        self.parent_widget = self.builder.get_object(template)
+        self.add(self.parent_widget)
         self.builder.connect_signals(self)
 
+    # noinspection PyUnresolvedReferences
     def __getattr__(self, item):
         """
         Simplifies widget access, instead of making builder.get_object() calls we can
         access widgets directly as attributes.
+
+        Instead of writing this:
+        >>> form.builder.get_object("mywidget")
+        We can do this:
+        >>> form.mywidget
+
         :param item: id of the widget.
         """
         # try to get widget from builder
@@ -105,7 +111,7 @@ class GladeTemplate(Gtk.Bin):
         # if worked, return the widget
         if widget:
             d = object.__getattribute__(self, "__dict__")
-            d[item] = widget  # cache widget
+            d[item] = widget  # cache it
             return widget
 
         # else, attribute we're trying to get is not a widget, so we return it the normal way
