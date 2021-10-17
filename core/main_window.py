@@ -64,11 +64,11 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         If there is a database called `main` auto selects it.
         """
-        # TODO: call on_database_selected or send select event to db_list
+        # TODO: call on_database_selected or send 'select' event to db_list
 
     def on_database_selected(self, db_list, row):
         """
-        If database closed – display open database form.
+        If selected database is closed – displays open database form.
         :param row: row containing selected database name.
         """
 
@@ -78,25 +78,27 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         :param path: path to database file we're trying to import.
         """
         # TODO: show success and error messages
-        # TODO: validate database file size, whether database already exists
+        # TODO: validate database file size, whether database already exists;
+        #  update db_list and list widget
 
     def on_import_database(self, _):
         """
         Displays import database dialog.
         """
-        # TODO: allow only .dba files
+        # TODO: allow only .dba files; call import_database
 
     def export_database(self, name):
         """
         Exports given database handling all errors.
         :param name: name of the database we're trying to export.
         """
-        # TODO: show success and error messages
+        # TODO: show success and error messages; call export_database
 
     def on_export_database(self, _):
         """
         Displays export database dialog.
         """
+        # TODO: set default file name to be <dbname>.dba; call export_database
 
     def on_quit(self, _):
         """
@@ -124,7 +126,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         # TODO: show success message in statusbar if database is deleted successfully
         # TODO: show error message if there is an error
-        # TODO: deselect any database
+        # TODO: deselect any database and update database list
 
     def on_delete_database(self, _):
         """
