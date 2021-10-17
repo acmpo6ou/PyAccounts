@@ -52,6 +52,13 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
+    def load_databases(self):
+        """
+        Fills `databases` property with list of databases residing in SRC_DIR folder.
+        """
+        # TODO: find all .dba files; use glob module
+        # TODO: set self.databases property
+
     def select_main_database(self):
         """
         If there is a database called `main` auto selects it.
