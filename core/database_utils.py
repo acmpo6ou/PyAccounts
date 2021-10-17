@@ -46,8 +46,8 @@ class Account:
 class Database:
     name: str
     password: Optional[str] = None
-    salt: Optional[bytes] = None
     accounts: Dict[str, Account] = field(default_factory=dict)
+    _salt: Optional[bytes] = None
 
     @property
     def opened(self):
@@ -61,6 +61,7 @@ class Database:
     def saved(self):
         """
         Represents whether in-memory database is same as database on the disk.
+
         Used to check whether database needs to be saved. It is needed when closing
         database, with it we can determine whether to show confirmation dialog about unsaved
         data to user or not.
@@ -97,28 +98,37 @@ class Database:
         Decrypts given string using database password and salt.
         """
 
-    def open(self):
+    def open(self, password):
         """
         Opens database using its name, password and salt.
 
         In particular opening database means reading content of corresponding .dba file,
         decrypting and deserializing it, then assigning deserialized accounts dict to `accounts`
         field of Database.
+        :param password: password to open the database.
         """
+        # TODO: save password to `password` field
+        # TODO: read .dba file; assign first 16 bytes to `_salt` and decrypt remaining bytes,
+        #  fill accounts property
 
     def create(self):
         """
         Creates .dba file for database using its name, password and salt.
         """
+        # TODO: use gensalt() to generate salt
 
     def delete(self):
         """
         Deletes .dba file associated with this Database instance.
         """
 
-    def save(self, oldname):
+    def save(self, name, password, accounts):
         """
         Deletes old database and creates new one, more specifically:
         it replaces old database with a new one.
-        :param oldname: old name of the database.
+
+        :param name: new name for the database.
+        :param password: new password for the database.
+        :param accounts: new accounts dict for the database.
         """
+        # TODO: use salt from the _salt property (no need to generate salt again)
