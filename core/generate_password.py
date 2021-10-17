@@ -22,8 +22,6 @@ gi.require_version("Gtk", "3.0")
 from core.gtk_utils import GladeTemplate
 from string import digits, ascii_lowercase, ascii_uppercase, punctuation
 
-ALL_CHARS = (digits, ascii_lowercase, ascii_uppercase, punctuation)
-
 
 class GenPassDialog(GladeTemplate):
     """
@@ -32,7 +30,6 @@ class GenPassDialog(GladeTemplate):
 
     def __init__(self, pass1, pass2):
         super().__init__("generate_password")
-        self.checkboxes = (self.numbers, self.lower, self.upper, self.punctuation)
 
         self.pass1 = pass1
         self.pass2 = pass2
@@ -57,11 +54,15 @@ class GenPassDialog(GladeTemplate):
         """
         Generates password and fills pass1 and pass2 password fields with it.
         """
-        """
+
+        all_chars = (digits, ascii_lowercase, ascii_uppercase, punctuation)
+        checkboxes = (self.numbers, self.lower, self.upper, self.punctuation)
         chars = []
+
+        """
         For each index, checkbox in enumerate checkboxes:
             if it is checked:
-                get characters associated with that checkbox (using ALL_CHARS[index])
+                get characters associated with that checkbox (using all_chars[index])
                 add them to chars
 
         call genpass passing it chars and password length
