@@ -25,6 +25,8 @@ from core.gtk_utils import GladeTemplate
 class AboutDialog(GladeTemplate):
     def __init__(self):
         super().__init__("about")
+        # TODO: set dialog version to current app version;
+        #  use self.parent_widget.version and APP_VERSION constant
 
     def run(self):
         self.parent_widget.run()

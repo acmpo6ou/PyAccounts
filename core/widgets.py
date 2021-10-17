@@ -161,4 +161,3 @@ class Window(Gtk.Window, GladeTemplate):
         """
         Displays about dialog.
         """
-        # TODO: set dialog version to current app version
