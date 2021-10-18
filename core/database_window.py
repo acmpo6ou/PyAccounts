@@ -39,13 +39,6 @@ class DatabaseWindow(Window):
         On success displays success message in statusbar, on error – error message.
         """
 
-    def on_copy(self, _):
-        """
-        Copies e-mail to clipboard and password to safe clipboard.
-        """
-        # TODO: copy password to password field of MainWindow.
-        # TODO: remove password after 1 minute
-
     def on_quit(self, _):
         """
         Checks if database is saved, if it is – quits, otherwise displays confirmation dialog.

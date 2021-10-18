@@ -35,12 +35,6 @@ Author: Bohdan Kolvakh
     <property name="icon-name">document-save</property>
     <property name="icon_size">1</property>
   </object>
-  <object class="GtkImage" id="image2">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">edit-copy</property>
-    <property name="icon_size">1</property>
-  </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -84,17 +78,6 @@ Author: Bohdan Kolvakh
                         <property name="image">image1</property>
                         <property name="use-stock">False</property>
                         <signal name="activate" handler="on_save" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label" translatable="yes">_Copy password</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">image2</property>
-                        <property name="use-stock">False</property>
-                        <signal name="activate" handler="on_copy" swapped="no"/>
                       </object>
                     </child>
                     <child>
