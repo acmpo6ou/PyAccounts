@@ -76,7 +76,7 @@ class DisplayAccount(GladeTemplate):
         """
         Copies e-mail to clipboard and password to safe clipboard.
         """
-        # TODO: copy password to password field of MainWindow.
+        # TODO: copy password to safe_clipboard property of MainWindow.
         # TODO: remove password after 1 minute
 
     def save_attached_file(self, path, content: bytes):

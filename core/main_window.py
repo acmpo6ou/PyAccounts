@@ -32,6 +32,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         GladeTemplate.__init__(self, "main_window")
         Window.__init__(self)
 
+        # we will copy password or notes here, because it's safer than using a regular clipboard
+        self.safe_clipboard = ""
+
         self.main_window = self
         self.settings = Settings()
 
