@@ -260,6 +260,7 @@ Author: Bohdan Kolvakh
             <property name="can-focus">True</property>
             <property name="valign">start</property>
             <property name="editable">False</property>
+            <property name="cursor-visible">False</property>
             <property name="monospace">True</property>
           </object>
         </child>
