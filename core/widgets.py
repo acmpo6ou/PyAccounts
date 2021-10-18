@@ -22,6 +22,7 @@ Contains custom GTK widgets.
 
 import gi
 
+from core.about import AboutDialog
 from core.gtk_utils import GladeTemplate
 from core.settings import SettingsDialog
 
@@ -33,8 +34,6 @@ class IconDialog(Gtk.Dialog):
     """
     Dialog containing icon and message.
     """
-
-    vbox = None
 
     def __init__(self, title, message, icon, *args, **kwargs):
         super().__init__(self, title=title, *args, **kwargs)
@@ -70,7 +69,7 @@ class WarningDialog(IconDialog):
             message=message,
             icon="dialog-warning",
             modal=True,
-            buttons=("No", Gtk.ResponseType.NO, "_Yes", Gtk.ResponseType.YES),
+            buttons=("_No", Gtk.ResponseType.NO, "Yes", Gtk.ResponseType.YES),
             *args,
             **kwargs,
         )
@@ -161,3 +160,4 @@ class Window(Gtk.Window, GladeTemplate):
         """
         Displays about dialog.
         """
+        AboutDialog().run()

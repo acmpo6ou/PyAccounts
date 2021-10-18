@@ -61,7 +61,7 @@ class CreateDatabaseForm(GladeTemplate):
         """
         # TODO: use validate_passwords and validate_name
 
-    def on_pass_toggle(self, _, __, ___):
+    def on_pass_toggle(self, *args):
         """
         Toggles password visibility of both password fields.
         """
