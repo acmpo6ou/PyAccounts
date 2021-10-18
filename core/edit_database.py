@@ -27,13 +27,13 @@ gi.require_version("Gtk", "3.0")
 class EditDatabaseForm(CreateDatabaseForm):
     def __init__(self):
         super().__init__()
-        self.database = None
         # TODO: change apply's button text to Save
 
     def set_database(self, database: Database):
         """
         Populates form fields with data from database.
         """
+        self.database = database
 
     def validate_name(self):
         """
