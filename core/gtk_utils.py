@@ -110,8 +110,8 @@ class GladeTemplate(Gtk.Bin):
 
         # if worked, return the widget
         if widget:
-            d = object.__getattribute__(self, "__dict__")
-            d[item] = widget  # cache it
+            attrs = object.__getattribute__(self, "__dict__")
+            attrs[item] = widget  # cache it
             return widget
 
         # else, attribute we're trying to get is not a widget, so we return it the normal way
