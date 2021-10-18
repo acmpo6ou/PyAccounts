@@ -49,8 +49,11 @@ class DisplayAccount(GladeTemplate):
         """
         iterate attached_files dict keys:
             create label with key text
+            create icon associated with mime type of attached file
+            put icon and label into hbox
             add it to attached_files list box
         """
+        # TODO: LOAD MIME ICONS FOR FILES
 
     def on_toggle_pass(self, button: Gtk.ToggleButton):
         """
@@ -75,3 +78,26 @@ class DisplayAccount(GladeTemplate):
         """
         # TODO: copy password to password field of MainWindow.
         # TODO: remove password after 1 minute
+
+    def save_attached_file(self, path, content: bytes):
+        """
+        Saves given attached file handling all errors.
+
+        :param path: where to save the file.
+        :param content: file content to save.
+        """
+        # TODO: open file for writing, write content to file
+        # TODO: Show error/success message.
+
+    def on_save_file(self, row):
+        """
+        Displays file dialog to save selected attached file.
+        :param row: row containing name of attached file.
+        """
+
+        # see FileChooserDialog docs for more details
+        # TODO: set dialog title to "Save attached file"
+        # TODO: set default name to attached file name (use current_name property)
+        # TODO: use Gtk.FileChooserAction.SAVE
+        # TODO: save the file only if response is Gtk.ResponseType.ACCEPT
+        # TODO: call save_attached_file
