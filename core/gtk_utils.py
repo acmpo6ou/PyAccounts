@@ -123,4 +123,5 @@ def get_mime_icon(path) -> Gtk.Image:
     Returns mime icon associated with file given in `path`.
     :param path: path to file icon of which we want to get.
     """
-    # TODO: see StackOverflow bookmark
+    # TODO: see StackOverflow bookmark:
+    #  https://stackoverflow.com/questions/1629172/how-do-you-get-the-icon-mime-type-and-application-associated-with-a-file-in-th

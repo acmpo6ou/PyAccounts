@@ -39,8 +39,9 @@ class Account:
         """
         Converts Account to dict renaming some fields.
         """
-        # TODO: use Account.__dict__ method to convert it to dict (use dict comprehension)
-        # TODO: rename `notes` and `username` fields
+        # TODO: use Account.__dict__ method to convert it to dict
+        # TODO: rename `notes` and `username` fields, see StackOverflow:
+        #  https://stackoverflow.com/questions/60789444/how-to-serialize-object-to-json-with-custom-fields-in-python
 
 
 @dataclass
