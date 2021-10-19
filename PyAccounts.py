@@ -20,8 +20,8 @@ import sys
 
 import gi
 
-from core.widgets import IconDialog
 from core.main_window import MainWindow
+from core.widgets import IconDialog
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -37,6 +37,7 @@ class Application(Gtk.Application):
             self.window = MainWindow(application=self, title="PyAccounts")
             self.window.show_all()
 
+            self.fix_src_dir()
             self.check_paste_shortcut()
         else:
             dialog = IconDialog(
@@ -59,8 +60,7 @@ class Application(Gtk.Application):
 
     def check_paste_shortcut(self):
         """
-        Checks if there is a system shortcut to paste password, if there isn't creates this
-        shortcut.
+        Checks if there is a system shortcut to paste password, if there isn't creates it.
         """
 
     def create_paste_shortcut(self):
