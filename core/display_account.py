@@ -101,5 +101,7 @@ class DisplayAccount(GladeTemplate):
         # TODO: set dialog title to "Save attached file"
         # TODO: set default name to attached file name (use current_name property)
         # TODO: use Gtk.FileChooserAction.SAVE
+        # TODO: add 2 buttons: Cancel and Save
         # TODO: save the file only if response is Gtk.ResponseType.ACCEPT
+        # TODO: use `filename` property of dialog to access selected file path
         # TODO: call save_attached_file
