@@ -49,11 +49,10 @@ class DisplayAccount(GladeTemplate):
         """
         iterate attached_files dict keys:
             create label with key text
-            create icon associated with mime type of attached file
+            get icon associated with mime type of attached file using get_mime_type() from gtk_utils
             put icon and label into hbox
             add it to attached_files list box
         """
-        # TODO: LOAD MIME ICONS FOR FILES
 
     def on_toggle_pass(self, button: Gtk.ToggleButton):
         """
