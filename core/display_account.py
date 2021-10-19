@@ -36,7 +36,6 @@ class DisplayAccount(GladeTemplate):
         Populates form fields with account data.
         """
         self.account = account
-        # TODO: use format() or f-strings, to make text appear beautifully
         # TODO: set password label's text to dots (use '●' * 24)
         # TODO: set notes text to NOTES_PLACEHOLDER
         self.load_attached_files()
@@ -59,8 +58,7 @@ class DisplayAccount(GladeTemplate):
         Toggles password visibility.
         :param button: used to decide whether to show or hide the password.
         """
-        # TODO: if button.active is True – set password label to account password (formatting it
-        #  appropriately with format())
+        # TODO: if button.active is True – set password label to account password
         # TODO: else – set password label to dots
 
     def on_toggle_notes(self, button: Gtk.ToggleButton):
