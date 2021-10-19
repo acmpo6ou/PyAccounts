@@ -32,9 +32,10 @@ class OpenDatabaseForm(GladeTemplate):
 
     def set_database(self, database: Database):
         """
-        Saves given database.
+        Changes form title to `Open [database name] database`.
         """
         self.database = database
+        # TODO: make database name cursive
 
     def clear(self):
         """
