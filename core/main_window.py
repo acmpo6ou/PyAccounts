@@ -103,12 +103,22 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         Displays import database dialog.
         """
-        # TODO: allow only .dba files; call import_database
 
-    def export_database(self, name):
+        # see FileChooserDialog docs for more details
+        # TODO: set dialog title to "Import database"
+        # TODO: allow only .dba files
+        # TODO: use Gtk.FileChooserAction.OPEN
+        # TODO: add 2 buttons: Cancel and Import
+        # TODO: import .dba file only if response is Gtk.ResponseType.ACCEPT
+        # TODO: use `filename` property of dialog to access selected file path
+        # TODO: call import_database
+
+    def export_database(self, name, path):
         """
         Exports given database handling all errors.
+
         :param name: name of the database we're trying to export.
+        :param path: where to export the database.
         """
         # TODO: show success and error messages; call export_database
 
@@ -116,7 +126,15 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         Displays export database dialog.
         """
-        # TODO: set default file name to be <dbname>.dba; call export_database
+
+        # see FileChooserDialog docs for more details
+        # TODO: set dialog title to "Export database"
+        # TODO: set default file name to be <dbname>.dba
+        # TODO: use Gtk.FileChooserAction.SAVE
+        # TODO: add 2 buttons: Cancel and Export
+        # TODO: export .dba file only if response is Gtk.ResponseType.ACCEPT
+        # TODO: use `filename` property of dialog to access selected file path
+        # TODO: call export_database
 
     def on_quit(self, _):
         """
