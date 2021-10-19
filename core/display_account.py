@@ -17,11 +17,11 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-from gi.repository import Gtk
-
-from core.gtk_utils import GladeTemplate
 
 gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+from core.gtk_utils import GladeTemplate
+
 
 NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 
