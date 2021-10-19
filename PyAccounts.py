@@ -39,6 +39,8 @@ class Application(Gtk.Application):
 
             self.fix_src_dir()
             self.check_paste_shortcut()
+            # TODO: set process name to `PyAccounts` using setproctitle;
+            #  see StackOverflow: https://stackoverflow.com/a/18992161
         else:
             dialog = IconDialog(
                 "PyAccounts is already running",
