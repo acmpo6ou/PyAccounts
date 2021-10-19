@@ -116,3 +116,11 @@ class GladeTemplate(Gtk.Bin):
 
         # else, attribute we're trying to get is not a widget, so we return it the normal way
         return object.__getattribute__(self, item)
+
+
+def get_mime_icon(path) -> Gtk.Image:
+    """
+    Returns mime icon associated with file given in `path`.
+    :param path: path to file icon of which we want to get.
+    """
+    # TODO: see StackOverflow bookmark
