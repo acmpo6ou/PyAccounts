@@ -18,13 +18,13 @@
 
 import gi
 
+
 gi.require_version("Gdk", "3.0")
-
 from gi.repository import Gdk
-from core.gtk_utils import GladeTemplate
+from core.widgets import CreateForm
 
 
-class CreateAccountForm(GladeTemplate):
+class CreateAccountForm(CreateForm):
     def __init__(self):
         super().__init__("create_edit_account")
 

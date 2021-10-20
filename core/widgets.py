@@ -161,3 +161,45 @@ class Window(Gtk.Window, GladeTemplate):
         Displays about dialog.
         """
         AboutDialog().run()
+
+
+class CreateForm(GladeTemplate):
+    """
+    Super class for CreateDatabaseForm and CreateAccountForm.
+    """
+
+    def validate_name(self):
+        """
+        Validates name field, displaying error tip if database/account name is invalid.
+
+        Possible problems with the name:
+        * name field is empty
+        * name field contains name that is already taken
+        :return: True if name is valid.
+        """
+
+    def validate_passwords(self):
+        """
+        Validates password fields, displaying error tips if passwords are invalid.
+
+        Possible problems with passwords:
+        * password fields are empty
+        * passwords from password fields don't match
+        :return: True if passwords are valid.
+        """
+
+    def on_apply_enabled(self, _):
+        """
+        Enables or disables apply button depending on whether there are errors in the form.
+        """
+        # TODO: use validate_passwords and validate_name
+
+    def on_pass_toggle(self, *args):
+        """
+        Toggles password visibility of both password fields.
+        """
+
+    def on_generate_password(self, _):
+        """
+        Displays dialog to generate password.
+        """

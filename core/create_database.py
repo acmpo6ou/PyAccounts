@@ -18,14 +18,14 @@
 
 import gi
 
+from core.widgets import CreateForm
+
 gi.require_version("Gtk", "3.0")
-from core.gtk_utils import GladeTemplate
 
 
-class CreateDatabaseForm(GladeTemplate):
+class CreateDatabaseForm(CreateForm):
     def __init__(self):
         super().__init__("create_edit_database")
-        self.vexpand = True
 
     def on_filter_name(self, name):
         """
@@ -33,42 +33,6 @@ class CreateDatabaseForm(GladeTemplate):
 
         Shows a warning explaining the user that he's trying to enter unallowed characters.
         :param name: name field containing database name.
-        """
-
-    def validate_name(self):
-        """
-        Validates name field, displaying error tip if database name is invalid.
-
-        Possible problems with database name:
-        * name field is empty
-        * name field contains name that is already taken
-        :return: True if name is valid.
-        """
-
-    def validate_passwords(self):
-        """
-        Validates password fields, displaying error tips if passwords are invalid.
-
-        Possible problems with passwords:
-        * password fields are empty
-        * passwords from password fields don't match
-        :return: True if passwords are valid.
-        """
-
-    def on_apply_enabled(self, _):
-        """
-        Enables or disables apply button depending on whether there are errors in the form.
-        """
-        # TODO: use validate_passwords and validate_name
-
-    def on_pass_toggle(self, *args):
-        """
-        Toggles password visibility of both password fields.
-        """
-
-    def on_generate_password(self, _):
-        """
-        Displays dialog to generate password.
         """
 
     def on_apply(self, _):
