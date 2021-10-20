@@ -125,3 +125,5 @@ def get_mime_icon(path) -> Gtk.Image:
     """
     # TODO: see StackOverflow bookmark:
     #  https://stackoverflow.com/questions/1629172/how-do-you-get-the-icon-mime-type-and-application-associated-with-a-file-in-th
+
+    # TODO: possibly test this function; it returns Image, so test it's properties
