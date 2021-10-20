@@ -51,7 +51,7 @@ Author: Bohdan Kolvakh
             <property name="can-focus">False</property>
             <property name="layout-style">end</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="button2">
                 <property name="label" translatable="yes">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -64,8 +64,8 @@ Author: Bohdan Kolvakh
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
-                <property name="label" translatable="yes">Ok</property>
+              <object class="GtkButton" id="button1">
+                <property name="label" translatable="yes">OK</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -99,6 +99,10 @@ Author: Bohdan Kolvakh
         </child>
       </object>
     </child>
+    <action-widgets>
+      <action-widget response="-6">button2</action-widget>
+      <action-widget response="-5">button1</action-widget>
+    </action-widgets>
   </object>
   <object class="GtkImage" id="remove">
     <property name="visible">True</property>
