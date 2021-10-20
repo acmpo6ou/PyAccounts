@@ -36,3 +36,14 @@ class CreateAccountForm(GladeTemplate):
         """
         icon.window.cursor = Gdk.Cursor(Gdk.CursorType.HAND1)
         # TODO: possibly test this method
+
+    def on_choose_date(self, *args):
+        """
+        Displays a dialog to choose the birth date.
+        """
+
+        # TODO: set main_window as parent
+        # TODO: run date_chooser dialog
+        # TODO: if response is OK – use date_chooser.date to get picked date
+        # TODO: convert the date to string of format "dd.mm.yyyy"
+        # TODO: set birth_date label to this date
