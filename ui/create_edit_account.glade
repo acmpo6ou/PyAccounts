@@ -226,12 +226,20 @@ Author: Bohdan Kolvakh
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkImage">
+                  <object class="GtkEventBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="margin-start">8</property>
-                    <property name="pixel-size">50</property>
-                    <property name="icon-name">calendar</property>
+                    <signal name="button-press-event" handler="on_show_date_dialog" swapped="no"/>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-start">8</property>
+                        <property name="pixel-size">50</property>
+                        <property name="icon-name">calendar</property>
+                        <signal name="realize" handler="on_hover_date_icon" swapped="no"/>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
