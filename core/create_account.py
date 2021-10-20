@@ -42,7 +42,6 @@ class CreateAccountForm(GladeTemplate):
         Displays a dialog to choose the birth date.
         """
 
-        # TODO: set main_window as parent
         # TODO: run date_chooser dialog
         # TODO: if response is OK – use date_chooser.date to get picked date
         # TODO: convert the date to string of format "dd.mm.yyyy"
