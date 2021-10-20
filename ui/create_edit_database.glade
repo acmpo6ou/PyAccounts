@@ -143,7 +143,7 @@ Author: Bohdan Kolvakh
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="generate">
+          <object class="GtkButton">
             <property name="label" translatable="yes">_Generate</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
