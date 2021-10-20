@@ -177,6 +177,8 @@ class CreateForm(GladeTemplate):
         * name field contains name that is already taken
         :return: True if name is valid.
         """
+        # TODO: use `items` property to check if name already exists (this property will be
+        #  implemented by subclasses
 
     def validate_passwords(self):
         """
