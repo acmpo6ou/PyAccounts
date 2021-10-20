@@ -35,3 +35,4 @@ class CreateAccountForm(GladeTemplate):
         :param icon: the date icon.
         """
         icon.window.cursor = Gdk.Cursor(Gdk.CursorType.HAND1)
+        # TODO: possibly test this method
