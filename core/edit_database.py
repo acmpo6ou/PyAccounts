@@ -27,6 +27,7 @@ gi.require_version("Gtk", "3.0")
 class EditDatabaseForm(CreateDatabaseForm):
     def __init__(self):
         super().__init__()
+        # TODO: change title text to `Edit [database name] database]`
         # TODO: change apply's button text to Save
 
     def set_database(self, database: Database):
