@@ -250,7 +250,7 @@ Author: Bohdan Kolvakh
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="forms_box">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
