@@ -101,6 +101,20 @@ class ErrorDialog(IconDialog):
         self.vbox.add(expander)
 
 
+class DateChooserDialog(GladeTemplate):
+    """
+    A dialog to choose date.
+    """
+
+    def __init__(self):
+        super().__init__("date_chooser")
+
+    def run(self):
+        response = self.parent_widget.run()
+        self.destroy()
+        return response
+
+
 class StatusBar:
     """
     A wrapper for Gtk.Statusbar to display messages that disappear in 15 seconds.
