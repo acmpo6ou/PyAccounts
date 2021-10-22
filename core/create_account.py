@@ -18,7 +18,6 @@
 
 import gi
 
-
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk
 from core.widgets import CreateForm
@@ -42,7 +41,7 @@ class CreateAccountForm(CreateForm):
         Displays a dialog to choose the birth date.
         """
 
-        # TODO: run date_chooser dialog
+        # TODO: run DateChooserDialog dialog
         # TODO: if response is OK – use date_chooser.date to get picked date
         # TODO: convert the date to string of format "dd.mm.yyyy"
         # TODO: set birth_date label to this date
