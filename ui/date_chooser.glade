@@ -24,6 +24,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="use-underline">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -37,6 +38,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="use-underline">True</property>
                 <style>
                   <class name="suggested-action"/>
                 </style>
@@ -58,9 +60,6 @@
           <object class="GtkCalendar" id="calendar">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="year">2021</property>
-            <property name="month">9</property>
-            <property name="day">20</property>
           </object>
           <packing>
             <property name="expand">False</property>
