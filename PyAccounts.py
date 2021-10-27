@@ -44,7 +44,7 @@ class Application(Gtk.Application):
         else:
             dialog = IconDialog(
                 "PyAccounts is already running",
-                "Only one application instance can run at the same time.",
+                "Only one application instance can run at a time.",
                 icon="dialog-warning",
             )
             dialog.show_all()
