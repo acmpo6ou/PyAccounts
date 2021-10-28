@@ -17,15 +17,38 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-
 gi.require_version("Gdk", "3.0")
-from gi.repository import Gdk
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import Gdk, Gtk
 from core.widgets import CreateForm
 
 
 class CreateAccountForm(CreateForm):
-    def __init__(self):
+    def __init__(self, database):
         super().__init__("create_edit_account")
+        self.database = database
+
+        # load completion for email and username fields
+        # TODO: get emails and usernames from self.database (use list comprehensions)
+        usernames = ...
+        emails = ...
+        self.load_completion(self.username, usernames)
+        self.load_completion(self.email, emails)
+
+    def load_completion(self, field, items):
+        """
+        Loads completion for [field] using completion strings from [items].
+        """
+
+        # TODO: here's a sample code on how to use Gtk.EntryCompletion:
+        # model = Gtk.ListStore(str)
+        # for entry in mylist:
+        #     model.append((entry,))
+        # completion = Gtk.EntryCompletion()
+        # completion.model = model
+        # completion.set_text_column(0)  # it's important to use set_text_column!
+        # field.completion = completion
 
     @staticmethod
     def on_hover_date_icon(icon):
