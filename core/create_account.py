@@ -68,3 +68,17 @@ class CreateAccountForm(CreateForm):
         # TODO: if response is OK – use date_chooser.date to get picked date
         # TODO: convert the date to string of format "dd.mm.yyyy"
         # TODO: set birth_date label to this date
+
+    def on_attach_file(self, _):
+        """
+        Displays attach file dialog.
+        """
+
+        # see FileChooserDialog and FileChooser docs for more details
+        # TODO: set dialog title to "Attach file"
+        # TODO: allow all files
+        # TODO: use Gtk.FileChooserAction.OPEN
+        # TODO: add 2 buttons: Cancel and Open
+        # TODO: attach the file only if response is Gtk.ResponseType.ACCEPT
+        # TODO: set select_multiple to True (to allow selection of multiple files)
+        # TODO: call attach_file() for every selected file
