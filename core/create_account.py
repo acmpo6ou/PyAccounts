@@ -91,3 +91,17 @@ class CreateAccountForm(CreateForm):
         #  key and path is the value
         # TODO: add item with file name to attached_files list box
         # TODO: add file mime icon to item using get_mime_icon() from gtk_utils
+
+    def on_detach_file(self, _):
+        """
+        Displays confirmation dialog to ask user if he really wants to detach selected file,
+        detaches the file on user confirmation.
+        """
+
+        # TODO: show warning if there is no file selected in attached_files list
+        # TODO: get selected item from attached_files and extract file name from it
+        # TODO: create WarningDialog asking "Detach [file name]?"
+        # TODO: if response is Gtk.ResponseType.ACCEPT:
+        #  remove the file from attached_paths
+        #  remove corresponding item from attached_files list (by iterating through children and
+        #  removing child with appropriate file name, break from the loop after removed child)
