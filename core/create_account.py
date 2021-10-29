@@ -115,3 +115,14 @@ class CreateAccountForm(CreateForm):
         # TODO: call load_attached_files() to get proper dict (file name -> file content in bytes)
         # TODO: create Account instance and add it to the database
         # TODO: clear form with clear()
+
+    def load_attached_files(self):
+        """
+        Loads content of selected attached files handling errors.
+        :return: dict mapping file names to file content.
+        """
+
+        # TODO: create empty attached_files dict
+        # TODO: iterate through attached_paths:
+        #  for each path try to read file content; save the content to attached_files dict
+        #  on error display ErrorDialog
