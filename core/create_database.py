@@ -41,3 +41,9 @@ class CreateDatabaseForm(CreateForm):
         """
         # TODO: create database, add it to databases list, update list of databases,
         #  open database window
+        # TODO: clear and hide form
+
+    def clear(self):
+        """
+        Clears form fields.
+        """
