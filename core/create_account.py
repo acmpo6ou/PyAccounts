@@ -30,6 +30,16 @@ class CreateAccountForm(CreateForm):
         super().__init__("create_edit_account")
         self.database = database
         self.attached_paths = {}
+        self.connect("show", self.on_show)
+
+    def on_show(self, _):
+        """
+        Initializes the form.
+
+        __init__ is called only once throughout app lifetime (when creating the form at app
+        startup). We however need to initialize the form every time it is shown. This is why we
+        do some of the initialization in this method rather then in __init__.
+        """
 
         # load completion for email and username fields
         # TODO: get emails and usernames from self.database (use list comprehensions)
