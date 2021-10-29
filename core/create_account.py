@@ -105,3 +105,13 @@ class CreateAccountForm(CreateForm):
         #  remove the file from attached_paths
         #  remove corresponding item from attached_files list (by iterating through children and
         #  removing child with appropriate file name, break from the loop after removed child)
+
+    def on_apply(self, _):
+        """
+        Creates account from form data.
+        """
+
+        # TODO: get data from all fields
+        # TODO: call load_attached_files() to get proper dict (file name -> file content in bytes)
+        # TODO: create Account instance and add it to the database
+        # TODO: clear form with clear()
