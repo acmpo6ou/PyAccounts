@@ -17,10 +17,11 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
+
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk
 from core.widgets import CreateForm
 
 
@@ -28,6 +29,7 @@ class CreateAccountForm(CreateForm):
     def __init__(self, database):
         super().__init__("create_edit_account")
         self.database = database
+        self.attached_paths = {}
 
         # load completion for email and username fields
         # TODO: get emails and usernames from self.database (use list comprehensions)
@@ -72,13 +74,20 @@ class CreateAccountForm(CreateForm):
     def on_attach_file(self, _):
         """
         Displays attach file dialog.
+        Saves all selected files to attached_paths.
+        Adds item to attached_files list with mime icon of file and file name.
         """
 
         # see FileChooserDialog and FileChooser docs for more details
         # TODO: set dialog title to "Attach file"
         # TODO: allow all files
         # TODO: use Gtk.FileChooserAction.OPEN
-        # TODO: add 2 buttons: Cancel and Open
+        # TODO: add 2 buttons: Cancel and Open (do we even need to add them?)
         # TODO: attach the file only if response is Gtk.ResponseType.ACCEPT
         # TODO: set select_multiple to True (to allow selection of multiple files)
-        # TODO: call attach_file() for every selected file
+
+        # TODO: use dialog.filenames to get list of selected file paths
+        # TODO: iterate over selected paths and add them to attached_paths dict, file name is the
+        #  key and path is the value
+        # TODO: add item with file name to attached_files list box
+        # TODO: add file mime icon to item using get_mime_icon() from gtk_utils
