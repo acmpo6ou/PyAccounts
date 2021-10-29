@@ -28,7 +28,6 @@ class OpenDatabaseForm(GladeTemplate):
     def __init__(self):
         super().__init__("open_database")
         self.vexpand = True
-        self.database = None
 
     def set_database(self, database: Database):
         """
@@ -37,18 +36,13 @@ class OpenDatabaseForm(GladeTemplate):
         self.database = database
         # TODO: make database name cursive
 
-    def clear(self):
-        """
-        Clears the form: clears password field and makes password invisible.
-        """
-
     def on_open_database(self, _):
         """
         Tries to open database with password from password field,
         if there is an error decrypting the database – displays incorrect_password tip.
         Opens database window on success.
         """
-        # TODO: clear and hide form on success
+        # TODO: destroy form on success
 
     def on_password_changed(self, _):
         """
