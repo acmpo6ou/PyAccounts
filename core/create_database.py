@@ -37,13 +37,10 @@ class CreateDatabaseForm(CreateForm):
 
     def on_apply(self, _):
         """
-        Creates database using form data.
+        Creates database using form data and handling all errors
         """
+
         # TODO: create database, add it to databases list, update list of databases,
         #  open database window
-        # TODO: clear and hide form
-
-    def clear(self):
-        """
-        Clears form fields.
-        """
+        # TODO: on error show error dialog
+        # TODO: destroy form on success
