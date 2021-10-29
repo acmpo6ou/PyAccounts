@@ -53,3 +53,4 @@ class EditDatabaseForm(CreateDatabaseForm):
         """
         # TODO: save database, update list of databases
         # TODO: show success/error message
+        # TODO: destroy form on success
