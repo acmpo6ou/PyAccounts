@@ -126,3 +126,10 @@ class CreateAccountForm(CreateForm):
         # TODO: iterate through attached_paths:
         #  for each path try to read file content; save the content to attached_files dict
         #  on error display ErrorDialog
+
+    def clear(self):
+        """
+        Clears form state.
+        """
+
+        # TODO: clear form fields, attached_files list and attached_paths
