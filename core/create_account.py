@@ -124,7 +124,7 @@ class CreateAccountForm(CreateForm):
         # TODO: get data from all fields
         # TODO: call load_attached_files() to get proper dict (file name -> file content in bytes)
         # TODO: create Account instance and add it to the database, update accounts list
-        # TODO: clear form with clear() and hide it
+        self.destroy()
 
     def load_attached_files(self):
         """
@@ -136,10 +136,3 @@ class CreateAccountForm(CreateForm):
         # TODO: iterate through attached_paths:
         #  for each path try to read file content; save the content to attached_files dict
         #  on error display ErrorDialog "Error reading file [file name]"
-
-    def clear(self):
-        """
-        Clears form state.
-        """
-
-        # TODO: clear form fields, attached_files list and attached_paths
