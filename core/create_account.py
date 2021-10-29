@@ -75,7 +75,7 @@ class CreateAccountForm(CreateForm):
         """
         Displays attach file dialog.
         Saves all selected files to attached_paths.
-        Adds item to attached_files list with mime icon of file and file name.
+        Adds items to attached_files list with file mime icon and file name.
         """
 
         # see FileChooserDialog and FileChooser docs for more details
