@@ -118,12 +118,12 @@ class CreateAccountForm(CreateForm):
 
     def on_apply(self, _):
         """
-        Creates account from form data.
+        Creates account using form data.
         """
 
         # TODO: get data from all fields
         # TODO: call load_attached_files() to get proper dict (file name -> file content in bytes)
-        # TODO: create Account instance and add it to the database
+        # TODO: create Account instance and add it to the database, update accounts list
         # TODO: clear form with clear() and hide it
 
     def load_attached_files(self):
