@@ -89,6 +89,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         If selected database is closed – displays open database form.
         :param row: row containing selected database name.
         """
+        # TODO: use show_form()
 
     def import_database(self, path):
         """
@@ -147,13 +148,17 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Displays create database form.
         """
 
+        # TODO: use show_form()
+
     def on_edit_database(self, _):
         """
         Displays edit database form for selected database.
         """
+
         # TODO: show warning in statusbar if there is no database selected
         #  or if database is closed
         # TODO: call form.set_database()
+        # TODO: use show_form()
 
     def delete_database(self, name):
         """

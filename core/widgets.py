@@ -154,6 +154,16 @@ class Window(Gtk.Window, GladeTemplate):
         self.load_separator()
         self.statusbar = StatusBar(self.statusbar)
 
+    def show_form(self, form):
+        """
+        Adds and shows given form to form_box removing currently shown form.
+        :param form: form to display.
+        """
+
+        # TODO: remove all forms from form_box, use foreach():
+        #  https://lazka.github.io/pgi-docs/Gtk-3.0/classes/Container.html#Gtk.Container.foreach
+        # TODO: add the form to form_box and show it
+
     def load_separator(self):
         """
         Loads separator position from settings.json
