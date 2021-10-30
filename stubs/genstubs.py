@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+"""
+Generates type stubs for `core` package.
+
+Generates stubs using mypy, then adds stubs extracted from glade ui files.
+This way, all classes that derive from GladeTemplate will have proper autocomplete.
+"""
+
 import os
 import re
 import sys
@@ -24,11 +31,13 @@ for stub in os.listdir(STUB_DIR):
 
     out.write("from gi.repository import Gtk\n")
     injected = False
+
     for line in _in:
         out.write(line)
 
         if "class " in line and not injected:
             injected = True
+
             # fmt: off
             glade_filepath = f"ui/{stub[:-3]}glade" \
                 .replace("ui/create_", "ui/create_edit_") \
