@@ -2,9 +2,15 @@
 
 import os
 import re
-import xml.etree.ElementTree as ET
+import sys
 
-os.system("stubgen core -o stubs")
+# noinspection StandardLibraryXml
+from xml.etree import ElementTree
+
+result = os.system("stubgen core -o stubs")
+if result:
+    print("Please install mypy")
+    sys.exit()
 
 STUB_DIR = "stubs/core/"
 SKIP = ("__init__.pyi", "gtk_utils.pyi", "database_utils.pyi", "widgets.pyi")
@@ -34,7 +40,7 @@ for stub in os.listdir(STUB_DIR):
             # fmt: on
 
             glade_file = open(glade_filepath, "r").read()
-            root = ET.parse(glade_filepath).getroot()
+            root = ElementTree.parse(glade_filepath).getroot()
 
             ids = re.findall('id="([a-z_]*)"', glade_file)
             for _id in ids:
