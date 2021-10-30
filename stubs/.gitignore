@@ -1,3 +1,4 @@
 *
 !.gitignore
 !genstubs.py
+!gtkstubs.py
