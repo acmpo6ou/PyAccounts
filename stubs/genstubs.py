@@ -24,16 +24,25 @@ for stub in os.listdir(STUB_DIR):
         if "class " in line and not injected:
             injected = True
             # fmt: off
-            glade_filename = f"ui/{stub[:-3]}glade" \
+            glade_filepath = f"ui/{stub[:-3]}glade" \
                 .replace("ui/create_", "ui/create_edit_") \
                 .replace("ui/edit_", "ui/create_edit_")
+
+            parent_widget_id = glade_filepath \
+                .replace("ui/", "") \
+                .replace(".glade", "")
             # fmt: on
 
-            glade_file = open(glade_filename, "r").read()
-            root = ET.parse(glade_filename).getroot()
+            glade_file = open(glade_filepath, "r").read()
+            root = ET.parse(glade_filepath).getroot()
 
-            ids = re.findall('id="([a-z_]*)"', glade_file)[1:]
+            ids = re.findall('id="([a-z_]*)"', glade_file)
             for _id in ids:
                 widget = root.findall(f".//*[@id='{_id}']")[0]
                 classname = widget.attrib["class"].replace("Gtk", "Gtk.")
+
+                if _id == parent_widget_id:
+                    out.write(f"    parent_widget: {classname}\n")
+                    continue
+
                 out.write(f"    {_id}: {classname}\n")
