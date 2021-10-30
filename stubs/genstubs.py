@@ -4,7 +4,7 @@ import os
 import re
 import xml.etree.ElementTree as ET
 
-# os.system("stubgen core -o stubs")
+os.system("stubgen core -o stubs")
 
 STUB_DIR = "stubs/core/"
 SKIP = ("__init__.pyi", "gtk_utils.pyi", "database_utils.pyi", "widgets.pyi")
@@ -14,19 +14,26 @@ for stub in os.listdir(STUB_DIR):
         continue
 
     _in = open(f"{STUB_DIR}/{stub}", "r").readlines()
-    # out = open(f"{STUB_DIR}/{stub}", "w")
+    out = open(f"{STUB_DIR}/{stub}", "w")
 
+    out.write("from gi.repository import Gtk\n")
     injected = False
-    # print(stub)
     for line in _in:
-        # out.write(line)
+        out.write(line)
 
         if "class " in line and not injected:
             injected = True
-            glade_file = f"ui/{stub[:-3]}glade"
+            # fmt: off
+            glade_filename = f"ui/{stub[:-3]}glade" \
+                .replace("ui/create_", "ui/create_edit_") \
+                .replace("ui/edit_", "ui/create_edit_")
+            # fmt: on
 
-            regex = re.search('id="(*)"')
+            glade_file = open(glade_filename, "r").read()
+            root = ET.parse(glade_filename).getroot()
 
-            # root = ET.parse(glade_file).getroot()
-            # print(root)
-    break
+            ids = re.findall('id="([a-z_]*)"', glade_file)[1:]
+            for _id in ids:
+                widget = root.findall(f".//*[@id='{_id}']")[0]
+                classname = widget.attrib["class"].replace("Gtk", "Gtk.")
+                out.write(f"    {_id}: {classname}\n")
