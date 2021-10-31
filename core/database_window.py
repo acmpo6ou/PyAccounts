@@ -23,8 +23,16 @@ from core.widgets import Window
 gi.require_version("Gtk", "3.0")
 from core.gtk_utils import GladeTemplate
 
+ACCOUNT_ICONS_DIR = "img/account_icons/"
+
 
 class DatabaseWindow(Window):
+    # TODO: use list comprehension, os.listdir(ACCOUNT_ICONS_DIR) and sorted(with custom function)
+    # TODO: remove .svg from icon names
+    # it's important to sort icon names by length (longer names first), because this way
+    # we will have better matches
+    account_icons = ...
+
     def __init__(self, database, main_window):
         GladeTemplate.__init__(self, "database_window")
         Window.__init__(self)
@@ -44,6 +52,16 @@ class DatabaseWindow(Window):
         # TODO: get icon using load_account_icon(), label is account name
         # TODO: style label: xalign = 0, margin start = 5
         # TODO: add() hbox to accounts_list
+
+    def load_account_icon(self, accountname):
+        """
+        Returns account icon associated with given [accountname].
+        """
+
+        # TODO: see loadAccountIcon() of MyAccounts:
+        #  https://github.com/acmpo6ou/MyAccounts/blob/master/app/src/main/java/com/acmpo6ou/myaccounts/account/accounts_list/AccountsAdapter.kt
+        # TODO: use load_icon(name) from gtk_utils
+        # TODO: return default icon
 
     def on_save(self, _):
         """
