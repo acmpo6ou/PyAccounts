@@ -114,6 +114,11 @@ class Database:
         # TODO: read .dba file; assign first 16 bytes to `salt` and decrypt remaining bytes,
         #  fill accounts property
 
+    def close(self):
+        """
+        Clears `password` and `accounts` fields, effectively closing the database.
+        """
+
     def create(self):
         """
         Creates .dba file for database using its name, password and salt.
