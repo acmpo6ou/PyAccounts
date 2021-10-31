@@ -21,8 +21,11 @@ import gi
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gdk
+from gi.repository import Gdk, Gtk
 from core.widgets import CreateForm
+
+
+DROP_ID = 808
 
 
 class CreateAccountForm(CreateForm):
@@ -30,6 +33,13 @@ class CreateAccountForm(CreateForm):
         super().__init__("create_edit_account")
         self.database = database
         self.attached_paths = {}
+
+        # allow dropping files onto attached_files list to attach them
+        self.attached_files.drag_dest_set(
+            Gtk.DestDefaults.ALL,
+            [Gtk.TargetEntry.new("text/uri-list", Gtk.TargetFlags.OTHER_APP, DROP_ID)],
+            Gdk.DragAction.COPY,
+        )
 
         # load completion for email and username fields
         # TODO: get emails and usernames from self.database (use list comprehensions)
@@ -71,11 +81,21 @@ class CreateAccountForm(CreateForm):
         # TODO: convert the date to string of format "dd.mm.yyyy"
         # TODO: set birth_date label to this date
 
+    def attach_file(self, path):
+        """
+        Adds item to attached_files list with file mime icon and file name.
+
+        Saves path to attached_paths.
+        :param path: path to file to attach.
+        """
+
+        # TODO: add path to attached_paths dict, file name is the key and path is the value
+        # TODO: add item with file name to attached_files list box
+        # TODO: add file mime icon to item using get_mime_icon() from gtk_utils
+
     def on_attach_file(self, _):
         """
         Displays attach file dialog.
-        Saves all selected files to attached_paths.
-        Adds items to attached_files list with file mime icon and file name.
         """
 
         # see FileChooserDialog and FileChooser docs for more details
@@ -87,10 +107,7 @@ class CreateAccountForm(CreateForm):
         # TODO: set select_multiple to True (to allow selection of multiple files)
 
         # TODO: use dialog.filenames to get list of selected file paths
-        # TODO: iterate over selected paths and add them to attached_paths dict, file name is the
-        #  key and path is the value
-        # TODO: add item with file name to attached_files list box
-        # TODO: add file mime icon to item using get_mime_icon() from gtk_utils
+        # TODO: iterate over selected paths and call attach_file() for each of them
 
     def on_detach_file(self, _):
         """
@@ -106,15 +123,15 @@ class CreateAccountForm(CreateForm):
         #  remove corresponding item from attached_files list (by iterating through children and
         #  removing child with appropriate file name, break from the loop after removed child)
 
-    def on_apply(self, _):
+    def on_drop_files(self, _, context, x, y, data, info, time):
         """
-        Creates account using form data.
+        Called when files are dropped onto attached files list, attaches dropped files.
+        :param data: contains paths to dropped files.
         """
 
-        # TODO: get data from all fields
-        # TODO: call load_attached_files() to get proper dict (file name -> file content in bytes)
-        # TODO: create Account instance and add it to the database, update accounts list
-        self.destroy()
+        # TODO: use data.get_uris() to get a list of file paths
+        # TODO: remove `file://` at the beginning of each path
+        # TODO: call attach_file for each path
 
     def load_attached_files(self):
         """
@@ -126,3 +143,13 @@ class CreateAccountForm(CreateForm):
         # TODO: iterate through attached_paths:
         #  for each path try to read file content; save the content to attached_files dict
         #  on error display ErrorDialog "Failed to read file [file name]"
+
+    def on_apply(self, _):
+        """
+        Creates account using form data.
+        """
+
+        # TODO: get data from all fields
+        # TODO: call load_attached_files() to get proper dict (file name -> file content in bytes)
+        # TODO: create Account instance and add it to the database, update accounts list
+        self.destroy()
