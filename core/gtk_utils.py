@@ -118,6 +118,15 @@ class GladeTemplate(Gtk.Bin):
         return object.__getattribute__(self, item)
 
 
+def load_icon(icon_name):
+    """
+    Returns icon from default theme.
+    """
+    icon_theme = Gtk.IconTheme.get_default()
+    icon = icon_theme.load_icon(icon_name, 128, Gtk.IconLookupFlags.FORCE_SVG)
+    return Gtk.Image.new_from_pixbuf(icon)
+
+
 def get_mime_icon(path) -> Gtk.Image:
     """
     Returns mime icon associated with file given in `path`.
