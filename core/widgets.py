@@ -23,7 +23,7 @@ Contains custom GTK widgets.
 import gi
 
 from core.about import AboutDialog
-from core.gtk_utils import GladeTemplate
+from core.gtk_utils import GladeTemplate, load_icon
 from core.settings import SettingsDialog
 
 gi.require_version("Gtk", "3.0")
@@ -41,9 +41,7 @@ class IconDialog(Gtk.Dialog):
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.vbox.add(box)
 
-        icon_theme = Gtk.IconTheme.get_default()
-        icon = icon_theme.load_icon(icon, 48, Gtk.IconLookupFlags.FORCE_SVG)
-        image = Gtk.Image.new_from_pixbuf(icon)
+        image = load_icon(icon, 64)
         image.margin = 10
         box.add(image)
 
