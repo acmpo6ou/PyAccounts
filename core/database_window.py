@@ -58,10 +58,12 @@ class DatabaseWindow(Window):
         Returns account icon associated with given [accountname].
         """
 
+        # TODO: icon = default icon (cs-user-accounts)
         # TODO: see loadAccountIcon() of MyAccounts:
         #  https://github.com/acmpo6ou/MyAccounts/blob/master/app/src/main/java/com/acmpo6ou/myaccounts/account/accounts_list/AccountsAdapter.kt
-        # TODO: use load_icon(name) from gtk_utils
-        # TODO: return default icon
+        #  if icon found: icon = load_icon(name, size) (from gtk_utils)
+        # TODO: return icon
+        # TODO: see tests of loadAccountIcon()
 
     def on_save(self, _):
         """
