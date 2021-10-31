@@ -18,11 +18,11 @@
 
 import gi
 
-from core.settings import Settings
-from core.widgets import Window
-
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
+
+from core.settings import Settings
+from core.widgets import Window
 from core.gtk_utils import GladeTemplate
 
 
@@ -36,6 +36,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self._safe_clipboard = ""
 
         self.main_window = self
+        self.databases = self.get_databases()
         self.settings = Settings()
 
         self.load_css()
@@ -71,12 +72,14 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
-    def load_databases(self):
+    def get_databases(self):
         """
-        Fills `databases` property with list of databases residing in SRC_DIR folder.
+        Returns list of databases residing in SRC_DIR folder.
         """
         # TODO: find all .dba files; use glob module
-        # TODO: set self.databases property
+
+    def load_databases(self):
+        ...
 
     def select_main_database(self):
         """
