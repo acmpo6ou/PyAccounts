@@ -31,7 +31,19 @@ class DatabaseWindow(Window):
 
         self.main_window = main_window
         self.database = database
+        self.load_accounts()
         # TODO: set title to database name
+
+    def load_accounts(self):
+        """
+        Populates accounts_list with items.
+        """
+
+        # TODO: set sort_func for accounts_list to sort alphabetically
+        # TODO: for each account create hbox with icon and label
+        # TODO: get icon using load_account_icon(), label is account name
+        # TODO: style label: xalign = 0, margin start = 5
+        # TODO: add() hbox to accounts_list
 
     def on_save(self, _):
         """
