@@ -56,6 +56,14 @@ class DatabaseWindow(Window):
         Checks if database is saved, if it is – quits, otherwise displays confirmation dialog.
         """
 
+        # TODO: show warning dialog "Are you sure you want to close the database?"
+        #  "Any unsaved changes will be lost!"
+
+        # TODO: offer 3 buttons: Cancel, Save and Ok
+        #   if Cancel is picked – return
+        #   if Save is picked, call database.save()
+        #   at the end of the method call database.close() and self.destroy()
+
     def on_create_account(self, _):
         """
         Displays create account form.
