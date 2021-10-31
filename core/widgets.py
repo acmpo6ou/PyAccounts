@@ -35,6 +35,9 @@ class IconDialog(Gtk.Dialog):
     Dialog containing icon and message.
     """
 
+    # DO NOT REMOVE THIS, this is needed because of strange issues with _setattr from gtk_utils
+    vbox = None
+
     def __init__(self, title, message, icon, *args, **kwargs):
         super().__init__(self, title=title, *args, **kwargs)
         self.vbox = self.content_area
