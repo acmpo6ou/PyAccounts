@@ -82,4 +82,8 @@ class DatabaseWindow(Window):
         """
         Displays confirmation dialog asking user if he really want's to delete selected account.
         """
+
         # TODO: show warning in statusbar if there is no account selected
+        #  "Please, select account you want to delete."
+        # TODO: remove account from database.accounts, remove corresponding ListBoxRow from
+        #  accounts_list
