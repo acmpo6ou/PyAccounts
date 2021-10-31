@@ -20,6 +20,8 @@ import sys
 
 import gi
 
+# noinspection PyUnresolvedReferences
+import core.gtk_utils
 from core.main_window import MainWindow
 from core.widgets import IconDialog
 
