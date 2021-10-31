@@ -36,10 +36,10 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self._safe_clipboard = ""
 
         self.main_window = self
-        self.databases = self.get_databases()
         self.settings = Settings()
-
         self.load_css()
+
+        self.databases = self.get_databases()
         self.load_databases()
         self.select_main_database()
 
@@ -79,7 +79,15 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         # TODO: find all .dba files; use glob module
 
     def load_databases(self):
-        ...
+        """
+        Populates db_list with items.
+        """
+
+        # TODO: set sort_func for db_list to sort alphabetically
+        # TODO: for each database create hbox with icon and label
+        # TODO: icon is just database icon, label is database name
+        # TODO: style label: xalign = 0, margin start = 5
+        # TODO: add() hbox to db_list
 
     def select_main_database(self):
         """
