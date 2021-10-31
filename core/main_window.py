@@ -154,6 +154,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         confirmation dialog.
         """
 
+        # TODO: use any() to check if there is any opened database
+        # TODO: call app.quit() to quit
+
     def on_create_database(self, _):
         """
         Displays create database form.
