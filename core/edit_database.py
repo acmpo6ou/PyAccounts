@@ -18,10 +18,10 @@
 
 import gi
 
+gi.require_version("Gtk", "3.0")
+
 from core.create_database import CreateDatabaseForm
 from core.database_utils import Database
-
-gi.require_version("Gtk", "3.0")
 
 
 class EditDatabaseForm(CreateDatabaseForm):
