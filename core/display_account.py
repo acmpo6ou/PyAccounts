@@ -18,6 +18,8 @@
 
 import gi
 
+from core.widgets import AttachedFilesMixin
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from core.gtk_utils import GladeTemplate
@@ -26,7 +28,7 @@ from core.gtk_utils import GladeTemplate
 NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 
 
-class DisplayAccount(GladeTemplate):
+class DisplayAccount(GladeTemplate, AttachedFilesMixin):
     def __init__(self):
         super().__init__("display_account")
         # TODO: set sort_func for attached_files list to sort it alphabetically
@@ -39,19 +41,6 @@ class DisplayAccount(GladeTemplate):
         # TODO: set password label's text to dots (use '●' * 24)
         # TODO: set notes text to NOTES_PLACEHOLDER
         self.load_attached_files()
-
-    def load_attached_files(self):
-        """
-        Populates attached_files list with attached files.
-        """
-
-        """
-        iterate attached_files dict keys:
-            create label with key text
-            get icon associated with mime type of attached file using get_mime_type() from gtk_utils
-            put icon and label into hbox
-            add it to attached_files list box
-        """
 
     def on_toggle_pass(self, button: Gtk.ToggleButton):
         """

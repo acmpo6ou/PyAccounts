@@ -230,3 +230,18 @@ class CreateForm(GladeTemplate):
         """
         Displays dialog to generate password.
         """
+
+
+class AttachedFilesMixin:
+    def load_attached_files(self):
+        """
+        Populates attached_files list with attached files.
+        """
+
+        """
+        iterate attached_files dict keys:
+            create label with key text
+            get icon associated with mime type of attached file using get_mime_type() from gtk_utils
+            put icon and label into hbox
+            add it to attached_files list box
+        """
