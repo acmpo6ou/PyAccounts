@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+
+#  Copyright (c) 2022. Bohdan Kolvakh
+#  This file is part of PyAccounts.
+#
+#  PyAccounts is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  PyAccounts is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+
+import gi
+
+from core.widgets import AttachedFilesMixin
+
+gi.require_version("Gdk", "3.0")
+gi.require_version("Gtk", "3.0")
+
+from core.create_account import CreateAccountForm
+
+
+class EditAccountForm(CreateAccountForm, AttachedFilesMixin):
+    def __init__(self, database, account):
+        super().__init__(database)
+        self.account = account
+        # TODO: fill attached_paths with file names from account.attached_files;
+        #  map file names to None (since they don't have any path)
+        # load already attached files mapping them to None since they don't have any path
+        self.attached_paths = ...
+        self.load_account()
+
+    def load_account(self):
+        """
+        Populates form fields with account data.
+        """
+
+        self.load_attached_files()
+        # TODO: change title to `Edit [account name] account`
