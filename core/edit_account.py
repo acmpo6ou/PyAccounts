@@ -46,6 +46,17 @@ class EditAccountForm(CreateAccountForm, AttachedFilesMixin):
         self.load_attached_files()
         # TODO: change title to `Edit [account name] account`
 
+    def validate_name(self):
+        """
+        Validates name field, displaying error tip if account name is invalid.
+
+        Possible problems with account name:
+        * name field is empty
+        * name field contains name that is already taken; it's OK, however if account name
+        hasn't changed throughout editing
+        :return: True if name is valid.
+        """
+
     def create_account(self) -> Account:
         """
         Creates account using form data.
