@@ -163,4 +163,4 @@ class CreateAccountForm(CreateForm):
 
         # TODO: create Account instance using create_account and add it to the database,
         #  update accounts list
-        self.destroy()
+        # TODO: destroy form on success
