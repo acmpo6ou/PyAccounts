@@ -18,6 +18,8 @@
 
 import gi
 
+from core.database_utils import Account
+
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 
@@ -144,12 +146,19 @@ class CreateAccountForm(CreateForm):
         #  for each path try to read file content; save the content to attached_files dict
         #  on error display ErrorDialog "Failed to read file [file name]"
 
-    def on_apply(self, _):
+    def create_account(self) -> Account:
         """
         Creates account using form data.
         """
 
         # TODO: get data from all fields
         # TODO: call get_attached_files() to get proper dict (file name -> file content in bytes)
-        # TODO: create Account instance and add it to the database, update accounts list
+
+    def on_apply(self, _):
+        """
+        Creates account, adds it to accounts list.
+        """
+
+        # TODO: create Account instance using create_account and add it to the database,
+        #  update accounts list
         self.destroy()
