@@ -133,7 +133,7 @@ class CreateAccountForm(CreateForm):
         # TODO: remove `file://` at the beginning of each path
         # TODO: call attach_file for each path
 
-    def load_attached_files(self):
+    def get_attached_files(self):
         """
         Loads content of selected attached files handling errors.
         :return: dict mapping file names to file content.
@@ -150,6 +150,6 @@ class CreateAccountForm(CreateForm):
         """
 
         # TODO: get data from all fields
-        # TODO: call load_attached_files() to get proper dict (file name -> file content in bytes)
+        # TODO: call get_attached_files() to get proper dict (file name -> file content in bytes)
         # TODO: create Account instance and add it to the database, update accounts list
         self.destroy()
