@@ -25,15 +25,12 @@ from core.gtk_utils import GladeTemplate
 
 
 class OpenDatabaseForm(GladeTemplate):
-    def __init__(self):
+    def __init__(self, database: Database):
         super().__init__("open_database")
         self.vexpand = True
-
-    def set_database(self, database: Database):
-        """
-        Changes form title to `Open [database name] database`.
-        """
         self.database = database
+
+        # TODO: change form title to `Open [database name] database`.
         # TODO: make database name cursive
 
     def on_open_database(self, _):

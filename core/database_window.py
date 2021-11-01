@@ -95,7 +95,6 @@ class DatabaseWindow(Window):
         Displays edit account form for selected account.
         """
         # TODO: show warning in statusbar if there is no account selected
-        # TODO: call form.set_account()
         # TODO: use show_form()
 
     def on_delete_account(self, _):

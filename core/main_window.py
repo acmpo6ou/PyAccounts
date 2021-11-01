@@ -171,7 +171,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
         # TODO: show warning in statusbar if there is no database selected
         #  or if database is closed
-        # TODO: call form.set_database()
         # TODO: use show_form()
 
     def delete_database(self, name):

@@ -18,6 +18,7 @@
 
 import gi
 
+from core.database_utils import Account
 from core.widgets import AttachedFilesMixin
 
 gi.require_version("Gtk", "3.0")
@@ -29,14 +30,11 @@ NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 
 
 class DisplayAccount(GladeTemplate, AttachedFilesMixin):
-    def __init__(self):
+    def __init__(self, account: Account):
         super().__init__("display_account")
         # TODO: set sort_func for attached_files list to sort it alphabetically
 
-    def set_account(self, account):
-        """
-        Populates form fields with account data.
-        """
+        # TODO: Populate form fields with account data.
         self.account = account
         # TODO: set password label's text to dots (use '●' * 24)
         # TODO: set notes text to NOTES_PLACEHOLDER

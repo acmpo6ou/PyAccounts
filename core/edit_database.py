@@ -25,16 +25,12 @@ from core.database_utils import Database
 
 
 class EditDatabaseForm(CreateDatabaseForm):
-    def __init__(self):
+    def __init__(self, database: Database):
         super().__init__()
-        # TODO: change title text to `Edit [database name] database]`
-        # TODO: change apply's button text to Save
-
-    def set_database(self, database: Database):
-        """
-        Populates form fields with data from database.
-        """
         self.database = database
+        # TODO: change title text to `Edit [database name] database`
+        # TODO: change apply's button text to Save
+        # TODO: populate form fields with data from database.
 
     def validate_name(self):
         """
