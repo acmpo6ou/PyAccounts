@@ -18,6 +18,7 @@
 
 import gi
 
+from core.database_utils import Account
 from core.widgets import AttachedFilesMixin
 
 gi.require_version("Gdk", "3.0")
@@ -43,3 +44,16 @@ class EditAccountForm(CreateAccountForm, AttachedFilesMixin):
 
         self.load_attached_files()
         # TODO: change title to `Edit [account name] account`
+
+    def create_account(self) -> Account:
+        """
+        Creates account using form data.
+        """
+        account = super().create_account()
+        # TODO: add already loaded attached files:
+        """
+        iterate over attached_paths keys:
+            if key value is None:
+                add attached file from self.account.attached_files to account.attached_files
+        return account
+        """
