@@ -45,6 +45,7 @@ class EditAccountForm(CreateAccountForm, AttachedFilesMixin):
 
         self.load_attached_files()
         # TODO: change title to `Edit [account name] account`
+        # TODO: make account name cursive
 
     def validate_name(self):
         """

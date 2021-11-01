@@ -29,6 +29,7 @@ class EditDatabaseForm(CreateDatabaseForm):
         super().__init__()
         self.database = database
         # TODO: change title text to `Edit [database name] database`
+        # TODO: make database name cursive
         # TODO: change apply's button text to Save
         # TODO: populate form fields with data from database.
 
