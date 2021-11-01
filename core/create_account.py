@@ -156,7 +156,7 @@ class CreateAccountForm(CreateForm):
         # TODO: get data from all fields
         # TODO: call get_attached_files() to get proper dict (file name -> file content in bytes)
 
-    def on_apply(self, _):
+    def on_apply(self, _=None):
         """
         Creates account, adds it to accounts list.
         """

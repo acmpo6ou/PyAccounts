@@ -36,6 +36,7 @@ class EditAccountForm(CreateAccountForm, AttachedFilesMixin):
         # load already attached files mapping them to None since they don't have any path
         self.attached_paths = ...
         self.load_account()
+        # TODO: change Create button to Save
 
     def load_account(self):
         """
@@ -57,3 +58,11 @@ class EditAccountForm(CreateAccountForm, AttachedFilesMixin):
                 add attached file from self.account.attached_files to account.attached_files
         return account
         """
+
+    def on_apply(self, _):
+        """
+        Saves changes done to account.
+        """
+
+        # TODO: remove old account from database and accounts list (remove ListBoxRow)
+        super().on_apply()
