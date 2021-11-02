@@ -23,7 +23,7 @@ Contains various utilities to simplify development with GTK.
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GObject, Gtk
+from gi.repository import GObject, Gtk, Gio
 
 
 # noinspection PyUnresolvedReferences
@@ -118,7 +118,7 @@ class GladeTemplate(Gtk.Bin):
         return object.__getattribute__(self, item)
 
 
-def load_icon(icon_name, size):
+def load_icon(icon_name, size) -> Gtk.Image:
     """
     Returns icon from default theme.
     """
@@ -132,15 +132,7 @@ def get_mime_icon(path) -> Gtk.Image:
     Returns mime icon associated with file given in `path`.
     :param path: path to file icon of which we want to get.
     """
-
-    # TODO: see StackOverflow bookmark:
-    #  https://stackoverflow.com/questions/1629172/how-do-you-get-the-icon-mime-type-and-application-associated-with-a-file-in-th
-
-    """ python translation
-    file = Gio.File.new_for_path("file_path_here")
+    # TODO: test this function; it returns Image, test image.pixbuf property
+    file = Gio.File.new_for_path(path)
     info = file.query_info("standard::*", Gio.FileQueryInfoFlags.NONE, None)
-    image = Gtk.Image.new_from_gicon(info.icon, Gtk.IconSize.DIALOG)
-    """
-
-    # TODO: use load_icon()
-    # TODO: possibly test this function; it returns Image, so test it's properties
+    return load_icon(info.icon.names[0], 64)
