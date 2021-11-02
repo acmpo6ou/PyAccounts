@@ -88,8 +88,18 @@ class CreateAccountForm(CreateForm):
         Adds item to attached_files list with file mime icon and file name.
 
         Saves path to attached_paths.
+        If the file with such name already exists – displays confirmation dialog.
         :param path: path to file to attach.
         """
+
+        # TODO: get file name from path
+        # TODO: check if file name is in attached_paths, if it is – display confirmation dialog
+        #  "File [file name] is already attached, replace?"
+        #  proceed only if response is Gtk.ResponseType.ACCEPT
+        # HOWEVER: if file name is already in attached_paths but its path is same as [path] don't
+        # show any dialog. Because when dropping multiple files onto attached_files list,
+        # the dropping even is generated twice for some reason and attached_file() will also be
+        # called twice; comment this strange behavior
 
         # TODO: add path to attached_paths dict, file name is the key and path is the value
         # TODO: add item with file name to attached_files list box
