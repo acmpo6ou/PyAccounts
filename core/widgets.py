@@ -39,7 +39,7 @@ class IconDialog(Gtk.Dialog):
     vbox = None
 
     def __init__(self, title, message, icon, *args, **kwargs):
-        super().__init__(self, title=title, *args, **kwargs)
+        super().__init__(self, title=title, modal=True, *args, **kwargs)
         self.vbox = self.content_area
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.vbox.add(box)
