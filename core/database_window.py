@@ -90,7 +90,7 @@ class DatabaseWindow(Window):
         """
         # TODO: use show_form()
 
-    def on_edit_database(self, _):
+    def on_edit_account(self, _):
         """
         Displays edit account form for selected account.
         """
