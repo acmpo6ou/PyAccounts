@@ -82,6 +82,7 @@ Author: Bohdan Kolvakh
                         <property name="image">image1</property>
                         <property name="use-stock">False</property>
                         <signal name="activate" handler="on_import_database" swapped="no"/>
+                        <accelerator key="i" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -93,6 +94,7 @@ Author: Bohdan Kolvakh
                         <property name="image">image2</property>
                         <property name="use-stock">False</property>
                         <signal name="activate" handler="on_export_database" swapped="no"/>
+                        <accelerator key="e" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -159,6 +161,7 @@ Author: Bohdan Kolvakh
                         <property name="use-underline">True</property>
                         <property name="use-stock">True</property>
                         <signal name="activate" handler="on_about" swapped="no"/>
+                        <accelerator key="F1" signal="activate"/>
                       </object>
                     </child>
                   </object>

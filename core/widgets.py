@@ -152,8 +152,12 @@ class Window(Gtk.Window, GladeTemplate):
         Gtk.Window.__init__(self)
         self.set_default_size(1280, 720)
         self.set_icon_from_file("img/icon.svg")
+
         self.load_separator()
         self.statusbar = StatusBar(self.statusbar)
+
+        self.shortcuts = Gtk.AccelGroup()
+        self.add_accel_group(self.shortcuts)
 
     def show_form(self, form):
         """
@@ -181,7 +185,7 @@ class Window(Gtk.Window, GladeTemplate):
         """
         SettingsDialog(self.main_window).run()
 
-    def on_about(self, _):
+    def on_about(self, *args):
         """
         Displays about dialog.
         """

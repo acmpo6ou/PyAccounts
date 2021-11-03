@@ -43,6 +43,30 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.load_databases()
         self.select_main_database()
 
+        # Ctrl+I to import database
+        self.shortcuts.connect(
+            Gdk.keyval_from_name("i"),
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE,
+            self.on_import_database,
+        )
+
+        # Ctrl+E to export database
+        self.shortcuts.connect(
+            Gdk.keyval_from_name("e"),
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE,
+            self.on_export_database,
+        )
+
+        # F1 to open About dialog
+        self.shortcuts.connect(
+            Gdk.keyval_from_name("F1"),
+            0,
+            Gtk.AccelFlags.VISIBLE,
+            self.on_about,
+        )
+
     @property
     def safe_clipboard(self):
         """
@@ -111,7 +135,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         # TODO: validate database file size, whether database already exists;
         #  update db_list and list widget
 
-    def on_import_database(self, _):
+    def on_import_database(self, *args):
         """
         Displays import database dialog.
         """
@@ -134,7 +158,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         # TODO: show success and error messages; call export_database
 
-    def on_export_database(self, _):
+    def on_export_database(self, *args):
         """
         Displays export database dialog.
         """
