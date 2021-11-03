@@ -78,6 +78,7 @@ Author: Bohdan Kolvakh
                         <property name="image">image1</property>
                         <property name="use-stock">False</property>
                         <signal name="activate" handler="on_save" swapped="no"/>
+                        <accelerator key="s" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>

@@ -17,6 +17,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
+from gi.repository import Gdk, Gtk
 
 from core.widgets import Window
 
@@ -39,6 +40,15 @@ class DatabaseWindow(Window):
 
         self.main_window = main_window
         self.database = database
+
+        # Ctrl+S to save database
+        self.shortcuts.connect(
+            Gdk.keyval_from_name("s"),
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE,
+            self.on_save,
+        )
+
         self.load_accounts()
         # TODO: set title to database name
 
@@ -65,7 +75,7 @@ class DatabaseWindow(Window):
         # TODO: return icon
         # TODO: see tests of loadAccountIcon()
 
-    def on_save(self, _):
+    def on_save(self, *args):
         """
         Saves database to disk.
         On success displays success message in statusbar, on error – error message.
