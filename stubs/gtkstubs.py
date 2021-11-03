@@ -25,19 +25,21 @@ See _getattr and _setattr from gtk_utils module for more details.
 import os
 import re
 
-STUBS_DIR = "stubs/Gtk"
 
-for file in os.listdir(STUBS_DIR):
-    _in = open(f"{STUBS_DIR}/{file}").read()
-    out = open(f"{STUBS_DIR}/{file}", "a")
+for module in ("Gtk", "Gdk", "Gio"):
+    STUBS_DIR = f"stubs/{module}"
 
-    gets = re.findall("get_[a-z_]*", _in)
-    sets = re.findall("set_[a-z_]*", _in)
+    for file in os.listdir(STUBS_DIR):
+        _in = open(f"{STUBS_DIR}/{file}").read()
+        out = open(f"{STUBS_DIR}/{file}", "a")
 
-    props = set()
-    for method in gets + sets:
-        prop = method[4:]
-        props.add(prop)
+        gets = re.findall("get_[a-z_]*", _in)
+        sets = re.findall("set_[a-z_]*", _in)
 
-    for prop in props:
-        out.write(f"    {prop} = ...\n")
+        props = set()
+        for method in gets + sets:
+            prop = method[4:]
+            props.add(prop)
+
+        for prop in props:
+            out.write(f"    {prop} = ...\n")
