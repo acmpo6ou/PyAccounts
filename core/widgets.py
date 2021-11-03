@@ -162,7 +162,7 @@ class Window(Gtk.Window, GladeTemplate):
         # F1 to open About dialog
         self.shortcuts.connect(
             Gdk.keyval_from_name("F1"),
-            0,  # no modifier (e.g. Ctrl or Shift)
+            0,  # don't use any modifiers (e.g. Ctrl or Shift)
             Gtk.AccelFlags.VISIBLE,
             self.on_about,
         )
