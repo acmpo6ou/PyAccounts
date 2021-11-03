@@ -20,13 +20,13 @@ import sys
 
 import gi
 
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
 # noinspection PyUnresolvedReferences
 import core.gtk_utils
 from core.main_window import MainWindow
 from core.widgets import IconDialog
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 
 
 class Application(Gtk.Application):
