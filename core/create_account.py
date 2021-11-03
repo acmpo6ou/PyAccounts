@@ -143,6 +143,7 @@ class CreateAccountForm(CreateForm):
 
         # TODO: use data.get_uris() to get a list of file paths
         # TODO: remove `file://` at the beginning of each path
+        # TODO: check if path is a directory, if it is – skip
         # TODO: call attach_file for each path
 
     def get_attached_files(self):
