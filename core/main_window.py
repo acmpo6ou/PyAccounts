@@ -59,14 +59,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             self.on_export_database,
         )
 
-        # F1 to open About dialog
-        self.shortcuts.connect(
-            Gdk.keyval_from_name("F1"),
-            0,
-            Gtk.AccelFlags.VISIBLE,
-            self.on_about,
-        )
-
     @property
     def safe_clipboard(self):
         """

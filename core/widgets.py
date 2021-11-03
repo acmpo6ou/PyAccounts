@@ -27,7 +27,7 @@ from core.gtk_utils import GladeTemplate, load_icon
 from core.settings import SettingsDialog
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 
 class IconDialog(Gtk.Dialog):
@@ -158,6 +158,14 @@ class Window(Gtk.Window, GladeTemplate):
 
         self.shortcuts = Gtk.AccelGroup()
         self.add_accel_group(self.shortcuts)
+
+        # F1 to open About dialog
+        self.shortcuts.connect(
+            Gdk.keyval_from_name("F1"),
+            0,  # no modifier (e.g. Ctrl or Shift)
+            Gtk.AccelFlags.VISIBLE,
+            self.on_about,
+        )
 
     def show_form(self, form):
         """
