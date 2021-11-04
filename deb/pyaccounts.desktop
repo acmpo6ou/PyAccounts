@@ -2,7 +2,7 @@
 Version=1.0.0
 Type=Application
 Name=PyAccounts
-Comment=PyAccounts – is a simple accounts database manager.
+Comment=Simple accounts database manager.
 Exec=pyaccounts
 Icon=/usr/share/pixmaps/pyaccounts.svg
 Categories=Utility;GTK;
