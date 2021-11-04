@@ -64,7 +64,7 @@ class Application(Gtk.Application):
 
     def check_paste_shortcut(self):
         """
-        Checks if there is a system shortcut to paste password, if there isn't creates it.
+        Checks if there is a system shortcut to paste password, if there isn't – creates it.
         """
 
     def create_paste_shortcut(self):
