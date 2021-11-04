@@ -41,7 +41,7 @@ class Account:
         """
         # TODO: use Account.__dict__ method to convert it to dict
         # TODO: rename `notes` and `username` fields, see StackOverflow:
-        #  https://stackoverflow.com/questions/60789444/how-to-serialize-object-to-json-with-custom-fields-in-python
+        #  https://stackoverflow.com/q/60789444
 
 
 @dataclass
