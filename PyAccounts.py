@@ -17,11 +17,12 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import sys
+from typing import List
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 # noinspection PyUnresolvedReferences
 import core.gtk_utils
@@ -31,7 +32,12 @@ from core.widgets import IconDialog
 
 class Application(Gtk.Application):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, application_id="com.acmpo6ou.PyAccounts", **kwargs)
+        super().__init__(
+            *args,
+            application_id="com.acmpo6ou.PyAccounts",
+            flags=Gio.ApplicationFlags.HANDLES_OPEN,
+            **kwargs
+        )
         self.window = None
 
     def do_activate(self):
@@ -51,6 +57,17 @@ class Application(Gtk.Application):
                 icon="dialog-warning",
             )
             dialog.show_all()
+
+    def do_open(self, files: List[Gio.File], *args):
+        """
+        Imports .dba files given in [files] list.
+        """
+        if not self.window:
+            self.do_activate()
+
+        # TODO: iterate over files, use file.path to get absolute file path
+        # TODO: skip non .dba files
+        # TODO: call self.window.import_database for each path
 
     def fix_src_dir(self):
         """
