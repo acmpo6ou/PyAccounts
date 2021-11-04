@@ -3,7 +3,9 @@
 if [ ! -d "deb/pyaccounts" ]; then
   python3 -m venv deb/pyaccounts
   source deb/pyaccounts/bin/activate
-  pip install -U pip setuptools
+  pip install -U pip
+  pip install -U setuptools
+  pip install -U wheel
 fi
 
 source deb/pyaccounts/bin/activate
