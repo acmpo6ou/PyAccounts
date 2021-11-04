@@ -82,6 +82,13 @@ class DatabaseWindow(Window):
         On success displays success message in statusbar, on error – error message.
         """
 
+    def do_delete_event(self, event):
+        """
+        Called when user tries to close the window, propagates event to on_quit.
+        NOTE: DO NOT move this method to Window superclass, or else it won't work.
+        """
+        return self.on_quit(event)
+
     def on_quit(self, _):
         """
         Checks if database is saved, if it is – quits, otherwise displays confirmation dialog.
@@ -94,6 +101,8 @@ class DatabaseWindow(Window):
         #   if Cancel is picked – return
         #   if Save is picked, call database.save()
         #   at the end of the method call database.close() and self.destroy()
+
+        # TODO: return True if user doesn't want to quit and False otherwise
 
     def on_create_account(self, _):
         """

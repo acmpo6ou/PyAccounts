@@ -168,6 +168,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
     def do_delete_event(self, event):
         """
         Called when user tries to close the window, propagates event to on_quit.
+        NOTE: DO NOT move this method to Window superclass, or else it won't work.
         """
         return self.on_quit(event)
 
