@@ -40,6 +40,7 @@ class Application(Gtk.Application):
             self.window.show_all()
 
             self.fix_src_dir()
+            self.fix_settings()
             self.check_paste_shortcut()
             # TODO: set process name to `PyAccounts` using setproctitle;
             #  see StackOverflow: https://stackoverflow.com/a/18992161
@@ -55,7 +56,6 @@ class Application(Gtk.Application):
         """
         Creates the SRC_DIR folder if it's absent.
         """
-        # TODO: also call fix_settings
 
     def fix_settings(self):
         """
