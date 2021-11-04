@@ -19,10 +19,11 @@
 import gi
 
 from core.database_utils import Account
+from core.database_window import DatabaseWindow
 from core.widgets import AttachedFilesMixin
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 from core.gtk_utils import GladeTemplate
 
 
@@ -30,8 +31,9 @@ NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 
 
 class DisplayAccount(GladeTemplate, AttachedFilesMixin):
-    def __init__(self, account: Account):
+    def __init__(self, account: Account, database_window: DatabaseWindow):
         super().__init__("display_account")
+        self.database_window = database_window
         # TODO: set sort_func for attached_files list to sort it alphabetically
 
         # TODO: Populate form fields with account data.
@@ -39,6 +41,15 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         # TODO: set password label's text to dots (use '●' * 24)
         # TODO: set notes text to NOTES_PLACEHOLDER
         self.load_attached_files()
+
+        # TODO: test this shortcut
+        # Ctrl+C to copy password
+        database_window.shortcuts.connect(
+            Gdk.keyval_from_name("c"),
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE,
+            self.on_copy,
+        )
 
     def on_toggle_pass(self, button: Gtk.ToggleButton):
         """
@@ -56,7 +67,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         # TODO: if button.active is True – set notes label to account notes
         #  else – set notes label to NOTES_PLACEHOLDER
 
-    def on_copy(self, _):
+    def on_copy(self, *args):
         """
         Copies e-mail to clipboard and password to safe clipboard.
         """
