@@ -92,6 +92,7 @@ class DatabaseWindow(Window):
     def on_quit(self, _):
         """
         Checks if database is saved, if it is – quits, otherwise displays confirmation dialog.
+        :returns: True to prevent quiting and False to allow it.
         """
 
         # TODO: show warning dialog "Are you sure you want to close the database?"
