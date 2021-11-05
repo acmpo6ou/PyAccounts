@@ -11,6 +11,7 @@ override_dh_auto_install:
 	cp -r img $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts
 	cp -r ui $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts
 	cp PyAccounts.py $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/PyAccounts.py
+	cp paste.sh $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/paste.sh
 	cp COPYING $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/COPYING
 	cp README.md $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/README.md
 	cp requirements.txt $$(pwd)/debian/pyaccounts/usr/share/pyaccounts/PyAccounts/requirements.txt
