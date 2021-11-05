@@ -47,7 +47,10 @@ class Application(Gtk.Application):
 
             self.fix_src_dir()
             self.fix_settings()
-            self.check_paste_shortcut()
+
+            if not self.check_paste_shortcut():
+                self.create_paste_shortcut()
+
             # TODO: set process name to `PyAccounts` using setproctitle;
             #  see StackOverflow: https://stackoverflow.com/a/18992161
         else:
@@ -82,7 +85,7 @@ class Application(Gtk.Application):
 
     def check_paste_shortcut(self):
         """
-        Checks if there is a system shortcut to paste password, if there isn't – creates it.
+        Returns boolean value indicating whether there is a system shortcut to paste password.
         """
 
     def create_paste_shortcut(self):
