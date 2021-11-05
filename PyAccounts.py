@@ -17,6 +17,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import sys
+from signal import signal, SIGUSR1
 from typing import List
 
 import gi
@@ -50,6 +51,8 @@ class Application(Gtk.Application):
 
             if not self.check_paste_shortcut():
                 self.create_paste_shortcut()
+
+            signal(SIGUSR1, self.on_paste)
 
             # TODO: set process name to `PyAccounts` using setproctitle;
             #  see StackOverflow: https://stackoverflow.com/a/18992161
@@ -92,6 +95,13 @@ class Application(Gtk.Application):
         """
         Creates system shortcut to paste password.
         """
+
+    def on_paste(self, *args):
+        """
+        Called when system shortcut (usually Super+V) to paste password from safe clipboard is
+        pressed. Sends key press events to X server to simulate password typing.
+        """
+        # TODO: use keyboard module to paste password from window.safe_clipboard
 
 
 if __name__ == "__main__":
