@@ -17,10 +17,10 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-from attr import dataclass
 
 gi.require_version("Gtk", "3.0")
 from core.gtk_utils import GladeTemplate
+from dataclasses import dataclass
 
 
 class SettingsDialog(GladeTemplate):
