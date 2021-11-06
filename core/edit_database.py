@@ -16,9 +16,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import gi
-
-gi.require_version("Gtk", "3.0")
 
 from core.create_database import CreateDatabaseForm
 from core.database_utils import Database

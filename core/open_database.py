@@ -16,11 +16,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import gi
 
 from core.database_utils import Database
-
-gi.require_version("Gtk", "3.0")
 from core.gtk_utils import GladeTemplate
 
 

@@ -16,16 +16,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import gi
-
-from core.database_utils import Account
-
-gi.require_version("Gdk", "3.0")
-gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gdk, Gtk
-from core.widgets import CreateForm
 
+from core.database_utils import Account
+from core.widgets import CreateForm
 
 DROP_ID = 808
 

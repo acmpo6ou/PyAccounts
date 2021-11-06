@@ -16,15 +16,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import gi
-
-from core.database_utils import Account
-from core.widgets import AttachedFilesMixin
-
-gi.require_version("Gdk", "3.0")
-gi.require_version("Gtk", "3.0")
 
 from core.create_account import CreateAccountForm
+from core.database_utils import Account
+from core.widgets import AttachedFilesMixin
 
 
 class EditAccountForm(CreateAccountForm, AttachedFilesMixin):

@@ -16,14 +16,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import gi
 
-gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 
+from core.gtk_utils import GladeTemplate
 from core.settings import Settings
 from core.widgets import Window
-from core.gtk_utils import GladeTemplate
 
 
 class MainWindow(Gtk.ApplicationWindow, Window):

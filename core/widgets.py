@@ -20,14 +20,11 @@
 Contains custom GTK widgets.
 """
 
-import gi
+from gi.repository import Gtk, Gdk
 
 from core.about import AboutDialog
 from core.gtk_utils import GladeTemplate, load_icon
 from core.settings import SettingsDialog
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk
 
 
 class IconDialog(Gtk.Dialog):

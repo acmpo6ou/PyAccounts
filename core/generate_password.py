@@ -16,11 +16,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import gi
 
-gi.require_version("Gtk", "3.0")
-from core.gtk_utils import GladeTemplate
 from string import digits, ascii_lowercase, ascii_uppercase, punctuation
+
+from core.gtk_utils import GladeTemplate
 
 
 class GenPassDialog(GladeTemplate):

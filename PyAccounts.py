@@ -16,14 +16,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import sys
-from signal import signal, SIGUSR1
-from typing import List
-
 import gi
 
 gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gio
+
+import sys
+from signal import signal, SIGUSR1
+from typing import List
 
 # noinspection PyUnresolvedReferences
 import core.gtk_utils

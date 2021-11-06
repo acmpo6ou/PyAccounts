@@ -16,11 +16,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import gi
-
 from core.widgets import CreateForm
-
-gi.require_version("Gtk", "3.0")
 
 
 class CreateDatabaseForm(CreateForm):

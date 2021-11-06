@@ -20,9 +20,6 @@
 Contains various utilities to simplify development with GTK.
 """
 
-import gi
-
-gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, Gtk, Gio
 
 

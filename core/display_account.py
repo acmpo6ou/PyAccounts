@@ -16,16 +16,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
-import gi
+
+from gi.repository import Gtk, Gdk
 
 from core.database_utils import Account
 from core.database_window import DatabaseWindow
-from core.widgets import AttachedFilesMixin
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk
 from core.gtk_utils import GladeTemplate
-
+from core.widgets import AttachedFilesMixin
 
 NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 
