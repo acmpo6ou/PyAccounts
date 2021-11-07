@@ -6,6 +6,8 @@
 !control
 !copyright
 !rules
+!source
+!source/*
 
 !postinst
 !preinst
