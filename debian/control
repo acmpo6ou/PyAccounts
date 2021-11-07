@@ -9,7 +9,7 @@ Package: pyaccounts
 Architecture: amd64
 Section: utils
 Priority: extra
-Depends: python3.8, ${shlibs:Depends}
+Depends: python3 (>= 3.8), ${shlibs:Depends}
 Homepage: https://github.com/acmpo6ou/PyAccounts
 Description: PyAccounts – is a simple accounts database manager.
  You can easily manage your accounts and store them safely in encrypted databases. The interface of PyAccounts is common and easy to use. PyAccounts is completely free and open source project.
