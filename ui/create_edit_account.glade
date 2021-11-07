@@ -22,7 +22,7 @@ Author: Bohdan Kolvakh
 
 -->
 <interface>
-  <requires lib="gtk+" version="3.22"/>
+  <requires lib="gtk+" version="3.24"/>
   <!-- interface-css-provider-path global.css -->
   <!-- interface-license-type gplv3 -->
   <!-- interface-name PyAccounts -->
