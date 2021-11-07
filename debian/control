@@ -2,6 +2,7 @@ Source: pyaccounts
 Maintainer: Bohdan Kolvakh <acmpo6ou@gmail.com>
 Section: utils
 Priority: optional
+Standards-Version: 4.6.0
 Build-depends: debhelper (>= 12)
 Homepage: https://github.com/acmpo6ou/PyAccounts
 
