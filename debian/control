@@ -1,14 +1,14 @@
 Source: pyaccounts
 Maintainer: Bohdan Kolvakh <acmpo6ou@gmail.com>
 Section: utils
-Priority: extra
+Priority: optional
 Build-depends: debhelper (>= 12)
 Homepage: https://github.com/acmpo6ou/PyAccounts
 
 Package: pyaccounts
 Architecture: amd64
 Section: utils
-Priority: extra
+Priority: optional
 Depends: python3 (>= 3.8), ${shlibs:Depends}
 Homepage: https://github.com/acmpo6ou/PyAccounts
 Description: PyAccounts – is a simple accounts database manager.
