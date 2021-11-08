@@ -1,0 +1,16 @@
+deb/mimetypes usr/share/icons/Mint-Y-Dark/
+deb/pyaccounts usr/share/
+
+core usr/share/pyaccounts/PyAccounts
+img usr/share/pyaccounts/PyAccounts
+ui usr/share/pyaccounts/PyAccounts
+
+PyAccounts.py usr/share/pyaccounts/PyAccounts
+paste.sh usr/share/pyaccounts/PyAccounts
+COPYING usr/share/pyaccounts/PyAccounts
+README.md usr/share/pyaccounts/PyAccounts
+requirements.txt usr/share/pyaccounts/PyAccounts
+
+deb/pyaccounts.svg usr/share/pixmaps
+deb/pyaccounts.desktop usr/share/applications
+deb/application-account-database.xml usr/share/mime/packages

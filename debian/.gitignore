@@ -6,6 +6,8 @@
 !control
 !copyright
 !rules
+!install
+
 !source
 !source/*
 
