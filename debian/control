@@ -4,13 +4,14 @@ Section: utils
 Priority: optional
 Standards-Version: 4.6.0
 Build-depends: debhelper (>= 12)
+Vcs-Git: https://github.com/acmpo6ou/PyAccounts
 Homepage: https://github.com/acmpo6ou/PyAccounts
 
 Package: pyaccounts
-Architecture: amd64
-Section: utils
-Priority: optional
+Architecture: any
 Depends: python3 (>= 3.8), ${shlibs:Depends}
 Homepage: https://github.com/acmpo6ou/PyAccounts
-Description: PyAccounts – is a simple accounts database manager.
- You can easily manage your accounts and store them safely in encrypted databases. The interface of PyAccounts is common and easy to use. PyAccounts is completely free and open source project.
+Description: Simple accounts database manager.
+ You can easily manage your accounts and store them safely in encrypted databases.
+ The interface of PyAccounts is common and easy to use.
+ PyAccounts is completely free and open source project.
