@@ -11,8 +11,10 @@ fi
 source deb/pyaccounts/bin/activate
 pip install -r requirements.txt
 
+# remove .pyc, .pyo and .exe files and __pycache__ directories
 find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
 find . \( -name "*.exe" \) -type f -delete
 
+# fix some venv paths to make the venv portable
 REPSTR="$HOME/Documents/PyAccounts/deb/pyaccounts/"
 grep -rl "$REPSTR" deb/pyaccounts | xargs sed -i "s;$REPSTR;/usr/share/pyaccounts/;g"
