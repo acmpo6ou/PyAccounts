@@ -37,4 +37,10 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateDbNameMixin):
         # TODO: use validate_name
 
     def on_apply(self, _):
-        """"""
+        """
+        Renames database using the name from name field.
+        """
+
+        # TODO: call database.rename() handling errors
+        # TODO: update database list and destroy self on success
+        # TODO: use ListBox.delete(name)
