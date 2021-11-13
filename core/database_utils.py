@@ -130,6 +130,13 @@ class Database:
         Deletes .dba file associated with this Database instance.
         """
 
+    def rename(self, name):
+        """
+        Renames database by renaming it's .dba file
+        :param name: new database name.
+        """
+        # TODO: set self.name to new name
+
     def save(self, name, password, accounts):
         """
         Deletes old database and creates new one, more specifically:
