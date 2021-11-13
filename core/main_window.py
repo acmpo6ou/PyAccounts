@@ -190,11 +190,11 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
     def on_edit_database(self, _):
         """
-        Displays edit database form for selected database.
+        If selected database is opened – displays edit database form,
+        otherwise – rename database form.
         """
 
         # TODO: show warning in statusbar if there is no database selected
-        #  or if database is closed
         # TODO: use show_form()
 
     def delete_database(self, name):
