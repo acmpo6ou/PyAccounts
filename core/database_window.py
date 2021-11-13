@@ -122,5 +122,4 @@ class DatabaseWindow(Window):
 
         # TODO: show warning in statusbar if there is no account selected
         #  "Please, select account you want to delete."
-        # TODO: remove account from database.accounts, remove corresponding ListBoxRow from
-        #  accounts_list
+        # TODO: remove account from database.accounts, call accounts_list.delete(name)

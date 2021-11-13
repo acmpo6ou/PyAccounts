@@ -204,7 +204,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         # TODO: show success message in statusbar if database is deleted successfully
         # TODO: show error message if there is an error
-        # TODO: deselect any database and update database list (remove corresponding ListBoxRow)
+        # TODO: deselect any database and update database list (use ListBox.delete(name))
 
     def on_delete_database(self, _):
         """

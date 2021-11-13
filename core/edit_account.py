@@ -71,5 +71,5 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
         Saves changes done to account.
         """
 
-        # TODO: remove old account from database and accounts list (remove ListBoxRow)
+        # TODO: remove old account from database and accounts list (use ListBox.delete(name))
         super().on_apply()
