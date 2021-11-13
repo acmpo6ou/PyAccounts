@@ -208,6 +208,19 @@ class FilterDbNameMixin:
         """
 
 
+class ValidateDbNameMixin:
+    def validate_name(self):
+        """
+        Validates name field, displaying error tip if database name is invalid.
+
+        Possible problems with database name:
+        * name field is empty
+        * name field contains name that is already taken; it's OK, however, if database name
+        hasn't changed throughout editing
+        :return: True if name is valid.
+        """
+
+
 class AttachedFilesMixin:
     def load_attached_files(self):
         """

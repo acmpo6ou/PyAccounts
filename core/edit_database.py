@@ -19,9 +19,10 @@
 
 from core.create_database import CreateDatabase
 from core.database_utils import Database
+from core.widgets import ValidateDbNameMixin
 
 
-class EditDatabase(CreateDatabase):
+class EditDatabase(ValidateDbNameMixin, CreateDatabase):
     def __init__(self, database: Database):
         super().__init__()
         self.database = database
@@ -29,17 +30,6 @@ class EditDatabase(CreateDatabase):
         # TODO: make database name cursive
         # TODO: change apply's button text to Save
         # TODO: populate form fields with data from database.
-
-    def validate_name(self):
-        """
-        Validates name field, displaying error tip if database name is invalid.
-
-        Possible problems with database name:
-        * name field is empty
-        * name field contains name that is already taken; it's OK, however if database name
-        hasn't changed throughout editing
-        :return: True if name is valid.
-        """
 
     def on_apply(self, _):
         """
