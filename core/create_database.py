@@ -19,7 +19,7 @@
 from core.widgets import CreateForm
 
 
-class CreateDatabaseForm(CreateForm):
+class CreateDatabase(CreateForm):
     def __init__(self):
         super().__init__("create_edit_database")
 

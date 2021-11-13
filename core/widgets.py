@@ -200,7 +200,7 @@ class Window(Gtk.Window, GladeTemplate):
 
 class CreateForm(GladeTemplate):
     """
-    Super class for CreateDatabaseForm and CreateAccountForm.
+    Super class for CreateDatabase and CreateAccount.
     """
 
     def validate_name(self):

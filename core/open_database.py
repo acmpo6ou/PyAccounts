@@ -21,7 +21,7 @@ from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
 
 
-class OpenDatabaseForm(GladeTemplate):
+class OpenDatabase(GladeTemplate):
     def __init__(self, database: Database):
         super().__init__("open_database")
         self.vexpand = True

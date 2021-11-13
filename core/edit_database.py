@@ -17,11 +17,11 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from core.create_database import CreateDatabaseForm
+from core.create_database import CreateDatabase
 from core.database_utils import Database
 
 
-class EditDatabaseForm(CreateDatabaseForm):
+class EditDatabase(CreateDatabase):
     def __init__(self, database: Database):
         super().__init__()
         self.database = database

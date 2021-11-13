@@ -17,12 +17,12 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from core.create_account import CreateAccountForm
+from core.create_account import CreateAccount
 from core.database_utils import Account
 from core.widgets import AttachedFilesMixin
 
 
-class EditAccountForm(CreateAccountForm, AttachedFilesMixin):
+class EditAccount(CreateAccount, AttachedFilesMixin):
     def __init__(self, database, account):
         super().__init__(database)
         self.account = account

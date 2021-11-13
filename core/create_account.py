@@ -25,7 +25,7 @@ from core.widgets import CreateForm
 DROP_ID = 808
 
 
-class CreateAccountForm(CreateForm):
+class CreateAccount(CreateForm):
     def __init__(self, database):
         super().__init__("create_edit_account")
         self.database = database
@@ -149,7 +149,7 @@ class CreateAccountForm(CreateForm):
 
         # TODO: create empty attached_files dict
         # TODO: iterate through attached_paths:
-        #  if path is None – skip it, because EditAccountForm may add old attached files as items
+        #  if path is None – skip it, because EditAccount may add old attached files as items
         #  with None path
         #  for each path try to read file content; save the content to attached_files dict
         #  on error display ErrorDialog "Failed to read file [file name]"
