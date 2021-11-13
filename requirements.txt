@@ -1,2 +1,2 @@
-PyGObject==3.36.0
+PyGObject==3.42.0
 python-xlib==0.31
