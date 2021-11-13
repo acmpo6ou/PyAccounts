@@ -74,6 +74,25 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
+def delete_item(self, item_name):
+    """
+    An extension function for Gtk.ListBox.
+    Removes item from Gtk.ListBox by its name.
+    """
+
+    """
+    iterate through self.widgets:
+        get first child from widget
+        if child text equals item_name:
+            remove widget from self
+            break
+    """
+
+
+# now Gtk.ListBox will have a convenient method to remove it's items by name
+Gtk.ListBox.delete = delete_item
+
+
 class GladeTemplate(Gtk.Bin):
     """
     Simplifies loading of glade ui files.
