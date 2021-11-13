@@ -198,7 +198,32 @@ class Window(Gtk.Window, GladeTemplate):
         AboutDialog().run()
 
 
-class CreateForm(GladeTemplate):
+class FilterDbNameMixin:
+    def on_filter_name(self, name):
+        """
+        Removes unallowed characters from database name.
+
+        Shows a warning explaining the user that he's trying to enter unallowed characters.
+        :param name: name field containing database name.
+        """
+
+
+class AttachedFilesMixin:
+    def load_attached_files(self):
+        """
+        Populates attached_files list with attached files.
+        """
+
+        """
+        iterate attached_files dict keys:
+            create label with key text
+            get icon associated with mime type of attached file using get_mime_type() from gtk_utils
+            put icon and label into hbox
+            add it to attached_files list box
+        """
+
+
+class CreateForm(GladeTemplate, FilterDbNameMixin):
     """
     Super class for CreateDatabase and CreateAccount.
     """
@@ -239,19 +264,4 @@ class CreateForm(GladeTemplate):
     def on_generate_password(self, _):
         """
         Displays dialog to generate password.
-        """
-
-
-class AttachedFilesMixin:
-    def load_attached_files(self):
-        """
-        Populates attached_files list with attached files.
-        """
-
-        """
-        iterate attached_files dict keys:
-            create label with key text
-            get icon associated with mime type of attached file using get_mime_type() from gtk_utils
-            put icon and label into hbox
-            add it to attached_files list box
         """

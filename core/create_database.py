@@ -23,14 +23,6 @@ class CreateDatabase(CreateForm):
     def __init__(self):
         super().__init__("create_edit_database")
 
-    def on_filter_name(self, name):
-        """
-        Removes unallowed characters from database name.
-
-        Shows a warning explaining the user that he's trying to enter unallowed characters.
-        :param name: name field containing database name.
-        """
-
     def on_apply(self, _):
         """
         Creates database using form data and handling all errors
