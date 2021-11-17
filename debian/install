@@ -11,6 +11,5 @@ COPYING usr/share/pyaccounts/PyAccounts
 README.md usr/share/pyaccounts/PyAccounts
 requirements.txt usr/share/pyaccounts/PyAccounts
 
-deb/pyaccounts.svg usr/share/pixmaps
 deb/pyaccounts.desktop usr/share/applications
 deb/application-account-database.xml usr/share/mime/packages
