@@ -32,7 +32,7 @@ class SettingsDialog(GladeTemplate):
         self.parent_widget.run()
 
     def on_cancel(self, _):
-        self.parent_widget.hide()
+        self.destroy()
 
     def load_fonts(self):
         """
@@ -46,6 +46,7 @@ class SettingsDialog(GladeTemplate):
         """
         # TODO: call main_window.load_css() to apply changes.
         # TODO: use main_window.settings.save()
+        # TODO: handle any errors; call self.destroy() on success
 
 
 @dataclass
