@@ -167,7 +167,7 @@ class Window(Gtk.Window, GladeTemplate):
 
     def show_form(self, form):
         """
-        Adds and shows given form to form_box removing currently shown form.
+        Adds given form to form_box removing currently shown form.
         :param form: form to display.
         """
 
@@ -191,7 +191,8 @@ class Window(Gtk.Window, GladeTemplate):
         """
         SettingsDialog(self.main_window).run()
 
-    def on_about(self, *args):
+    @staticmethod
+    def on_about(*args):
         """
         Displays about dialog.
         """
@@ -199,12 +200,10 @@ class Window(Gtk.Window, GladeTemplate):
 
 
 class FilterDbNameMixin:
-    def on_filter_name(self, name):
+    def on_filter_name(self):
         """
         Removes unallowed characters from database name.
-
         Shows a warning explaining the user that he's trying to enter unallowed characters.
-        :param name: name field containing database name.
         """
 
 
@@ -251,7 +250,7 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
         :return: True if name is valid.
         """
         # TODO: use `items` property to check if name already exists (this property will be
-        #  implemented by subclasses
+        #  implemented by subclasses)
 
     def validate_passwords(self):
         """
