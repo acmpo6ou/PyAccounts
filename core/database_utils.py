@@ -64,10 +64,13 @@ class Database:
         Represents whether in-memory database is same as database on the disk.
 
         Used to check whether database needs to be saved. It is needed when closing
-        database, with it we can determine whether to show confirmation dialog about unsaved
+        database. With it, we can determine whether to show confirmation dialog about unsaved
         data to user or not.
         """
-        return False  # TODO: implement
+        # TODO: create new Database instance, a copy of self
+        # TODO: use open() on new instance to read data from disk
+        # TODO: compare `accounts` property of self and disk database
+        return False
 
     def loads(self, string):
         """
@@ -81,8 +84,8 @@ class Database:
         """
         Serializes accounts dict to json.
         """
-        # TODO: use to_dict of Account to convert it to dict, serialize resulting dict of account
-        #  dicts
+        # TODO: use to_dict of Account to convert it to dict,
+        #  serialize resulting dict of account dicts
 
     @staticmethod
     def gensalt():
@@ -112,7 +115,7 @@ class Database:
         """
         # TODO: save password to `password` field
         # TODO: read .dba file; assign first 16 bytes to `salt` and decrypt remaining bytes,
-        #  fill accounts property
+        #  fill `accounts` property
 
     def close(self):
         """
@@ -121,7 +124,7 @@ class Database:
 
     def create(self):
         """
-        Creates .dba file for database using its name, password and salt.
+        Creates .dba file for database using its name and password.
         """
         # TODO: use gensalt() to generate salt
 
@@ -132,7 +135,7 @@ class Database:
 
     def rename(self, name):
         """
-        Renames database by renaming it's .dba file
+        Renames .dba file associated with this Database instance.
         :param name: new database name.
         """
         # TODO: set self.name to new name
