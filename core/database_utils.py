@@ -35,7 +35,7 @@ class Account:
     copy_email: bool = True
     attached_files: Dict[str, str] = field(default_factory=dict)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """
         Converts Account to dict renaming some fields.
         """
@@ -51,7 +51,7 @@ class Database:
     accounts: Dict[str, Account] = field(default_factory=dict)
 
     @property
-    def opened(self):
+    def opened(self) -> bool:
         """
         Represents whether database is opened or not, the database is
         considered opened when password is not None.
@@ -59,7 +59,7 @@ class Database:
         return False  # TODO: implement
 
     @property
-    def saved(self):
+    def saved(self) -> bool:
         """
         Represents whether in-memory database is same as database on the disk.
 
@@ -72,7 +72,7 @@ class Database:
         # TODO: compare `accounts` property of self and disk database
         return False
 
-    def loads(self, string):
+    def loads(self, string: str) -> Dict[Account]:
         """
         Deserializes json string to dict of accounts.
         """
@@ -80,7 +80,7 @@ class Database:
         #  corresponding Account instances.
         #  Possibly set `accounts` field to resulting dict
 
-    def dumps(self, accounts):
+    def dumps(self, accounts: Dict[Account]) -> str:
         """
         Serializes accounts dict to json.
         """
@@ -88,23 +88,23 @@ class Database:
         #  serialize resulting dict of account dicts
 
     @staticmethod
-    def gensalt():
+    def gensalt() -> bytes:
         """
         Generates 16 purely random bytes of salt.
         """
         return b""
 
-    def encrypt(self, string, salt):
+    def encrypt(self, string: str, salt: bytes) -> str:
         """
         Encrypts given string using database password and salt.
         """
 
-    def decrypt(self, string, salt):
+    def decrypt(self, string: str, salt: bytes) -> str:
         """
         Decrypts given string using database password and salt.
         """
 
-    def open(self, password):
+    def open(self, password: str):
         """
         Opens database using its name, password and salt.
 
@@ -133,14 +133,14 @@ class Database:
         Deletes .dba file associated with this Database instance.
         """
 
-    def rename(self, name):
+    def rename(self, name: str):
         """
         Renames .dba file associated with this Database instance.
         :param name: new database name.
         """
         # TODO: set self.name to new name
 
-    def save(self, name, password, accounts):
+    def save(self, name: str, password: str, accounts: Dict[Account]):
         """
         Deletes old database and creates new one, more specifically:
         it replaces old database with a new one.
