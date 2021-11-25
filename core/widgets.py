@@ -192,7 +192,7 @@ class Window(Gtk.Window, GladeTemplate):
         SettingsDialog(self.main_window).run()
 
     @staticmethod
-    def on_about(*args):
+    def on_about(*_):
         """
         Displays about dialog.
         """
