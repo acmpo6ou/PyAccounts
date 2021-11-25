@@ -74,7 +74,7 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
-def delete_item(self, item_name):
+def delete_item(self, item_name: str):
     """
     An extension function for Gtk.ListBox.
     Removes item from Gtk.ListBox by its name.
@@ -134,7 +134,7 @@ class GladeTemplate(Gtk.Bin):
         return object.__getattribute__(self, item)
 
 
-def load_icon(icon_name, size) -> Gtk.Image:
+def load_icon(icon_name: str, size: int) -> Gtk.Image:
     """
     Returns icon from default theme.
     """
@@ -143,7 +143,7 @@ def load_icon(icon_name, size) -> Gtk.Image:
     return Gtk.Image.new_from_pixbuf(icon)
 
 
-def get_mime_icon(path) -> Gtk.Image:
+def get_mime_icon(path: str) -> Gtk.Image:
     """
     Returns mime icon associated with file given in `path`.
     :param path: path to file icon of which we want to get.

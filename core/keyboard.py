@@ -386,7 +386,7 @@ def key_up(key):
     display.sync()
 
 
-def write(string):
+def write(string: str):
     for key in string:
         if isShiftCharacter(key):
             fake_input(display, X.KeyPress, keyboardMapping["shift"])
