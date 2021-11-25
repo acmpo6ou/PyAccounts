@@ -35,7 +35,7 @@ class IconDialog(Gtk.Dialog):
     # DO NOT REMOVE THIS, this is needed because of strange issues with _setattr from gtk_utils
     vbox = None
 
-    def __init__(self, title, message, icon, *args, **kwargs):
+    def __init__(self, title: str, message: str, icon: str, *args, **kwargs):
         super().__init__(self, title=title, modal=True, *args, **kwargs)
         self.vbox = self.content_area
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -49,7 +49,7 @@ class IconDialog(Gtk.Dialog):
         label.margin = 10
         box.add(label)
 
-    def run(self):
+    def run(self) -> Gtk.ResponseType:
         self.show_all()
         response = super().run()
         self.destroy()
@@ -61,7 +61,7 @@ class WarningDialog(IconDialog):
     Dialog with warning icon and 2 buttons: `Yes` and `No`.
     """
 
-    def __init__(self, message, *args, **kwargs):
+    def __init__(self, message: str, *args, **kwargs):
         super().__init__(
             title="Warning!",
             message=message,
@@ -78,7 +78,7 @@ class ErrorDialog(IconDialog):
     Dialog with error icon, error message and details.
     """
 
-    def __init__(self, message, details, *args, **kwargs):
+    def __init__(self, message: str, details: str, *args, **kwargs):
         super().__init__(
             title="Error!",
             message=message,
@@ -107,7 +107,7 @@ class DateChooserDialog(GladeTemplate):
     def __init__(self):
         super().__init__("date_chooser")
 
-    def run(self):
+    def run(self) -> Gtk.ResponseType:
         response = self.parent_widget.run()
         self.destroy()
         return response
@@ -118,22 +118,22 @@ class StatusBar:
     A wrapper for Gtk.Statusbar to display messages that disappear in 15 seconds.
     """
 
-    def __init__(self, statusbar):
+    def __init__(self, statusbar: Gtk.Statusbar):
         self.statusbar = statusbar
 
-    def message(self, message):
+    def message(self, message: str):
         """
         Displays message that disappears in 15 seconds on status bar.
         """
         # TODO: use GObject.timeout_add() to add callback to clear status bar in 15 seconds.
 
-    def success(self, message):
+    def success(self, message: str):
         """
         Displays a success message.
         """
         # TODO: display ✔ before the message
 
-    def warning(self, message):
+    def warning(self, message: str):
         """
         Displays a warning.
         """
@@ -180,7 +180,7 @@ class Window(Gtk.Window, GladeTemplate):
         Loads separator position from settings.json
         """
 
-    def on_separator_moved(self, separator, _):
+    def on_separator_moved(self, separator: Gtk.Paned, _):
         """
         Saves separator position to settings.json
         """
