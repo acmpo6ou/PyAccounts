@@ -7,6 +7,7 @@
     <plugin id="lermitage.intellij.extra.icons" />
     <plugin id="org.intellij.plugins.markdown" />
     <plugin id="org.jetbrains.settingsRepository" />
+    <plugin id="ru.meanmail.plugin.requirements" />
     <plugin id="sourcery.pycharm-plugin" />
   </component>
 </project>
