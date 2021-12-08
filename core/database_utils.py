@@ -72,7 +72,7 @@ class Database:
         # TODO: compare `accounts` property of self and disk database
         return False
 
-    def loads(self, string: str) -> Dict[Account]:
+    def loads(self, string: str) -> Dict[str, Account]:
         """
         Deserializes json string to dict of accounts.
         """
@@ -80,7 +80,7 @@ class Database:
         #  corresponding Account instances.
         #  Possibly set `accounts` field to resulting dict
 
-    def dumps(self, accounts: Dict[Account]) -> str:
+    def dumps(self, accounts: Dict[str, Account]) -> str:
         """
         Serializes accounts dict to json.
         """
@@ -140,7 +140,7 @@ class Database:
         """
         # TODO: set self.name to new name
 
-    def save(self, name: str, password: str, accounts: Dict[Account]):
+    def save(self, name: str, password: str, accounts: Dict[str, Account]):
         """
         Deletes old database and creates new one, more specifically:
         it replaces old database with a new one.
