@@ -32,7 +32,7 @@ CORE_DIR = "core/"
 SKIP = ("__init__.py", "gtk_utils.py", "database_utils.py", "widgets.py")
 
 
-def inject_glade_stubs():
+def gen_glade_stubs():
     out.write("    # glade stubs start\n")
     ids = re.findall('id="([a-z_]*)"', glade_file)
 
@@ -87,4 +87,4 @@ for file in os.listdir(CORE_DIR):
             glade_file = open(glade_filepath, "r").read()
             root = ElementTree.parse(glade_filepath).getroot()
 
-            inject_glade_stubs()
+            gen_glade_stubs()
