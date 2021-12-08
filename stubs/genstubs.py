@@ -29,11 +29,11 @@ import re
 from xml.etree import ElementTree
 
 CORE_DIR = "core/"
-SKIP = ("__init__.py", "gtk_utils.py", "database_utils.py", "widgets.py")
+SKIP = ("__init__.py", "gtk_utils.py", "database_utils.py", "widgets.py", "__pycache__")
 
 
 def gen_glade_stubs():
-    out.write("    # glade stubs start\n")
+    out.write("    # <editor-fold>\n")
     ids = re.findall('id="([a-z_]*)"', glade_file)
 
     for _id in ids:
@@ -45,7 +45,7 @@ def gen_glade_stubs():
             continue
 
         out.write(f"    {_id}: {classname}\n")
-    out.write("    # glade stubs end\n")
+    out.write("    # </editor-fold>\n")
 
 
 for file in os.listdir(CORE_DIR):
@@ -60,9 +60,9 @@ for file in os.listdir(CORE_DIR):
 
     for line in _in:
         # skip previously generated stubs
-        if "# glade stubs start" in line:
+        if "<editor-fold>" in line:
             skip = True
-        elif "# glade stubs end" in line:
+        elif "</editor-fold>" in line:
             skip = False
             continue
 
