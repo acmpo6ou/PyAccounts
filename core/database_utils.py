@@ -147,5 +147,5 @@ class Database:
 
         :param name: new name for the database.
         :param password: new password for the database.
-        :param accounts: new accounts dict for the database.
+        :param accounts: new `accounts` dict for the database.
         """

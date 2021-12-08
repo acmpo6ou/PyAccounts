@@ -128,7 +128,7 @@ class DatabaseWindow(Window):
 
     def on_delete_account(self, _):
         """
-        Displays confirmation dialog asking user if he really want's to delete selected account.
+        Displays confirmation dialog asking user if he really wants to delete selected account.
         """
 
         # TODO: show warning in statusbar if there is no account selected

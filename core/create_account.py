@@ -92,7 +92,7 @@ class CreateAccount(CreateForm):
 
     def on_choose_date(self, *args):
         """
-        Displays a dialog to choose the birth date.
+        Displays a dialog to choose the birthdate.
         """
 
         # TODO: run DateChooserDialog dialog
