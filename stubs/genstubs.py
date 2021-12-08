@@ -31,6 +31,23 @@ from xml.etree import ElementTree
 CORE_DIR = "core/"
 SKIP = ("__init__.py", "gtk_utils.py", "database_utils.py", "widgets.py")
 
+
+def inject_glade_stubs():
+    out.write("    # glade stubs start\n")
+    ids = re.findall('id="([a-z_]*)"', glade_file)
+
+    for _id in ids:
+        widget = root.findall(f".//*[@id='{_id}']")[0]
+        classname = widget.attrib["class"].replace("Gtk", "Gtk.")
+
+        if _id == parent_widget_id:
+            out.write(f"    parent_widget: {classname}\n")
+            continue
+
+        out.write(f"    {_id}: {classname}\n")
+    out.write("    # glade stubs end\n\n")
+
+
 for file in os.listdir(CORE_DIR):
     if file in SKIP:
         continue
@@ -58,14 +75,4 @@ for file in os.listdir(CORE_DIR):
             glade_file = open(glade_filepath, "r").read()
             root = ElementTree.parse(glade_filepath).getroot()
 
-            ids = re.findall('id="([a-z_]*)"', glade_file)
-            for _id in ids:
-                widget = root.findall(f".//*[@id='{_id}']")[0]
-                classname = widget.attrib["class"].replace("Gtk", "Gtk.")
-
-                if _id == parent_widget_id:
-                    out.write(f"    parent_widget: {classname}\n")
-                    continue
-
-                out.write(f"    {_id}: {classname}\n")
-            out.write("\n")
+            inject_glade_stubs()
