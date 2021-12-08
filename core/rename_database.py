@@ -15,6 +15,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from gi.repository import Gtk
 
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
@@ -22,6 +23,14 @@ from core.widgets import FilterDbNameMixin, ValidateDbNameMixin
 
 
 class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateDbNameMixin):
+    # <editor-fold>
+    parent_widget: Gtk.Box
+    title: Gtk.Label
+    name: Gtk.Entry
+    name_error: Gtk.Label
+    apply: Gtk.Button
+    # </editor-fold>
+
     def __init__(self, database: Database):
         super().__init__("rename_database")
         self.database = database

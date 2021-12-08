@@ -25,6 +25,17 @@ ACCOUNT_ICONS_DIR = "img/account_icons/"
 
 
 class DatabaseWindow(Window):
+    # <editor-fold>
+    parent_widget: Gtk.Box
+    menubar_toolbar: Gtk.Box
+    menubar: Gtk.MenuBar
+    toolbar: Gtk.Toolbar
+    separator: Gtk.Paned
+    form_box: Gtk.Box
+    accounts_list: Gtk.ListBox
+    statusbar: Gtk.Statusbar
+    # </editor-fold>
+
     # TODO: use list comprehension, os.listdir(ACCOUNT_ICONS_DIR) and sorted(with custom function)
     # TODO: remove .svg from icon names
     # it's important to sort icon names by length (longer names first), because this way

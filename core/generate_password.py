@@ -19,10 +19,22 @@
 
 from string import digits, ascii_lowercase, ascii_uppercase, punctuation
 
+from gi.repository import Gtk
+
 from core.gtk_utils import GladeTemplate
 
 
 class GenPassDialog(GladeTemplate):
+    # <editor-fold>
+    length_adj: Gtk.Adjustment
+    parent_widget: Gtk.Dialog
+    length: Gtk.SpinButton
+    numbers: Gtk.CheckButton
+    upper: Gtk.CheckButton
+    lower: Gtk.CheckButton
+    punctuation: Gtk.CheckButton
+    # </editor-fold>
+
     """
     A dialog to generate password.
     """

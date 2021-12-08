@@ -28,6 +28,21 @@ NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 
 
 class DisplayAccount(GladeTemplate, AttachedFilesMixin):
+    # <editor-fold>
+    copy_notes: Gtk.Image
+    visibility: Gtk.Image
+    visibility_notes: Gtk.Image
+    parent_widget: Gtk.Box
+    accountname: Gtk.Label
+    username: Gtk.Label
+    email: Gtk.Label
+    to_copy: Gtk.Label
+    password: Gtk.Label
+    birth_date: Gtk.Label
+    notes: Gtk.TextView
+    attached_files: Gtk.ListBox
+    # </editor-fold>
+
     def __init__(self, account: Account, database_window: DatabaseWindow):
         super().__init__("display_account")
         self.database_window = database_window

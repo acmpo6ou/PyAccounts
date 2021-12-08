@@ -25,6 +25,17 @@ from core.widgets import Window
 
 
 class MainWindow(Gtk.ApplicationWindow, Window):
+    # <editor-fold>
+    parent_widget: Gtk.Box
+    menubar_toolbar: Gtk.Box
+    menubar: Gtk.MenuBar
+    toolbar: Gtk.Toolbar
+    separator: Gtk.Paned
+    form_box: Gtk.Box
+    db_list: Gtk.ListBox
+    statusbar: Gtk.Statusbar
+    # </editor-fold>
+
     def __init__(self, *args, **kwargs):
         Gtk.ApplicationWindow.__init__(self, *args, **kwargs)
         GladeTemplate.__init__(self, "main_window")

@@ -15,12 +15,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-
+from gi.repository import Gtk
 
 from core.gtk_utils import GladeTemplate
 
 
 class AboutDialog(GladeTemplate):
+    # <editor-fold>
+    parent_widget: Gtk.AboutDialog
+    # </editor-fold>
+
     def __init__(self):
         super().__init__("about")
         # TODO: set dialog version to current app version;

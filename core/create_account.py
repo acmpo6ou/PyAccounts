@@ -26,6 +26,28 @@ DROP_ID = 808
 
 
 class CreateAccount(CreateForm):
+    # <editor-fold>
+    add: Gtk.Image
+    remove: Gtk.Image
+    parent_widget: Gtk.Box
+    title: Gtk.Label
+    apply: Gtk.Button
+    username: Gtk.Entry
+    email: Gtk.Entry
+    copy_email: Gtk.RadioButton
+    birth_box: Gtk.EventBox
+    birth_date: Gtk.Label
+    notes: Gtk.TextView
+    attached_files: Gtk.ListBox
+    accname: Gtk.Label
+    name: Gtk.Entry
+    name_error: Gtk.Label
+    password: Gtk.Entry
+    password_error: Gtk.Label
+    repeat_password: Gtk.Entry
+    passwords_diff_error: Gtk.Label
+    # </editor-fold>
+
     def __init__(self, database):
         super().__init__("create_edit_account")
         self.database = database

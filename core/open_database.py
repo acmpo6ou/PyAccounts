@@ -15,13 +15,21 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-
+from gi.repository import Gtk
 
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
 
 
 class OpenDatabase(GladeTemplate):
+    # <editor-fold>
+    parent_widget: Gtk.Box
+    title: Gtk.Label
+    open_button: Gtk.Button
+    incorrect_password: Gtk.Label
+    password: Gtk.Entry
+    # </editor-fold>
+
     def __init__(self, database: Database):
         super().__init__("open_database")
         self.vexpand = True

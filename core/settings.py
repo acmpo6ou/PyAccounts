@@ -19,10 +19,18 @@
 
 from dataclasses import dataclass
 
+from gi.repository import Gtk
+
 from core.gtk_utils import GladeTemplate
 
 
 class SettingsDialog(GladeTemplate):
+    # <editor-fold>
+    parent_widget: Gtk.Dialog
+    general_font: Gtk.FontButton
+    mono_font: Gtk.FontButton
+    # </editor-fold>
+
     def __init__(self, main_window):
         super().__init__("settings")
         self.load_fonts()

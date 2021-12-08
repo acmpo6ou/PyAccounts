@@ -15,11 +15,24 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from gi.repository import Gtk
 
 from core.widgets import CreateForm
 
 
 class CreateDatabase(CreateForm):
+    # <editor-fold>
+    parent_widget: Gtk.Box
+    title: Gtk.Label
+    name: Gtk.Entry
+    password: Gtk.Entry
+    repeat_password: Gtk.Entry
+    apply: Gtk.Button
+    name_error: Gtk.Label
+    password_error: Gtk.Label
+    passwords_diff_error: Gtk.Label
+    # </editor-fold>
+
     def __init__(self):
         super().__init__("create_edit_database")
 
