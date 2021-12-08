@@ -19,33 +19,24 @@
 """
 Generates type stubs for `core` package.
 
-Generates stubs using mypy, then adds stubs extracted from glade ui files.
+Adds stubs extracted from glade ui files.
 This way, all classes that derive from GladeTemplate will have proper autocomplete.
 """
 
 import os
 import re
-import sys
 
-# noinspection StandardLibraryXml
 from xml.etree import ElementTree
 
-result = os.system("stubgen core -o stubs")
-if result:
-    print("Please install mypy")
-    sys.exit()
+CORE_DIR = "core/"
+SKIP = ("__init__.py", "gtk_utils.py", "database_utils.py", "widgets.py")
 
-STUB_DIR = "stubs/core/"
-SKIP = ("__init__.pyi", "gtk_utils.pyi", "database_utils.pyi", "widgets.pyi")
-
-for stub in os.listdir(STUB_DIR):
-    if stub in SKIP:
+for file in os.listdir(CORE_DIR):
+    if file in SKIP:
         continue
 
-    _in = open(f"{STUB_DIR}/{stub}", "r").readlines()
-    out = open(f"{STUB_DIR}/{stub}", "w")
-
-    out.write("from gi.repository import Gtk\n")
+    _in = open(f"{CORE_DIR}/{file}", "r").readlines()
+    out = open(f"{CORE_DIR}/{file}", "w")
     injected = False
 
     for line in _in:
@@ -55,7 +46,7 @@ for stub in os.listdir(STUB_DIR):
             injected = True
 
             # fmt: off
-            glade_filepath = f"ui/{stub[:-3]}glade" \
+            glade_filepath = f"ui/{file[:-2]}glade" \
                 .replace("ui/create_", "ui/create_edit_") \
                 .replace("ui/edit_", "ui/create_edit_")
 
@@ -77,3 +68,4 @@ for stub in os.listdir(STUB_DIR):
                     continue
 
                 out.write(f"    {_id}: {classname}\n")
+            out.write("\n")
