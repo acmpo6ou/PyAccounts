@@ -45,7 +45,7 @@ def inject_glade_stubs():
             continue
 
         out.write(f"    {_id}: {classname}\n")
-    out.write("    # glade stubs end\n\n")
+    out.write("    # glade stubs end\n")
 
 
 for file in os.listdir(CORE_DIR):
@@ -54,9 +54,21 @@ for file in os.listdir(CORE_DIR):
 
     _in = open(f"{CORE_DIR}/{file}", "r").readlines()
     out = open(f"{CORE_DIR}/{file}", "w")
+
     injected = False
+    skip = False
 
     for line in _in:
+        # skip previously generated stubs
+        if "# glade stubs start" in line:
+            skip = True
+        elif "# glade stubs end" in line:
+            skip = False
+            continue
+
+        if skip:
+            continue
+
         out.write(line)
 
         if "class " in line and not injected:
