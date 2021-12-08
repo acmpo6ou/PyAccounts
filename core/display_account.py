@@ -20,7 +20,6 @@
 from gi.repository import Gtk, Gdk
 
 from core.database_utils import Account
-from core.database_window import DatabaseWindow
 from core.gtk_utils import GladeTemplate
 from core.widgets import AttachedFilesMixin
 
@@ -43,7 +42,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
     attached_files: Gtk.ListBox
     # </editor-fold>
 
-    def __init__(self, account: Account, database_window: DatabaseWindow):
+    def __init__(self, account: Account, database_window):
         super().__init__("display_account")
         self.database_window = database_window
         # TODO: set sort_func for attached_files list to sort it alphabetically
