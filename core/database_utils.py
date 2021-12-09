@@ -30,7 +30,7 @@ class Account:
     username: str
     email: str
     password: str
-    date: str
+    birthdate: str
     notes: str
     copy_email: bool = True
     attached_files: dict[str, str] = field(default_factory=dict)
@@ -40,7 +40,7 @@ class Account:
         Converts Account to dict renaming some fields.
         """
         # TODO: use Account.__dict__ method to convert it to dict
-        # TODO: rename `notes` and `username` fields, see StackOverflow:
+        # TODO: rename `notes`, `birthdate` and `username` fields, see StackOverflow:
         #  https://stackoverflow.com/q/60789444
 
 
