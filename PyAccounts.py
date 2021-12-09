@@ -24,7 +24,6 @@ from gi.repository import Gtk, Gio
 
 import sys
 from signal import signal, SIGUSR1
-from typing import List
 
 # noinspection PyUnresolvedReferences
 import core.gtk_utils
@@ -66,7 +65,7 @@ class Application(Gtk.Application):
             )
             dialog.show_all()
 
-    def do_open(self, files: List[Gio.File], *args):
+    def do_open(self, files: list[Gio.File], *args):
         """
         Imports .dba files given in [files] list.
         """

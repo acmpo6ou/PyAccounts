@@ -18,8 +18,10 @@
 Defines most fundamental classes for PyAccounts: Account and Database.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+from typing import TypeAlias
 
 
 @dataclass
@@ -31,7 +33,7 @@ class Account:
     date: str
     notes: str
     copy_email: bool = True
-    attached_files: Dict[str, str] = field(default_factory=dict)
+    attached_files: dict[str, str] = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         """
@@ -42,11 +44,14 @@ class Account:
         #  https://stackoverflow.com/q/60789444
 
 
+Accounts: TypeAlias = dict[str, Account]
+
+
 @dataclass
 class Database:
     name: str
-    password: Optional[str] = None
-    accounts: Dict[str, Account] = field(default_factory=dict)
+    password: str | None = None
+    accounts: Accounts = field(default_factory=dict)
 
     @property
     def opened(self) -> bool:
@@ -70,15 +75,14 @@ class Database:
         # TODO: compare `accounts` property of self and disk database
         return False
 
-    def loads(self, string: str) -> Dict[str, Account]:
+    def loads(self, string: str) -> Accounts:
         """
         Deserializes json string to dict of accounts.
         """
         # TODO: use json to deserialize string, then replace dicts inside accounts dict with
         #  corresponding Account instances.
-        #  Possibly set `accounts` field to resulting dict
 
-    def dumps(self, accounts: Dict[str, Account]) -> str:
+    def dumps(self, accounts: Accounts) -> str:
         """
         Serializes accounts dict to json.
         """
@@ -138,7 +142,7 @@ class Database:
         """
         # TODO: set self.name to new name
 
-    def save(self, name: str, password: str, accounts: Dict[str, Account]):
+    def save(self, name: str, password: str, accounts: Accounts):
         """
         Deletes old database and creates new one, more specifically:
         it replaces old database with a new one.
