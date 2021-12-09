@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 #  Copyright (c) 2021. Bohdan Kolvakh
 #  This file is part of PyAccounts.
 #
@@ -15,6 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+
 from gi.repository import Gtk
 
 from core.create_account import CreateAccount

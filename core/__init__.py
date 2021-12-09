@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 #  Copyright (c) 2021. Bohdan Kolvakh
 #  This file is part of PyAccounts.
 #
