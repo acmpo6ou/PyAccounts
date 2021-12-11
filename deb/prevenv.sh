@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -d "deb/pyaccounts" ]; then
-  python3 -m venv deb/pyaccounts
+  python3.9 -m venv deb/pyaccounts
   source deb/pyaccounts/bin/activate
   pip install -U pip
   pip install -U setuptools
@@ -18,3 +18,6 @@ find . \( -name "*.exe" \) -type f -delete
 # fix some venv paths to make the venv portable
 REPSTR="$HOME/Documents/PyAccounts/deb/pyaccounts/"
 grep -rl "$REPSTR" deb/pyaccounts | xargs sed -i "s;$REPSTR;/usr/share/pyaccounts/;g"
+
+# remove dangling links
+rm deb/pyaccounts/bin/python deb/pyaccounts/bin/python3
