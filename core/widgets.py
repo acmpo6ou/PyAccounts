@@ -238,6 +238,8 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
     Super class for CreateDatabase and CreateAccount.
     """
 
+    APPLY_BUTTON_TEXT = "_Create"
+
     def validate_name(self):
         """
         Validates name field, displaying error tip if database/account name is invalid.
@@ -265,6 +267,11 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
         Enables or disables apply button depending on whether there are errors in the form.
         """
         # TODO: use validate_passwords and validate_name
+        # TODO: set button text to `APPLY_BUTTON_TEXT` when disabled;
+        #  and to `✨ APPLY_BUTTON_TEXT` when enabled
+        # TODO: add comment "This is needed because when button is disabled the ✨ emoji doesn't
+        #  appear greyed out, so we just remove it and display the emoji only when button is
+        #  enabled"
 
     def on_pass_toggle(self, *args):
         """

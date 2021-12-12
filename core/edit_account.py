@@ -44,6 +44,8 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
     passwords_diff_error: Gtk.Label
     # </editor-fold>
 
+    APPLY_BUTTON_TEXT = "_Save"
+
     def __init__(self, database, account):
         super().__init__(database)
         self.account = account
@@ -52,7 +54,8 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
         # load already attached files mapping them to None since they don't have any path
         self.attached_paths = ...
         self.load_account()
-        # TODO: change Create button to Save
+        # TODO: Create button should be changed to Save automatically, because load_account()
+        #  will fill form fields with data
 
     def load_account(self):
         """
