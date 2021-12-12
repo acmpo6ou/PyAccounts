@@ -59,7 +59,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Database name: </property>
+            <property name="label" translatable="yes">✏️ Database name: </property>
             <property name="mnemonic-widget">name</property>
             <property name="xalign">0</property>
           </object>
@@ -88,7 +88,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Password: </property>
+            <property name="label" translatable="yes">🔒️ Password: </property>
             <property name="xalign">0</property>
           </object>
           <packing>
@@ -117,7 +117,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Repeat password: </property>
+            <property name="label" translatable="yes">🔒️ Repeat password: </property>
             <property name="xalign">0</property>
           </object>
           <packing>
@@ -144,7 +144,7 @@ Author: Bohdan Kolvakh
         </child>
         <child>
           <object class="GtkButton">
-            <property name="label" translatable="yes">_Generate</property>
+            <property name="label" translatable="yes">🔐 _Generate</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
