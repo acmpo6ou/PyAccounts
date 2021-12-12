@@ -105,7 +105,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Username: </property>
+            <property name="label" translatable="yes">✏️ Username: </property>
             <property name="xalign">0</property>
           </object>
           <packing>
@@ -130,7 +130,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">E-mail:</property>
+            <property name="label" translatable="yes">✉️ E-mail:</property>
             <property name="xalign">0</property>
           </object>
           <packing>
@@ -168,7 +168,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">To copy:</property>
+            <property name="label" translatable="yes">📋️ To copy:</property>
             <property name="xalign">0</property>
           </object>
           <packing>
@@ -260,7 +260,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Notes</property>
+            <property name="label" translatable="yes">📝 Notes</property>
             <property name="xalign">0</property>
             <attributes>
               <attribute name="weight" value="bold"/>
@@ -276,7 +276,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Attached files</property>
+            <property name="label" translatable="yes">📎 Attached files</property>
             <property name="xalign">0</property>
             <attributes>
               <attribute name="weight" value="bold"/>
@@ -377,7 +377,7 @@ Author: Bohdan Kolvakh
               <object class="GtkLabel" id="accname">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Account name: </property>
+                <property name="label" translatable="yes">👤 Account name: </property>
                 <property name="mnemonic-widget">name</property>
                 <property name="xalign">0</property>
                 <style>
@@ -437,7 +437,7 @@ Author: Bohdan Kolvakh
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Password: </property>
+                <property name="label" translatable="yes">🔒️ Password: </property>
                 <property name="xalign">0</property>
               </object>
               <packing>
@@ -496,7 +496,7 @@ Author: Bohdan Kolvakh
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Repeat password: </property>
+                <property name="label" translatable="yes">🔒️ Repeat password: </property>
                 <property name="xalign">0</property>
               </object>
               <packing>
