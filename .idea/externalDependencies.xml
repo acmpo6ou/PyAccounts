@@ -6,6 +6,7 @@
     <plugin id="lermitage.intellij.extra.icons" />
     <plugin id="org.intellij.plugins.markdown" />
     <plugin id="org.jetbrains.settingsRepository" />
+    <plugin id="org.tonybaloney.security.pycharm-security" />
     <plugin id="ru.meanmail.plugin.requirements" />
     <plugin id="sourcery.pycharm-plugin" />
   </component>
