@@ -13,11 +13,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from typing import TYPE_CHECKING
 
 from gi.repository import Gdk, Gtk
 
+from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
 from core.widgets import Window
+
+if TYPE_CHECKING:
+    from core.main_window import MainWindow
 
 ACCOUNT_ICONS_DIR = "img/account_icons/"
 
@@ -40,7 +45,7 @@ class DatabaseWindow(Window):
     # we will have better matches
     account_icons = ...
 
-    def __init__(self, database, main_window):
+    def __init__(self, database: Database, main_window: "MainWindow"):
         GladeTemplate.__init__(self, "database_window")
         Window.__init__(self)
 
@@ -70,7 +75,7 @@ class DatabaseWindow(Window):
         # TODO: style label: xalign = 0, margin start = 5
         # TODO: add() hbox to accounts_list
 
-    def load_account_icon(self, accountname):
+    def load_account_icon(self, accountname: str):
         """
         Returns account icon associated with given [accountname].
         """
@@ -95,7 +100,7 @@ class DatabaseWindow(Window):
         """
         return self.on_quit(event)
 
-    def on_quit(self, _):
+    def on_quit(self, _) -> bool:
         """
         Checks if database is saved, if it is – quits, otherwise displays confirmation dialog.
         :returns: True to prevent quiting and False to allow it.

@@ -13,11 +13,11 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-
+from __future__ import annotations
 
 from gi.repository import Gdk, Gtk
 
-from core.database_utils import Account
+from core.database_utils import Account, Database
 from core.widgets import CreateForm
 
 DROP_ID = 808
@@ -46,7 +46,7 @@ class CreateAccount(CreateForm):
     passwords_diff_error: Gtk.Label
     # </editor-fold>
 
-    def __init__(self, database):
+    def __init__(self, database: Database):
         super().__init__("create_edit_account")
         self.database = database
         self.attached_paths = {}
@@ -65,7 +65,7 @@ class CreateAccount(CreateForm):
         self.load_completion(self.username, usernames)
         self.load_completion(self.email, emails)
 
-    def load_completion(self, field, items):
+    def load_completion(self, field: Gtk.Entry, items: list[str]):
         """
         Loads completion for [field] using completion strings from [items].
         """
@@ -80,7 +80,7 @@ class CreateAccount(CreateForm):
         # field.completion = completion
 
     @staticmethod
-    def on_hover_date_icon(icon):
+    def on_hover_date_icon(icon: Gtk.Image):
         """
         Changes cursor style to `pointer` when hovering over date icon.
         :param icon: the date icon.
@@ -98,7 +98,7 @@ class CreateAccount(CreateForm):
         # TODO: convert the date to string of format "dd.mm.yyyy"
         # TODO: set birth_date label to this date
 
-    def attach_file(self, path):
+    def attach_file(self, path: str):
         """
         Adds item to attached_files list with file mime icon and file name.
 
@@ -150,7 +150,7 @@ class CreateAccount(CreateForm):
         #  remove corresponding item from attached_files list (by iterating through children and
         #  removing child with appropriate file name, break from the loop after removed child)
 
-    def on_drop_files(self, _, context, x, y, data, info, time):
+    def on_drop_files(self, _, context, x, y, data: Gtk.SelectionData, info, time):
         """
         Called when files are dropped onto attached files list, attaches dropped files.
         :param data: contains paths to dropped files.
@@ -161,7 +161,7 @@ class CreateAccount(CreateForm):
         # TODO: check if path is a directory, if it is – skip
         # TODO: call attach_file for each path
 
-    def get_attached_files(self):
+    def get_attached_files(self) -> dict[str, bytes]:
         """
         Loads content of selected attached files handling errors.
         :return: dict mapping file names to file content.
@@ -184,7 +184,7 @@ class CreateAccount(CreateForm):
 
     def on_apply(self, _=None):
         """
-        Creates account, adds it to accounts list.
+        Creates account and adds it to accounts list.
         """
 
         # TODO: create Account instance using create_account and add it to the database,

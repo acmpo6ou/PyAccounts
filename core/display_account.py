@@ -13,13 +13,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-
+from typing import TYPE_CHECKING
 
 from gi.repository import Gtk, Gdk
 
 from core.database_utils import Account
 from core.gtk_utils import GladeTemplate
 from core.widgets import AttachedFilesMixin
+
+if TYPE_CHECKING:
+    from core.database_window import DatabaseWindow
 
 NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 
@@ -40,7 +43,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
     attached_files: Gtk.ListBox
     # </editor-fold>
 
-    def __init__(self, account: Account, database_window):
+    def __init__(self, account: Account, database_window: "DatabaseWindow"):
         super().__init__("display_account")
         self.database_window = database_window
         # TODO: set sort_func for attached_files list to sort it alphabetically
@@ -88,7 +91,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         """
         # TODO: copy notes to safe_clipboard property of MainWindow.
 
-    def save_attached_file(self, path, content: bytes):
+    def save_attached_file(self, path: str, content: bytes):
         """
         Saves given attached file handling all errors.
 
@@ -98,7 +101,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         # TODO: open file for writing, write content to file
         # TODO: Show error/success message.
 
-    def on_save_file(self, row):
+    def on_save_file(self, row: Gtk.ListBoxRow):
         """
         Displays file dialog to save selected attached file.
         :param row: row containing name of attached file.

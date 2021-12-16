@@ -163,7 +163,7 @@ class Window(Gtk.Window, GladeTemplate):
             self.on_about,
         )
 
-    def show_form(self, form):
+    def show_form(self, form: GladeTemplate):
         """
         Adds given form to form_box removing currently shown form.
         :param form: form to display.
@@ -206,7 +206,7 @@ class FilterDbNameMixin:
 
 
 class ValidateDbNameMixin:
-    def validate_name(self):
+    def validate_name(self) -> bool:
         """
         Validates name field, displaying error tip if database name is invalid.
 
@@ -240,7 +240,7 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
 
     APPLY_BUTTON_TEXT = "_Create"
 
-    def validate_name(self):
+    def validate_name(self) -> bool:
         """
         Validates name field, displaying error tip if database/account name is invalid.
 
@@ -252,7 +252,7 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
         # TODO: use `items` property to check if name already exists (this property will be
         #  implemented by subclasses)
 
-    def validate_passwords(self):
+    def validate_passwords(self) -> bool:
         """
         Validates password fields, displaying error tips if passwords are invalid.
 

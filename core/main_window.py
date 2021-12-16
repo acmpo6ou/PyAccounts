@@ -17,6 +17,7 @@
 
 from gi.repository import Gtk, Gdk
 
+from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
 from core.settings import Settings
 from core.widgets import Window
@@ -68,14 +69,14 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         )
 
     @property
-    def safe_clipboard(self):
+    def safe_clipboard(self) -> str:
         """
         Returns content from safe clipboard, then automatically clears the clipboard.
         This is done for safety.
         """
 
     @safe_clipboard.setter
-    def safe_clipboard(self, value):
+    def safe_clipboard(self, value: str):
         """
         Puts `value` into safe clipboard and starts one minute timer to auto clear the clipboard.
         This is done for safety.
@@ -96,7 +97,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
-    def get_databases(self):
+    def get_databases(self) -> list[Database]:
         """
         Returns list of databases residing in SRC_DIR folder.
         """
@@ -119,14 +120,14 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         # TODO: call on_database_selected or send 'select' event to db_list
 
-    def on_database_selected(self, db_list, row):
+    def on_database_selected(self, _, row: Gtk.ListBoxRow):
         """
         If selected database is closed – displays open database form.
         :param row: row containing selected database name.
         """
         # TODO: use show_form()
 
-    def import_database(self, path):
+    def import_database(self, path: str):
         """
         Imports given database handling all errors.
         :param path: path to database file we're trying to import.
@@ -149,7 +150,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         # TODO: use `filename` property of dialog to access selected file path
         # TODO: call import_database
 
-    def export_database(self, name, path):
+    def export_database(self, name: str, path: str):
         """
         Exports given database handling all errors.
 
@@ -179,7 +180,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
         return self.on_quit(event)
 
-    def on_quit(self, _):
+    def on_quit(self, _) -> bool:
         """
         Checks if all databases are closed, if they are – quits, if they aren't – displays
         confirmation dialog.
@@ -206,7 +207,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         # TODO: show warning in statusbar if there is no database selected
         # TODO: use show_form()
 
-    def delete_database(self, name):
+    def delete_database(self, name: str):
         """
         Deletes given database from disk and database list handling all errors.
         :param name: name of the database to delete.

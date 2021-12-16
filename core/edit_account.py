@@ -17,7 +17,7 @@
 from gi.repository import Gtk
 
 from core.create_account import CreateAccount
-from core.database_utils import Account
+from core.database_utils import Account, Database
 from core.widgets import AttachedFilesMixin
 
 
@@ -46,7 +46,7 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
 
     APPLY_BUTTON_TEXT = "_Save"
 
-    def __init__(self, database, account):
+    def __init__(self, database: Database, account: Account):
         super().__init__(database)
         self.account = account
         # TODO: fill attached_paths with file names from account.attached_files;
@@ -66,7 +66,7 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
         # TODO: change title to `Edit [account name] account`
         # TODO: make account name cursive
 
-    def validate_name(self):
+    def validate_name(self) -> bool:
         """
         Validates name field, displaying error tip if account name is invalid.
 

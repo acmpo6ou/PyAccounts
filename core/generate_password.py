@@ -36,7 +36,7 @@ class GenPassDialog(GladeTemplate):
     A dialog to generate password.
     """
 
-    def __init__(self, pass1, pass2):
+    def __init__(self, pass1: Gtk.Entry, pass2: Gtk.Entry):
         super().__init__("generate_password")
 
         self.pass1 = pass1
@@ -45,7 +45,7 @@ class GenPassDialog(GladeTemplate):
     def on_cancel(self, _):
         self.parent_widget.hide()
 
-    def genpass(self, length, chars):
+    def genpass(self, length, chars) -> str:
         """
         Generates random password.
 

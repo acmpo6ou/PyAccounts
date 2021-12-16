@@ -22,7 +22,7 @@ from gi.repository import GObject, Gtk, Gio
 
 
 # noinspection PyUnresolvedReferences
-def _getattr(self, item):
+def _getattr(self, item: str):
     """
     A fluent API to get GTK object's attributes.
 
@@ -41,7 +41,7 @@ def _getattr(self, item):
 
 
 # noinspection PyUnresolvedReferences
-def _setattr(self, item, value):
+def _setattr(self, item: str, value):
     """
     A fluent API to set GTK object's attributes.
 
@@ -106,7 +106,7 @@ class GladeTemplate(Gtk.Bin):
         self.builder.connect_signals(self)
 
     # noinspection PyUnresolvedReferences
-    def __getattr__(self, item):
+    def __getattr__(self, item: str):
         """
         Simplifies widget access, instead of making builder.get_object() calls we can
         access widgets directly as attributes.
