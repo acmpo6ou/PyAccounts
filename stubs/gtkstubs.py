@@ -22,24 +22,18 @@ This way, we get autocompletion for them.
 See _getattr and _setattr from gtk_utils module for more details.
 """
 
-import os
-import re
-
-
 for module in ("Gtk", "Gdk", "Gio"):
-    STUBS_DIR = f"stubs/{module}"
+    module = "Gtk"
+    _in = open(f"stubs/{module}.pyi")
+    out = open(f"stubs/out-{module}.pyi", "w")
 
-    for file in os.listdir(STUBS_DIR):
-        _in = open(f"{STUBS_DIR}/{file}").read()
-        out = open(f"{STUBS_DIR}/{file}", "a")
+    for line in _in.readlines():
+        out.write(line)
 
-        gets = re.findall("get_[a-z_]*", _in)
-        sets = re.findall("set_[a-z_]*", _in)
-
-        props = set()
-        for method in gets + sets:
-            prop = method[4:]
-            props.add(prop)
+        if line.startswith("    def get_"):
+            line
 
         for prop in props:
-            out.write(f"    {prop} = ...\n")
+            print(f"    {prop} = ...\n")
+            # out.write(f"    {prop} = ...\n")
+    break
