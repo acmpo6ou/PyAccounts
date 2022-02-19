@@ -3,3 +3,7 @@ PyGobject-stubs
 pretty-errors
 
 pytest==7.0.1
+pytest-cov
+pytest-randomly
+pytest-mock
+Faker
