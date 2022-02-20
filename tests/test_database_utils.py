@@ -13,11 +13,14 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import pytest
+
 from core.database_utils import Account, Database
 
 
-def test_account_to_dict():
-    account = Account(
+@pytest.fixture
+def account():
+    return Account(
         accountname="gmail",
         username="Gmail User",
         email="example@gmail.com",
@@ -28,6 +31,8 @@ def test_account_to_dict():
         attached_files={"file1": "file1 content", "file2": "file2 content"},
     )
 
+
+def test_account_to_dict(account):
     account_dict = account.to_dict()
 
     expected_dict = {
