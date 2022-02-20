@@ -1,4 +1,4 @@
-#  Copyright (c) 2021. Bohdan Kolvakh
+#  Copyright (c) 2021-2022. Bohdan Kolvakh
 #  This file is part of PyAccounts.
 #
 #  PyAccounts is free software: you can redistribute it and/or modify

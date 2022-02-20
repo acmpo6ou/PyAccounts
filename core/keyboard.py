@@ -1,4 +1,4 @@
-#  Copyright (c) 2021. Bohdan Kolvakh
+#  Copyright (c) 2021-2022. Bohdan Kolvakh
 #  This file is part of PyAccounts.
 #
 #  PyAccounts is free software: you can redistribute it and/or modify
@@ -277,9 +277,7 @@ keyboardMapping.update(
         "num9": display.keysym_to_keycode(Xlib.XK.string_to_keysym("KP_9")),
         "multiply": display.keysym_to_keycode(Xlib.XK.string_to_keysym("KP_Multiply")),
         "add": display.keysym_to_keycode(Xlib.XK.string_to_keysym("KP_Add")),
-        "separator": display.keysym_to_keycode(
-            Xlib.XK.string_to_keysym("KP_Separator")
-        ),
+        "separator": display.keysym_to_keycode(Xlib.XK.string_to_keysym("KP_Separator")),
         "subtract": display.keysym_to_keycode(Xlib.XK.string_to_keysym("KP_Subtract")),
         "decimal": display.keysym_to_keycode(Xlib.XK.string_to_keysym("KP_Decimal")),
         "divide": display.keysym_to_keycode(Xlib.XK.string_to_keysym("KP_Divide")),
@@ -308,9 +306,7 @@ keyboardMapping.update(
         "f23": display.keysym_to_keycode(Xlib.XK.string_to_keysym("F23")),
         "f24": display.keysym_to_keycode(Xlib.XK.string_to_keysym("F24")),
         "numlock": display.keysym_to_keycode(Xlib.XK.string_to_keysym("Num_Lock")),
-        "scrolllock": display.keysym_to_keycode(
-            Xlib.XK.string_to_keysym("Scroll_Lock")
-        ),
+        "scrolllock": display.keysym_to_keycode(Xlib.XK.string_to_keysym("Scroll_Lock")),
         "shiftleft": display.keysym_to_keycode(Xlib.XK.string_to_keysym("Shift_L")),
         "shiftright": display.keysym_to_keycode(Xlib.XK.string_to_keysym("Shift_R")),
         "ctrlleft": display.keysym_to_keycode(Xlib.XK.string_to_keysym("Control_L")),
