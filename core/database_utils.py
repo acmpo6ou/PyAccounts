@@ -66,7 +66,7 @@ class Database:
     def opened(self) -> bool:
         """
         Represents whether database is opened or not, the database is
-        considered opened when password is not None.
+        considered open when password is not None.
         """
         return False  # TODO: implement
 
