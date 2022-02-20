@@ -54,3 +54,30 @@ def test_database_opened():
 
     assert with_password.opened
     assert not without_password.opened
+
+
+def test_dumps(account):
+    account2 = Account(
+        accountname="mega",
+        username="Mega User",
+        email="example@gmail.com",
+        password="312",
+        birthdate="05.01.2000",
+        notes="My mega account.",
+    )
+    database = Database(
+        "main", "123", {account.accountname: account, account2.accountname: account2}
+    )
+
+    json = database.dumps()
+
+    expected_json = (
+        '{"gmail": {"account": "gmail", "name": "Gmail User", "email": '
+        '"example@gmail.com", "password": "123", "date": "01.01.2000", "comment": "My '
+        'gmail account.", "copy_email": false, "attach_files": {"file1": "file1 '
+        'content", "file2": "file2 content"}}, "mega": {"account": "mega", "name": '
+        '"Mega User", "email": "example@gmail.com", "password": "312", "date": '
+        '"05.01.2000", "comment": "My mega account.", "copy_email": true, '
+        '"attach_files": {}}}'
+    )
+    assert json == expected_json

@@ -20,6 +20,7 @@ Defines most fundamental classes for PyAccounts: Account and Database.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
@@ -91,12 +92,16 @@ class Database:
         # TODO: use json to deserialize string, then replace dicts inside accounts dict with
         #  corresponding Account instances.
 
-    def dumps(self, accounts: Accounts) -> str:
+    def dumps(self) -> str:
         """
         Serializes accounts dict to json.
         """
         # TODO: use to_dict of Account to convert it to dict,
         #  serialize resulting dict of account dicts
+        accounts_dicts = {
+            accountname: account.to_dict() for accountname, account in self.accounts.items()
+        }
+        return json.dumps(accounts_dicts)
 
     @staticmethod
     def gensalt() -> bytes:
