@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-from core.database_utils import Account
+from core.database_utils import Account, Database
 
 
 def test_account_to_dict():
@@ -41,3 +41,11 @@ def test_account_to_dict():
         "attach_files": {"file1": "file1 content", "file2": "file2 content"},
     }
     assert account_dict == expected_dict
+
+
+def test_database_opened():
+    with_password = Database("main", "123")
+    without_password = Database("main")
+
+    assert with_password.opened
+    assert not without_password.opened

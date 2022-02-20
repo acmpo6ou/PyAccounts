@@ -68,7 +68,7 @@ class Database:
         Represents whether database is opened or not, the database is
         considered open when password is not None.
         """
-        return False  # TODO: implement
+        return self.password is not None
 
     @property
     def saved(self) -> bool:
