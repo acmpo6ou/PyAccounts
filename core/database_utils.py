@@ -42,9 +42,15 @@ class Account:
         """
         Converts Account to dict renaming some fields.
         """
-        # TODO: use Account.__dict__ method to convert it to dict
-        # TODO: rename `notes`, `birthdate` and `username` fields, see StackOverflow:
-        #  https://stackoverflow.com/q/60789444
+
+        field_mapping = {
+            "accountname": "account",
+            "username": "name",
+            "birthdate": "date",
+            "notes": "comment",
+            "attached_files": "attach_files",
+        }
+        return {field_mapping.get(k, k): v for k, v in self.__dict__.items()}
 
 
 Accounts: TypeAlias = dict[str, Account]
