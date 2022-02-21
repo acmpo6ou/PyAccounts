@@ -20,9 +20,14 @@ Defines most fundamental classes for PyAccounts: Account and Database.
 
 from __future__ import annotations
 
+import base64
 import json
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
+
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 if TYPE_CHECKING:
     from typing import TypeAlias
@@ -124,10 +129,20 @@ class Database:
         Encrypts given string using database password and salt.
         """
 
-    def decrypt(self, string: str, salt: bytes) -> str:
+    def decrypt(self, token: bytes, salt: bytes) -> bytes:
         """
-        Decrypts given string using database password and salt.
+        Decrypts given token using database password and salt.
         """
+
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=salt,
+            iterations=100_000,
+        )
+        key = base64.urlsafe_b64encode(kdf.derive(self.password.encode()))
+        f = Fernet(key)
+        return f.decrypt(token)
 
     def open(self, password: str):
         """
