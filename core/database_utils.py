@@ -53,6 +53,16 @@ class Account:
         }
         return {field_mapping.get(k, k): v for k, v in self.__dict__.items()}
 
+    @staticmethod
+    def from_dict(d: dict) -> "Account":
+        """
+        Creates Account from dict.
+
+        Note, that we can't use dictionary unpacking because the dict contains
+        some keys that are different from arguments that need to be passed to
+        Account constructor.
+        """
+
 
 Accounts: TypeAlias = dict[str, Account]
 
