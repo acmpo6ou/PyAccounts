@@ -103,6 +103,14 @@ def test_database_opened():
     assert not without_password.opened
 
 
+def test_open_database(main_db):
+    database = Database("main")
+    database.open("123")
+
+    assert database.password == "123"
+    assert database.accounts == accounts
+
+
 def test_close_database():
     database = Database("main", "123", accounts)
     database.close()

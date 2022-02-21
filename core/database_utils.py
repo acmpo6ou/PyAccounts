@@ -29,6 +29,8 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
+from core import SRC_DIR
+
 if TYPE_CHECKING:
     from typing import TypeAlias
 
@@ -104,7 +106,7 @@ class Database:
         # TODO: compare `accounts` property of self and disk database
         return False
 
-    def loads(self, string: str):
+    def loads(self, string: bytes | str):
         """
         Deserializes json string to dict of accounts.
         """
@@ -153,9 +155,14 @@ class Database:
         field of Database.
         :param password: password to open the database.
         """
-        # TODO: save password to `password` field
-        # TODO: read .dba file; assign first 16 bytes to `salt` and decrypt remaining bytes,
-        #  fill `accounts` property
+
+        self.password = password
+        with open(SRC_DIR / f"{self.name}.dba", "rb") as file:
+            salt = file.read(16)
+            token = file.read()
+
+            data = self.decrypt(token, salt)
+            self.loads(data)
 
     def close(self):
         """
