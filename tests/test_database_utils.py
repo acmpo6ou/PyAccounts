@@ -69,6 +69,23 @@ def test_account_to_dict():
     assert account_dict == expected_dict
 
 
+def test_account_from_dict():
+    _dict = {
+        "account": "gmail",
+        "name": "Gmail User",
+        "email": "example@gmail.com",
+        "password": "123",
+        "date": "01.01.2000",
+        "comment": "My gmail " "account.",
+        "copy_email": False,
+        "attach_files": {"file1": "file1 content", "file2": "file2 content"},
+    }
+
+    _account = Account.from_dict(_dict)
+
+    assert _account == account
+
+
 def test_database_opened():
     with_password = Database("main", "123")
     without_password = Database("main")
