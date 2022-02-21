@@ -13,9 +13,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import shutil
 
+import pytest
+
+import core
 from core.database_utils import Account, Database
-
 
 account = Account(
     accountname="gmail",
@@ -51,6 +54,12 @@ ACCOUNTS_JSON = (
     '"05.01.2000", "comment": "My mega account.", "copy_email": true, '
     '"attach_files": {}}}'
 )
+
+
+@pytest.fixture
+def main_db(monkeypatch, tmp_path):
+    monkeypatch.setattr(core, "SRC_DIR", tmp_path)
+    shutil.copy("tests/data/main.dba", tmp_path)
 
 
 def test_account_to_dict():
