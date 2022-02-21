@@ -119,13 +119,6 @@ class Database:
         }
         return json.dumps(accounts_dicts)
 
-    @staticmethod
-    def gensalt() -> bytes:
-        """
-        Generates 16 purely random bytes of salt.
-        """
-        return b""
-
     def encrypt(self, string: str, salt: bytes) -> str:
         """
         Encrypts given string using database password and salt.
@@ -158,7 +151,6 @@ class Database:
         """
         Creates .dba file for database using its name and password.
         """
-        # TODO: use gensalt() to generate salt
 
     def delete(self):
         """
