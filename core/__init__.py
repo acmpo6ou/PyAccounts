@@ -17,10 +17,10 @@
 """
 This package contains core PyAccounts functionality.
 """
-import os
+from pathlib import Path
 
 # directory containing database and config files
-SRC_DIR = f"{os.environ['HOME']}/.PyAccounts/"
+SRC_DIR = Path.home() / ".PyAccounts"
 
 # current app version
 APP_VERSION = "1.0.0"
