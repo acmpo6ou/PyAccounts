@@ -98,3 +98,9 @@ def test_dumps():
     database = Database("main", "123", accounts)
     json = database.dumps()
     assert json == ACCOUNTS_JSON
+
+
+def test_loads():
+    database = Database("main")
+    database.loads(ACCOUNTS_JSON)
+    assert database.accounts == accounts
