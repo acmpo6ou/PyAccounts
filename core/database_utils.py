@@ -147,6 +147,9 @@ class Database:
         Clears `password` and `accounts` fields, effectively closing the database.
         """
 
+        self.password = None
+        self.accounts = {}
+
     def create(self):
         """
         Creates .dba file for database using its name and password.

@@ -94,6 +94,14 @@ def test_database_opened():
     assert not without_password.opened
 
 
+def test_close_database():
+    database = Database("main", "123", accounts)
+    database.close()
+
+    assert database.password is None
+    assert not database.accounts
+
+
 def test_dumps():
     database = Database("main", "123", accounts)
     json = database.dumps()
