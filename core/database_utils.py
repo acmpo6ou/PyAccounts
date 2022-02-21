@@ -99,12 +99,14 @@ class Database:
         # TODO: compare `accounts` property of self and disk database
         return False
 
-    def loads(self, string: str) -> Accounts:
+    def loads(self, string: str):
         """
         Deserializes json string to dict of accounts.
         """
-        # TODO: use json to deserialize string, then replace dicts inside accounts dict with
-        #  corresponding Account instances.
+
+        accounts_dict = json.loads(string)
+        for accountname, account_dict in accounts_dict.items():
+            self.accounts[accountname] = Account.from_dict(account_dict)
 
     def dumps(self) -> str:
         """
