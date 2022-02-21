@@ -39,22 +39,23 @@ class Account:
     copy_email: bool = True
     attached_files: dict[str, str] = field(default_factory=dict)
 
+    field_mapping = {
+        "accountname": "account",
+        "username": "name",
+        "birthdate": "date",
+        "notes": "comment",
+        "attached_files": "attach_files",
+    }
+    reversed_mapping = {v: k for k, v in field_mapping.items()}
+
     def to_dict(self) -> dict:
         """
         Converts Account to dict renaming some fields.
         """
-
-        field_mapping = {
-            "accountname": "account",
-            "username": "name",
-            "birthdate": "date",
-            "notes": "comment",
-            "attached_files": "attach_files",
-        }
-        return {field_mapping.get(k, k): v for k, v in self.__dict__.items()}
+        return {self.field_mapping.get(k, k): v for k, v in self.__dict__.items()}
 
     @staticmethod
-    def from_dict(d: dict) -> "Account":
+    def from_dict(_dict: dict) -> "Account":
         """
         Creates Account from dict.
 
@@ -62,6 +63,9 @@ class Account:
         some keys that are different from arguments that need to be passed to
         Account constructor.
         """
+
+        args = {Account.reversed_mapping.get(k, k): v for k, v in _dict.items()}
+        return Account(**args)
 
 
 Accounts: TypeAlias = dict[str, Account]
