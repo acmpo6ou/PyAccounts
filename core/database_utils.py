@@ -24,6 +24,7 @@ import base64
 import json
 import os
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from cryptography.fernet import Fernet
@@ -84,6 +85,10 @@ class Database:
     name: str
     password: str | None = None
     accounts: Accounts = field(default_factory=dict)
+
+    @property
+    def dba_file(self) -> Path:
+        return SRC_DIR / f"{self.name}.dba"
 
     @property
     def opened(self) -> bool:
@@ -167,7 +172,7 @@ class Database:
         """
 
         self.password = password
-        with open(SRC_DIR / f"{self.name}.dba", "rb") as file:
+        with open(self.dba_file, "rb") as file:
             salt = file.read(16)
             token = file.read()
 
@@ -187,7 +192,7 @@ class Database:
         Creates .dba file for database using its name and password.
         """
 
-        with open(SRC_DIR / f"{self.name}.dba", "wb") as file:
+        with open(self.dba_file, "wb") as file:
             salt = os.urandom(16)
             file.write(salt)
 
@@ -199,7 +204,7 @@ class Database:
         """
         Deletes .dba file associated with this Database instance.
         """
-        (SRC_DIR / f"{self.name}.dba").unlink()
+        self.dba_file.unlink()
 
     def rename(self, name: str):
         """
