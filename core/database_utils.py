@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import base64
 import json
+import os
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
@@ -126,10 +127,20 @@ class Database:
         }
         return json.dumps(accounts_dicts)
 
-    def encrypt(self, string: str, salt: bytes) -> str:
+    def encrypt(self, data: str, salt: bytes) -> bytes:
         """
-        Encrypts given string using database password and salt.
+        Encrypts given data using database password and salt.
         """
+
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=salt,
+            iterations=100_000,
+        )
+        key = base64.urlsafe_b64encode(kdf.derive(self.password.encode()))
+        f = Fernet(key)
+        return f.encrypt(data.encode())
 
     def decrypt(self, token: bytes, salt: bytes) -> bytes:
         """
