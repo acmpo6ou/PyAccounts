@@ -56,10 +56,15 @@ ACCOUNTS_JSON = (
 )
 
 
-@pytest.fixture
-def main_db(monkeypatch, tmp_path):
+@pytest.fixture()
+def src_dir(monkeypatch, tmp_path):
     monkeypatch.setattr(core.database_utils, "SRC_DIR", tmp_path)
-    shutil.copy("tests/data/main.dba", tmp_path)
+    return tmp_path
+
+
+@pytest.fixture
+def main_db(src_dir):
+    shutil.copy("tests/data/main.dba", src_dir)
 
 
 def test_account_to_dict():
