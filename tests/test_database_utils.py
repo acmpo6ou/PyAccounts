@@ -100,6 +100,18 @@ def test_account_from_dict():
     assert _account == account
 
 
+def test_dumps():
+    database = Database("main", "123", accounts)
+    json = database.dumps()
+    assert json == ACCOUNTS_JSON
+
+
+def test_loads():
+    database = Database("main")
+    database.loads(ACCOUNTS_JSON)
+    assert database.accounts == accounts
+
+
 def test_database_opened():
     with_password = Database("main", "123")
     without_password = Database("main")
