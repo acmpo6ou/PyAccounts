@@ -128,11 +128,7 @@ class Database:
         return json.dumps(accounts_dicts)
 
     @staticmethod
-    def encrypt(data: str, password: str, salt: bytes) -> bytes:
-        """
-        Encrypts given data using password and salt.
-        """
-
+    def get_fernet(password: str, salt: bytes) -> Fernet:
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
@@ -140,7 +136,15 @@ class Database:
             iterations=100_000,
         )
         key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
-        f = Fernet(key)
+        return Fernet(key)
+
+    @staticmethod
+    def encrypt(data: str, password: str, salt: bytes) -> bytes:
+        """
+        Encrypts given data using password and salt.
+        """
+
+        f = Database.get_fernet(password, salt)
         return f.encrypt(data.encode())
 
     @staticmethod
@@ -149,14 +153,7 @@ class Database:
         Decrypts given token using password and salt.
         """
 
-        kdf = PBKDF2HMAC(
-            algorithm=hashes.SHA256(),
-            length=32,
-            salt=salt,
-            iterations=100_000,
-        )
-        key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
-        f = Fernet(key)
+        f = Database.get_fernet(password, salt)
         return f.decrypt(token)
 
     def open(self, password: str):
