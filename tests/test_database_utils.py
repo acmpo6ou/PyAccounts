@@ -28,7 +28,7 @@ account = Account(
     birthdate="01.01.2000",
     notes="My gmail account.",
     copy_email=False,
-    attached_files={"file1": "file1 content", "file2": "file2 content"},
+    attached_files={"file1": "ZmlsZTEgY29udGVudAo=", "file2": "ZmlsZTIgY29udGVudAo="},
 )
 
 account2 = Account(
@@ -48,8 +48,8 @@ accounts = {
 ACCOUNTS_JSON = (
     '{"gmail": {"account": "gmail", "name": "Gmail User", "email": '
     '"example@gmail.com", "password": "123", "date": "01.01.2000", "comment": "My '
-    'gmail account.", "copy_email": false, "attach_files": {"file1": "file1 '
-    'content", "file2": "file2 content"}}, "mega": {"account": "mega", "name": '
+    'gmail account.", "copy_email": false, "attach_files": {"file1": "ZmlsZTEgY29udGVudAo='
+    '", "file2": "ZmlsZTIgY29udGVudAo="}}, "mega": {"account": "mega", "name": '
     '"Mega User", "email": "example@gmail.com", "password": "312", "date": '
     '"05.01.2000", "comment": "My mega account.", "copy_email": true, '
     '"attach_files": {}}}'
@@ -73,7 +73,7 @@ def test_account_to_dict():
         "date": "01.01.2000",
         "comment": "My gmail " "account.",
         "copy_email": False,
-        "attach_files": {"file1": "file1 content", "file2": "file2 content"},
+        "attach_files": {"file1": "ZmlsZTEgY29udGVudAo=", "file2": "ZmlsZTIgY29udGVudAo="},
     }
     assert account_dict == expected_dict
 
@@ -87,7 +87,7 @@ def test_account_from_dict():
         "date": "01.01.2000",
         "comment": "My gmail " "account.",
         "copy_email": False,
-        "attach_files": {"file1": "file1 content", "file2": "file2 content"},
+        "attach_files": {"file1": "ZmlsZTEgY29udGVudAo=", "file2": "ZmlsZTIgY29udGVudAo="},
     }
 
     _account = Account.from_dict(_dict)
