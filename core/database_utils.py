@@ -188,6 +188,14 @@ class Database:
         Creates .dba file for database using its name and password.
         """
 
+        with open(SRC_DIR / f"{self.name}.dba", "wb") as file:
+            salt = os.urandom(16)
+            file.write(salt)
+
+            data = self.dumps()
+            token = self.encrypt(data, salt)
+            file.write(token)
+
     def delete(self):
         """
         Deletes .dba file associated with this Database instance.

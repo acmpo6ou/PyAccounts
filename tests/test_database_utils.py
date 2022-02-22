@@ -13,7 +13,9 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import filecmp
 import shutil
+from pathlib import Path
 
 import pytest
 
@@ -143,13 +145,10 @@ def test_close_database():
     assert not database.accounts
 
 
-def test_dumps():
+def test_create_database(src_dir, salt):
     database = Database("main", "123", accounts)
-    json = database.dumps()
-    assert json == ACCOUNTS_JSON
+    database.create()
 
-
-def test_loads():
-    database = Database("main")
-    database.loads(ACCOUNTS_JSON)
-    assert database.accounts == accounts
+    expected_db = Path("tests/data/main.dba")
+    actual_db = src_dir / "main.dba"
+    assert filecmp.cmp(expected_db, actual_db, shallow=False)
