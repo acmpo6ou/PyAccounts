@@ -211,7 +211,9 @@ class Database:
         Renames .dba file associated with this Database instance.
         :param name: new database name.
         """
-        # TODO: set self.name to new name
+
+        self.dba_file.rename(SRC_DIR / f"{name}.dba")
+        self.name = name
 
     def save(self, name: str, password: str, accounts: Accounts):
         """

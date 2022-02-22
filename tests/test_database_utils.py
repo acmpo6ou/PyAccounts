@@ -169,3 +169,12 @@ def test_delete_database(src_dir, main_db):
 
     # and crypt.dba should be still there
     assert (src_dir / "crypt.dba").exists()
+
+
+def test_rename_database(src_dir, main_db):
+    db = Database("main")
+    db.rename("crypt")
+
+    assert db.name == "crypt"
+    assert not (src_dir / "main.dba").exists()
+    assert (src_dir / "crypt.dba").exists()
