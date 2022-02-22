@@ -154,3 +154,18 @@ def test_create_database(src_dir, salt):
         token = db_file.read()
         data = Database.decrypt(token, "123", salt).decode()
         assert data == ACCOUNTS_JSON
+
+
+def test_delete_database(src_dir, main_db):
+    # GIVEN we have two databases: main (provided by main_db fixture) and crypt
+    shutil.copy("tests/data/main.dba", src_dir / "crypt.dba")
+
+    # WHEN we delete main
+    db = Database("main")
+    db.delete()
+
+    # THEN its .dba file should be removed
+    assert not (src_dir / "main.dba").exists()
+
+    # and crypt.dba should be still there
+    assert (src_dir / "crypt.dba").exists()

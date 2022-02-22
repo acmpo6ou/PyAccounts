@@ -199,6 +199,7 @@ class Database:
         """
         Deletes .dba file associated with this Database instance.
         """
+        (SRC_DIR / f"{self.name}.dba").unlink()
 
     def rename(self, name: str):
         """
