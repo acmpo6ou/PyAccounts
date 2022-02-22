@@ -127,9 +127,10 @@ class Database:
         }
         return json.dumps(accounts_dicts)
 
-    def encrypt(self, data: str, salt: bytes) -> bytes:
+    @staticmethod
+    def encrypt(data: str, password: str, salt: bytes) -> bytes:
         """
-        Encrypts given data using database password and salt.
+        Encrypts given data using password and salt.
         """
 
         kdf = PBKDF2HMAC(
@@ -138,13 +139,14 @@ class Database:
             salt=salt,
             iterations=100_000,
         )
-        key = base64.urlsafe_b64encode(kdf.derive(self.password.encode()))
+        key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
         f = Fernet(key)
         return f.encrypt(data.encode())
 
-    def decrypt(self, token: bytes, salt: bytes) -> bytes:
+    @staticmethod
+    def decrypt(token: bytes, password: str, salt: bytes) -> bytes:
         """
-        Decrypts given token using database password and salt.
+        Decrypts given token using password and salt.
         """
 
         kdf = PBKDF2HMAC(
@@ -153,7 +155,7 @@ class Database:
             salt=salt,
             iterations=100_000,
         )
-        key = base64.urlsafe_b64encode(kdf.derive(self.password.encode()))
+        key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
         f = Fernet(key)
         return f.decrypt(token)
 
@@ -172,7 +174,7 @@ class Database:
             salt = file.read(16)
             token = file.read()
 
-            data = self.decrypt(token, salt)
+            data = self.decrypt(token, password, salt)
             self.loads(data)
 
     def close(self):
@@ -193,7 +195,7 @@ class Database:
             file.write(salt)
 
             data = self.dumps()
-            token = self.encrypt(data, salt)
+            token = self.encrypt(data, self.password, salt)
             file.write(token)
 
     def delete(self):
