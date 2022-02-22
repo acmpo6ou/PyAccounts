@@ -59,7 +59,7 @@ ACCOUNTS_JSON = (
 @pytest.fixture()
 def salt(monkeypatch):
     salt = b"0123456789abcdef"
-    monkeypatch.setattr("os.urandom", lambda: salt)
+    monkeypatch.setattr("os.urandom", lambda x: salt)
     return salt
 
 
