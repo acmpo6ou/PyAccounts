@@ -15,15 +15,20 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import shutil
 
+import pytest
+
 from core.database_utils import Database
 from core.main_window import MainWindow
 
 
-def test_get_databases(src_dir):
+@pytest.fixture
+def databases(src_dir):
     shutil.copy("tests/data/main.dba", src_dir)
     shutil.copy("tests/data/main.dba", src_dir / "crypt.dba")
     shutil.copy("tests/data/main.dba", src_dir / "data.dba")
 
+
+def test_get_databases(databases):
     main_window = MainWindow()
     dbs = main_window.get_databases()
 
