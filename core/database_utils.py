@@ -125,8 +125,6 @@ class Database:
         """
         Serializes accounts dict to json.
         """
-        # TODO: use to_dict of Account to convert it to dict,
-        #  serialize resulting dict of account dicts
         accounts_dicts = {
             accountname: account.to_dict() for accountname, account in self.accounts.items()
         }
