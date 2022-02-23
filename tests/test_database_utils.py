@@ -17,7 +17,6 @@ import shutil
 
 import pytest
 
-import core
 from core.database_utils import Account, Database
 
 account = Account(
@@ -61,12 +60,6 @@ def salt(monkeypatch):
     salt = b"0123456789abcdef"
     monkeypatch.setattr("os.urandom", lambda x: salt)
     return salt
-
-
-@pytest.fixture()
-def src_dir(monkeypatch, tmp_path):
-    monkeypatch.setattr(core.database_utils, "SRC_DIR", tmp_path)
-    return tmp_path
 
 
 @pytest.fixture
