@@ -181,6 +181,17 @@ def test_database_saved(main_db):
     assert not db.saved
 
 
+def test_database_saved_no_database(main_db):
+    """
+    database.saved should return False if the database on disk doesn't exist.
+    """
+    db = Database("main", "123", accounts.copy())
+    assert db.saved
+
+    db.delete()
+    assert not db.saved
+
+
 def test_save_database(src_dir, main_db):
     db = Database("main", "123", accounts)
 

@@ -22,7 +22,9 @@ from __future__ import annotations
 
 import base64
 import json
+import logging
 import os
+import traceback
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -109,7 +111,13 @@ class Database:
         """
 
         disk_db = Database(self.name)
-        disk_db.open(self.password)
+        try:
+            disk_db.open(self.password)
+        except FileNotFoundError as err:
+            # if database on disk doesn't exist then it definitely
+            # differs from the one in memory
+            logging.error(traceback.format_exc())
+            return False
         return self.accounts == disk_db.accounts
 
     def loads(self, string: bytes | str):
