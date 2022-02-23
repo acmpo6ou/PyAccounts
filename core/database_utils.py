@@ -31,7 +31,7 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-from core import SRC_DIR
+import core
 
 if TYPE_CHECKING:
     from typing import TypeAlias
@@ -88,7 +88,7 @@ class Database:
 
     @property
     def dba_file(self) -> Path:
-        return SRC_DIR / f"{self.name}.dba"
+        return core.SRC_DIR / f"{self.name}.dba"
 
     @property
     def opened(self) -> bool:
@@ -210,7 +210,7 @@ class Database:
         :param name: new database name.
         """
 
-        self.dba_file.rename(SRC_DIR / f"{name}.dba")
+        self.dba_file.rename(core.SRC_DIR / f"{name}.dba")
         self.name = name
 
     def save(self, name: str, password: str, accounts: Accounts):

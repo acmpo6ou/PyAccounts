@@ -15,10 +15,10 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import pytest
 
-import core.database_utils
+import core
 
 
 @pytest.fixture()
 def src_dir(monkeypatch, tmp_path):
-    monkeypatch.setattr(core.database_utils, "SRC_DIR", tmp_path)
+    monkeypatch.setattr(core, "SRC_DIR", tmp_path)
     return tmp_path
