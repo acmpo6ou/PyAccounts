@@ -13,10 +13,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-
+import glob
+from pathlib import Path
 
 from gi.repository import Gtk, Gdk
 
+import core
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
 from core.settings import Settings
@@ -97,11 +99,18 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
-    def get_databases(self) -> list[Database]:
+    @staticmethod
+    def get_databases() -> list[Database]:
         """
-        Returns list of databases residing in SRC_DIR folder.
+        Returns a sorted list of databases residing in SRC_DIR folder.
         """
-        # TODO: find all .dba files; use glob module
+
+        dbs = []
+        for file in glob.glob(f"{core.SRC_DIR}/*.dba"):
+            name = Path(file).stem
+            dbs.append(Database(name))
+        dbs.sort()
+        return dbs
 
     def load_databases(self):
         """

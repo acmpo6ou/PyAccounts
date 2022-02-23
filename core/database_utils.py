@@ -80,7 +80,7 @@ class Account:
 Accounts: TypeAlias = dict[str, Account]
 
 
-@dataclass
+@dataclass(order=True)
 class Database:
     name: str
     password: str | None = None
