@@ -186,3 +186,35 @@ def test_database_saved(main_db):
 
     del db.accounts["gmail"]
     assert not db.saved
+
+
+def test_save_database(src_dir, main_db):
+    db = Database("main", "123", accounts)
+
+    new_accounts = accounts.copy()
+    del new_accounts["mega"]
+    db.save("crypt", "321", new_accounts)
+
+    new_db = Database("crypt")
+    new_db.open("321")
+    assert new_db.accounts == new_accounts
+    assert not (src_dir / "main.dba").exists()
+
+
+def test_save_database_name_didnt_change(src_dir, main_db):
+    """
+    Saving a database when its name didn't change.
+
+    For Database.save(), it's important to first delete old database and then create new one,
+    not the other way around. Because if the name of the database didn't change during saving,
+    the database file will be removed.
+    """
+    db = Database("main", "123", accounts)
+
+    new_accounts = accounts.copy()
+    del new_accounts["mega"]
+    db.save("main", "321", new_accounts)  # the name is still `main`
+
+    new_db = Database("main")
+    new_db.open("321")
+    assert new_db.accounts == new_accounts

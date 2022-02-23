@@ -215,10 +215,14 @@ class Database:
 
     def save(self, name: str, password: str, accounts: Accounts):
         """
-        Deletes old database and creates new one, more specifically:
-        it replaces old database with a new one.
+        Deletes old database and creates new one, i.e. it replaces
+        old database with a new one.
 
         :param name: new name for the database.
         :param password: new password for the database.
         :param accounts: new `accounts` dict for the database.
         """
+
+        self.delete()
+        db = Database(name, password, accounts)
+        db.create()
