@@ -107,10 +107,10 @@ class Database:
         database. With it, we can determine whether to show confirmation dialog about unsaved
         data to user or not.
         """
-        # TODO: create new Database instance, a copy of self
-        # TODO: use open() on new instance to read data from disk
-        # TODO: compare `accounts` property of self and disk database
-        return False
+
+        disk_db = Database(self.name)
+        disk_db.open(self.password)
+        return self.accounts == disk_db.accounts
 
     def loads(self, string: bytes | str):
         """
