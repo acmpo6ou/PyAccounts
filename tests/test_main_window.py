@@ -27,5 +27,5 @@ def test_get_databases(src_dir):
     main_window = MainWindow()
     dbs = main_window.get_databases()
 
-    expected_dbs = [Database("main"), Database("crypt"), Database("data")]
+    expected_dbs = [Database("crypt"), Database("data"), Database("main")]
     assert dbs == expected_dbs
