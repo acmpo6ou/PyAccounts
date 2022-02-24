@@ -16,7 +16,7 @@
 import shutil
 
 import pytest
-from gi.repository import Gtk, GdkPixbuf
+from gi.repository import Gtk
 
 from core.database_utils import Database
 from core.main_window import MainWindow
@@ -51,13 +51,11 @@ def test_load_databases(databases):
         labels.append(hbox.children[1])
 
     # all icons should be PyAccounts app icons
-    expected_icon = Gtk.Image.new_from_file("img/icon.svg")
+    expected_icon = Gtk.Image.new_from_file("img/icon.svg").pixbuf.get_pixels()
     for icon in icons:
-        icon: Gtk.Image
-        p: GdkPixbuf.Pixbuf = icon.pixbuf
-        assert icon.pixbuf == expected_icon.pixbuf
+        assert icon.pixbuf.get_pixels() == expected_icon
     assert len(icons) == 3
 
     # all labels should contain appropriate databases names
     db_names = [label.text for label in labels]
-    assert db_names == ["main", "data", "crypt"]
+    assert db_names == ["crypt", "data", "main"]

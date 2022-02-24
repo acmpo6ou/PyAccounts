@@ -117,11 +117,17 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Populates db_list with items.
         """
 
+        for db in self.databases:
+            icon = Gtk.Image.new_from_file("img/icon.svg")
+            label = Gtk.Label(db.name)
+
+            hbox = Gtk.HBox()
+            hbox.add(icon)
+            hbox.add(label)
+            self.db_list.add(hbox)
+
         # TODO: set sort_func for db_list to sort alphabetically
-        # TODO: for each database create hbox with icon and label
-        # TODO: icon is just database icon, label is database name
         # TODO: style label: xalign = 0, margin start = 5
-        # TODO: add() hbox to db_list
 
     def select_main_database(self):
         """
