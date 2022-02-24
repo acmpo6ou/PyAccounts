@@ -87,6 +87,16 @@ def delete_item(self, item_name: str):
     """
 
 
+def abc_list_sort(row1: Gtk.ListBoxRow, row2: Gtk.ListBoxRow) -> int:
+    """
+    Sort function for Gtk.ListBox to sort its items alphabetically.
+
+    For more details see:
+    https://lazka.github.io/pgi-docs/Gtk-3.0/callbacks.html#Gtk.ListBoxSortFunc
+    """
+    ...
+
+
 # now Gtk.ListBox will have a convenient method to remove it's items by name
 Gtk.ListBox.delete = delete_item
 
