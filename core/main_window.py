@@ -120,15 +120,23 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         for db in self.databases:
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
             icon = Gtk.Image.new_from_pixbuf(pixbuf)
-            label = Gtk.Label(db.name)
+            icon.xalign = 0
+            icon.margin_start = 5
 
-            hbox = Gtk.HBox()
+            label = Gtk.Label(db.name)
+            label.xalign = 0
+            label.margin_start = 5
+            label.margin_end = 10
+
+            hbox = Gtk.Box()
+            hbox.homogeneous = False
+
             hbox.add(icon)
             hbox.add(label)
             self.db_list.add(hbox)
 
+        # TODO: implement alphabetical sort fun in gtk_utils
         # TODO: set sort_func for db_list to sort alphabetically
-        # TODO: style label: xalign = 0, margin start = 5
 
     def select_main_database(self):
         """
