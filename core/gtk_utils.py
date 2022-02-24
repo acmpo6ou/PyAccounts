@@ -103,7 +103,18 @@ def abc_list_sort(row1: Gtk.ListBoxRow, row2: Gtk.ListBoxRow) -> ListOrder:
     For more details see:
     https://lazka.github.io/pgi-docs/Gtk-3.0/callbacks.html#Gtk.ListBoxSortFunc
     """
-    ...
+
+    names = []
+    for row in (row1, row2):
+        label: Gtk.Label = row.children[0].children[-1]
+        names.append(label.text)
+
+    if names[0] == names[1]:
+        return ListOrder.EQUAL
+    elif names == sorted(names):
+        return ListOrder.ROW1_ROW2
+    else:
+        return ListOrder.ROW2_ROW1
 
 
 # now Gtk.ListBox will have a convenient method to remove it's items by name
