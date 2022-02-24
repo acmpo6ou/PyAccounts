@@ -17,6 +17,7 @@
 """
 Contains various utilities to simplify development with GTK.
 """
+from enum import IntEnum
 
 from gi.repository import GObject, Gtk, Gio
 
@@ -87,7 +88,15 @@ def delete_item(self, item_name: str):
     """
 
 
-def abc_list_sort(row1: Gtk.ListBoxRow, row2: Gtk.ListBoxRow) -> int:
+class ListOrder(IntEnum):
+    """Used by abc_list_sort sort function to indicate the order of Gtk.ListBoxRow items."""
+
+    ROW1_ROW2 = -1
+    EQUAL = 0
+    ROW2_ROW1 = 1
+
+
+def abc_list_sort(row1: Gtk.ListBoxRow, row2: Gtk.ListBoxRow) -> ListOrder:
     """
     Sort function for Gtk.ListBox to sort its items alphabetically.
 
