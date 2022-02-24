@@ -16,7 +16,7 @@
 import glob
 from pathlib import Path
 
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, GdkPixbuf
 
 import core
 from core.database_utils import Database
@@ -118,7 +118,8 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         """
 
         for db in self.databases:
-            icon = Gtk.Image.new_from_file("img/icon.svg")
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
+            icon = Gtk.Image.new_from_pixbuf(pixbuf)
             label = Gtk.Label(db.name)
 
             hbox = Gtk.HBox()
