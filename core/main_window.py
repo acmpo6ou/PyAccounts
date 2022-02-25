@@ -20,7 +20,7 @@ from gi.repository import Gtk, Gdk, GdkPixbuf
 
 import core
 from core.database_utils import Database
-from core.gtk_utils import GladeTemplate
+from core.gtk_utils import GladeTemplate, abc_list_sort
 from core.settings import Settings
 from core.widgets import Window
 
@@ -117,8 +117,10 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Populates db_list with items.
         """
 
+        self.db_list.sort_func = abc_list_sort
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
+
         for db in self.databases:
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
             icon = Gtk.Image.new_from_pixbuf(pixbuf)
             icon.xalign = 0
             icon.margin_start = 5
@@ -134,9 +136,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             hbox.add(icon)
             hbox.add(label)
             self.db_list.add(hbox)
-
-        # TODO: implement alphabetical sort fun in gtk_utils
-        # TODO: set sort_func for db_list to sort alphabetically
 
     def select_main_database(self):
         """
