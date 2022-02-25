@@ -171,9 +171,9 @@ class Window(Gtk.Window, GladeTemplate):
         :param form: form to display.
         """
 
-        # TODO: remove all forms from form_box, use foreach():
-        #  https://lazka.github.io/pgi-docs/Gtk-3.0/classes/Container.html#Gtk.Container.foreach
-        # TODO: add the form to form_box and show it
+        self.form_box.foreach(lambda form: self.form_box.remove(form))
+        self.form_box.add(form)
+        form.show()
 
     def load_separator(self):
         """

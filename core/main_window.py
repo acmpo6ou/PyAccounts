@@ -19,6 +19,7 @@ from pathlib import Path
 from gi.repository import Gtk, Gdk, GdkPixbuf
 
 import core
+from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate, abc_list_sort
 from core.settings import Settings
@@ -218,7 +219,8 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Displays create database form.
         """
 
-        # TODO: use show_form()
+        form = CreateDatabase()
+        self.show_form(form)
 
     def on_edit_database(self, _):
         """

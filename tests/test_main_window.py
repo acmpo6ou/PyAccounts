@@ -18,6 +18,7 @@ import shutil
 import pytest
 from gi.repository import Gtk, GdkPixbuf
 
+from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.main_window import MainWindow
 
@@ -62,3 +63,9 @@ def test_load_databases(databases, main_window):
     # all labels should contain appropriate databases names
     db_names = [label.text for label in labels]
     assert db_names == ["crypt", "data", "main"]
+
+
+def test_on_create_database(main_window):
+    main_window.on_create_database(None)
+    form = main_window.form_box.children[0]
+    assert isinstance(form, CreateDatabase)
