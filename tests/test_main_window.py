@@ -20,6 +20,7 @@ from gi.repository import Gtk, GdkPixbuf
 
 from core.create_database import CreateDatabase
 from core.database_utils import Database
+from core.edit_database import EditDatabase
 from core.main_window import MainWindow
 from core.rename_database import RenameDatabase
 
@@ -76,7 +77,7 @@ def test_edit_closed_database(databases, main_window):
     """Edit database button should display
     rename database form if selected database is closed."""
 
-    # select main database
+    # select a database
     row = main_window.db_list.children[1]
     main_window.db_list.select_row(row)
 
@@ -84,4 +85,22 @@ def test_edit_closed_database(databases, main_window):
 
     form = main_window.form_box.children[0]
     assert isinstance(form, RenameDatabase)
+    assert form.database == main_window.databases[1]
+
+
+def test_edit_opened_database(databases, main_window):
+    """Edit database button should display
+    edit database form if selected database is opened."""
+
+    # make a database opened
+    main_window.databases[1].password = "123"
+
+    # select it
+    row = main_window.db_list.children[1]
+    main_window.db_list.select_row(row)
+
+    main_window.on_edit_database(None)
+
+    form = main_window.form_box.children[0]
+    assert isinstance(form, EditDatabase)
     assert form.database == main_window.databases[1]

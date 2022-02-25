@@ -21,6 +21,7 @@ from gi.repository import Gtk, Gdk, GdkPixbuf
 import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
+from core.edit_database import EditDatabase
 from core.gtk_utils import GladeTemplate, abc_list_sort
 from core.rename_database import RenameDatabase
 from core.settings import Settings
@@ -233,7 +234,10 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         index = self.db_list.children.index(row)
         selected_db = self.databases[index]
 
-        form = RenameDatabase(selected_db)
+        if selected_db.opened:
+            form = EditDatabase(selected_db)
+        else:
+            form = RenameDatabase(selected_db)
         self.show_form(form)
         # TODO: show warning in statusbar if there is no database selected
 
