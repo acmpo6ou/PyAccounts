@@ -21,6 +21,7 @@ from gi.repository import Gtk, GdkPixbuf
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.main_window import MainWindow
+from core.rename_database import RenameDatabase
 
 
 @pytest.fixture
@@ -69,3 +70,21 @@ def test_on_create_database(main_window):
     main_window.on_create_database(None)
     form = main_window.form_box.children[0]
     assert isinstance(form, CreateDatabase)
+
+
+def test_on_edit_database_closed_database(main_window):
+    """Edit database button should display
+    rename database form if selected database is closed."""
+
+    main_window.databases = [Database("crypt"), Database("main")]
+    main_window.load_databases()
+
+    # select main database
+    row = main_window.db_list.children[1]
+    main_window.db_list.select_row(row)
+
+    main_window.on_edit_database(None)
+
+    form = main_window.form_box.children[0]
+    assert isinstance(form, RenameDatabase)
+    assert form.database == main_window.databases[1]
