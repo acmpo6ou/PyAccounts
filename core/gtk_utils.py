@@ -127,6 +127,8 @@ class GladeTemplate(Gtk.Bin):
     This class should be subclassed to automatically load needed ui file.
     """
 
+    parent_widget: Gtk.Box
+
     def __init__(self, template: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

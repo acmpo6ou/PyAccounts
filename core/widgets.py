@@ -143,6 +143,8 @@ class Window(Gtk.Window, GladeTemplate):
     Super class for MainWindow and DatabaseWindow.
     """
 
+    form_box: Gtk.Box
+
     def __init__(self):
         Gtk.Window.__init__(self)
         self.set_default_size(1280, 720)
