@@ -19,30 +19,40 @@ import pytest
 
 from core.database_utils import Account, Database
 
-account = Account(
-    accountname="gmail",
-    username="Gmail User",
-    email="example@gmail.com",
-    password="123",
-    birthdate="01.01.2000",
-    notes="My gmail account.",
-    copy_email=False,
-    attached_files={"file1": "ZmlsZTEgY29udGVudAo=", "file2": "ZmlsZTIgY29udGVudAo="},
-)
 
-account2 = Account(
-    accountname="mega",
-    username="Mega User",
-    email="example@gmail.com",
-    password="312",
-    birthdate="05.01.2000",
-    notes="My mega account.",
-)
+@pytest.fixture
+def account():
+    return Account(
+        accountname="gmail",
+        username="Gmail User",
+        email="example@gmail.com",
+        password="123",
+        birthdate="01.01.2000",
+        notes="My gmail account.",
+        copy_email=False,
+        attached_files={"file1": "ZmlsZTEgY29udGVudAo=", "file2": "ZmlsZTIgY29udGVudAo="},
+    )
 
-accounts = {
-    account.accountname: account,
-    account2.accountname: account2,
-}
+
+@pytest.fixture
+def account2():
+    return Account(
+        accountname="mega",
+        username="Mega User",
+        email="example@gmail.com",
+        password="312",
+        birthdate="05.01.2000",
+        notes="My mega account.",
+    )
+
+
+@pytest.fixture
+def accounts(account, account2):
+    return {
+        account.accountname: account,
+        account2.accountname: account2,
+    }
+
 
 ACCOUNTS_JSON = (
     '{"gmail": {"account": "gmail", "name": "Gmail User", "email": '
@@ -67,7 +77,7 @@ def main_db(src_dir):
     shutil.copy("tests/data/main.dba", src_dir)
 
 
-def test_account_to_dict():
+def test_account_to_dict(account):
     account_dict = account.to_dict()
 
     expected_dict = {
@@ -83,7 +93,7 @@ def test_account_to_dict():
     assert account_dict == expected_dict
 
 
-def test_account_from_dict():
+def test_account_from_dict(account):
     _dict = {
         "account": "gmail",
         "name": "Gmail User",
@@ -100,13 +110,13 @@ def test_account_from_dict():
     assert _account == account
 
 
-def test_dumps():
+def test_dumps(accounts):
     database = Database("main", "123", accounts)
     json = database.dumps()
     assert json == ACCOUNTS_JSON
 
 
-def test_loads():
+def test_loads(accounts):
     database = Database("main")
     database.loads(ACCOUNTS_JSON)
     assert database.accounts == accounts
@@ -120,7 +130,7 @@ def test_database_opened():
     assert not without_password.opened
 
 
-def test_open_database(main_db):
+def test_open_database(main_db, accounts):
     database = Database("main")
     database.open("123")
 
@@ -128,7 +138,7 @@ def test_open_database(main_db):
     assert database.accounts == accounts
 
 
-def test_close_database():
+def test_close_database(accounts):
     database = Database("main", "123", accounts)
     database.close()
 
@@ -136,7 +146,7 @@ def test_close_database():
     assert not database.accounts
 
 
-def test_create_database(src_dir, salt):
+def test_create_database(src_dir, salt, accounts):
     database = Database("main", "123", accounts)
     database.create()
 
@@ -173,26 +183,26 @@ def test_rename_database(src_dir, main_db):
     assert (src_dir / "crypt.dba").exists()
 
 
-def test_database_saved(main_db):
-    db = Database("main", "123", accounts.copy())
+def test_database_saved(main_db, accounts):
+    db = Database("main", "123", accounts)
     assert db.saved
 
     del db.accounts["gmail"]
     assert not db.saved
 
 
-def test_database_saved_no_database(main_db):
+def test_database_saved_no_database(main_db, accounts):
     """
     database.saved should return False if the database on disk doesn't exist.
     """
-    db = Database("main", "123", accounts.copy())
+    db = Database("main", "123", accounts)
     assert db.saved
 
     db.delete()
     assert not db.saved
 
 
-def test_save_database(src_dir, main_db):
+def test_save_database(src_dir, main_db, accounts):
     db = Database("main", "123", accounts)
 
     new_accounts = accounts.copy()
@@ -205,7 +215,7 @@ def test_save_database(src_dir, main_db):
     assert not (src_dir / "main.dba").exists()
 
 
-def test_save_database_name_didnt_change(src_dir, main_db):
+def test_save_database_name_didnt_change(src_dir, main_db, accounts):
     """
     Saving a database when its name didn't change.
 
@@ -215,7 +225,7 @@ def test_save_database_name_didnt_change(src_dir, main_db):
     """
     db = Database("main", "123", accounts)
 
-    new_accounts = accounts.copy()
+    new_accounts = accounts
     del new_accounts["mega"]
     db.save("main", "321", new_accounts)  # the name is still `main`
 
