@@ -72,7 +72,7 @@ def test_on_create_database(main_window):
     assert isinstance(form, CreateDatabase)
 
 
-def test_on_edit_database_closed_database(databases, main_window):
+def test_edit_closed_database(databases, main_window):
     """Edit database button should display
     rename database form if selected database is closed."""
 
