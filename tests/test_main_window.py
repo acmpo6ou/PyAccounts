@@ -29,17 +29,20 @@ def databases(src_dir):
     shutil.copy("tests/data/main.dba", src_dir / "data.dba")
 
 
-def test_get_databases(databases):
+@pytest.fixture
+def main_window():
+    return MainWindow()
+
+
+def test_get_databases(databases, main_window):
     # get_databases is called by MainWindow constructor
-    main_window = MainWindow()
 
     expected_dbs = [Database("crypt"), Database("data"), Database("main")]
     assert main_window.databases == expected_dbs
 
 
-def test_load_databases(databases):
+def test_load_databases(databases, main_window):
     # load_databases is called by MainWindow constructor
-    main_window = MainWindow()
 
     # get icons and labels of elements in the database list
     icons = []
