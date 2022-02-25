@@ -14,6 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import shutil
+from unittest.mock import Mock
 
 import pytest
 from gi.repository import Gtk, GdkPixbuf
@@ -23,6 +24,7 @@ from core.database_utils import Database
 from core.edit_database import EditDatabase
 from core.main_window import MainWindow
 from core.rename_database import RenameDatabase
+from core.widgets import StatusBar
 
 
 @pytest.fixture
@@ -104,3 +106,15 @@ def test_edit_opened_database(databases, main_window):
     form = main_window.form_box.children[0]
     assert isinstance(form, EditDatabase)
     assert form.database == main_window.databases[1]
+
+
+def test_edit_database_no_selection(databases, main_window):
+    """Edit database button should display a warning in statusbar
+    if there is no database selected."""
+
+    statusbar = Mock(StatusBar)
+    main_window.statusbar = statusbar
+    main_window.on_edit_database(None)
+
+    assert statusbar.warning.assert_called_with("Please select a database to edit.")
+    assert not main_window.form_box.children  # no form should be shown
