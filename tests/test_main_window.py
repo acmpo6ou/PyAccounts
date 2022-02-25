@@ -30,11 +30,11 @@ def databases(src_dir):
 
 
 def test_get_databases(databases):
+    # get_databases is called by MainWindow constructor
     main_window = MainWindow()
-    dbs = main_window.get_databases()
 
     expected_dbs = [Database("crypt"), Database("data"), Database("main")]
-    assert dbs == expected_dbs
+    assert main_window.databases == expected_dbs
 
 
 def test_load_databases(databases):

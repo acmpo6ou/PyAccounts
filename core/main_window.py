@@ -49,7 +49,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.settings = Settings()
         self.load_css()
 
-        self.databases = self.get_databases()
+        self.get_databases()
         self.load_databases()
         self.select_main_database()
 
@@ -99,10 +99,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
-    @staticmethod
-    def get_databases() -> list[Database]:
+    def get_databases(self):
         """
-        Returns a sorted list of databases residing in SRC_DIR folder.
+        Builds a sorted list of databases residing in SRC_DIR folder.
         """
 
         dbs = []
@@ -110,7 +109,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             name = Path(file).stem
             dbs.append(Database(name))
         dbs.sort()
-        return dbs
+        self.databases = dbs
 
     def load_databases(self):
         """
