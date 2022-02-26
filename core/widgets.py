@@ -30,7 +30,8 @@ class IconDialog(Gtk.Dialog):
     Dialog containing icon and message.
     """
 
-    # DO NOT REMOVE THIS, this is needed because of strange issues with _setattr from gtk_utils
+    # DO NOT REMOVE THIS, this is needed because of strange issues with
+    # _setattr from gtk_utils
     vbox = None
 
     def __init__(self, title: str, message: str, icon: str, *args, **kwargs):
@@ -43,7 +44,7 @@ class IconDialog(Gtk.Dialog):
         image.margin = 10
         box.add(image)
 
-        label = Gtk.Label(message)
+        label = Gtk.Label(message, use_markup=True)
         label.margin = 10
         box.add(label)
 
