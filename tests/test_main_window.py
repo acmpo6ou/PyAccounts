@@ -22,7 +22,7 @@ from gi.repository import Gtk, GdkPixbuf
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
-from core.main_window import MainWindow, SELECT_DB_TO_EDIT
+from core.main_window import MainWindow, SELECT_DB_TO_EDIT, SELECT_DB_TO_DELETE
 from core.rename_database import RenameDatabase
 from core.widgets import StatusBar
 
@@ -118,3 +118,15 @@ def test_edit_database_no_selection(databases, main_window):
 
     statusbar.warning.assert_called_with(SELECT_DB_TO_EDIT)
     assert not main_window.form_box.children  # no form should be shown
+
+
+def test_delete_database_no_selection(databases, main_window):
+    """Delete database button should display a warning in statusbar
+    if there is no database selected."""
+
+    statusbar = Mock(StatusBar)
+    main_window.statusbar = statusbar
+    main_window.on_delete_database(None)
+
+    statusbar.warning.assert_called_with(SELECT_DB_TO_DELETE)
+    # TODO: no dialog should be shown

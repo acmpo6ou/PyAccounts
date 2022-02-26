@@ -28,6 +28,7 @@ from core.settings import Settings
 from core.widgets import Window
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
+SELECT_DB_TO_DELETE = "Please select a database to delete."
 
 
 class MainWindow(Gtk.ApplicationWindow, Window):
@@ -252,12 +253,19 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Deletes given database from disk and database list handling all errors.
         :param name: name of the database to delete.
         """
+
         # TODO: show success message in statusbar if database is deleted successfully
         # TODO: show error message if there is an error
         # TODO: deselect any database and update database list (use ListBox.delete(name))
 
     def on_delete_database(self, _):
         """
-        Displays confirmation dialog asking user if he really want's to delete selected database.
+        Displays confirmation dialog asking user if he really want's to delete
+        selected database.
         """
-        # TODO: show warning in statusbar if there is no database selected
+
+        # show warning in statusbar if there is no database selected
+        row = self.db_list.selected_row
+        if not row:
+            self.statusbar.warning(SELECT_DB_TO_DELETE)
+            return
