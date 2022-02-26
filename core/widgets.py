@@ -151,7 +151,7 @@ class Window(Gtk.Window, GladeTemplate):
         self.set_icon_from_file("img/icon.svg")
 
         self.load_separator()
-        self.statusbar = StatusBar(self.statusbar)
+        self.statusbar = StatusBar(self.status_bar)
 
         self.shortcuts = Gtk.AccelGroup()
         self.add_accel_group(self.shortcuts)

@@ -289,7 +289,7 @@ Author: Bohdan Kolvakh
       </packing>
     </child>
     <child>
-      <object class="GtkStatusbar" id="statusbar">
+      <object class="GtkStatusbar" id="status_bar">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="margin-start">5</property>

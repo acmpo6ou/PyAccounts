@@ -37,7 +37,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
     separator: Gtk.Paned
     form_box: Gtk.Box
     db_list: Gtk.ListBox
-    statusbar: Gtk.Statusbar
+    status_bar: Gtk.Statusbar
     # </editor-fold>
 
     def __init__(self, *args, **kwargs):
