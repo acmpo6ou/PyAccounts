@@ -27,6 +27,8 @@ from core.rename_database import RenameDatabase
 from core.settings import Settings
 from core.widgets import Window
 
+SELECT_DB_TO_EDIT = "Please select a database to edit."
+
 
 class MainWindow(Gtk.ApplicationWindow, Window):
     # <editor-fold>
@@ -230,7 +232,12 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         otherwise – rename database form.
         """
 
+        # show warning in statusbar if there is no database selected
         row = self.db_list.selected_row
+        if not row:
+            self.statusbar.warning(SELECT_DB_TO_EDIT)
+            return
+
         index = self.db_list.children.index(row)
         selected_db = self.databases[index]
 
@@ -239,7 +246,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         else:
             form = RenameDatabase(selected_db)
         self.show_form(form)
-        # TODO: show warning in statusbar if there is no database selected
 
     def delete_database(self, name: str):
         """
