@@ -177,7 +177,6 @@ def test_delete_database_no_selection(databases, main_window):
 
     statusbar = Mock(StatusBar)
     main_window.statusbar = statusbar
-    main_window.on_delete_database(None)
 
+    main_window.on_delete_database(None)
     statusbar.warning.assert_called_with(SELECT_DB_TO_DELETE)
-    # TODO: no dialog should be shown
