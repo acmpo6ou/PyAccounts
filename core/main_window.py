@@ -23,6 +23,7 @@ from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
 from core.gtk_utils import GladeTemplate, abc_list_sort
+from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
 from core.settings import Settings
 from core.widgets import Window, WarningDialog
@@ -154,7 +155,13 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         If selected database is closed – displays open database form.
         :param row: row containing selected database name.
         """
-        # TODO: use show_form()
+
+        index = self.db_list.children.index(row)
+        selected_db = self.databases[index]
+
+        if not selected_db.opened:
+            form = OpenDatabase(selected_db)
+            self.show_form(form)
 
     def import_database(self, path: str):
         """

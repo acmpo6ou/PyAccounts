@@ -29,6 +29,7 @@ from core.main_window import (
     SELECT_DB_TO_DELETE,
     CONFIRM_DB_DELETION,
 )
+from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
 from core.widgets import StatusBar
 
@@ -79,6 +80,32 @@ def test_on_create_database(main_window):
     main_window.on_create_database(None)
     form = main_window.form_box.children[0]
     assert isinstance(form, CreateDatabase)
+
+
+def test_select_closed_database(databases, main_window):
+    """When selecting a database, the open database form should be displayed
+    if the database is closed."""
+
+    # select a database
+    row = main_window.db_list.children[2]
+    main_window.db_list.select_row(row)
+
+    form = main_window.form_box.children[0]
+    assert isinstance(form, OpenDatabase)
+    assert form.database == main_window.databases[2]
+
+
+def test_select_opened_database(databases, main_window):
+    """When selecting an opened database, the open database form shouldn't be displayed."""
+
+    # make a database opened
+    main_window.databases[2].password = "123"
+
+    # select it
+    row = main_window.db_list.children[2]
+    main_window.db_list.select_row(row)
+
+    assert not main_window.form_box.children
 
 
 def test_edit_closed_database(databases, main_window):
