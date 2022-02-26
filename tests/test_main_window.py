@@ -22,7 +22,7 @@ from gi.repository import Gtk, GdkPixbuf
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
-from core.main_window import MainWindow
+from core.main_window import MainWindow, SELECT_DB_TO_EDIT
 from core.rename_database import RenameDatabase
 from core.widgets import StatusBar
 
@@ -116,5 +116,5 @@ def test_edit_database_no_selection(databases, main_window):
     main_window.statusbar = statusbar
     main_window.on_edit_database(None)
 
-    assert statusbar.warning.assert_called_with("Please select a database to edit.")
+    statusbar.warning.assert_called_with(SELECT_DB_TO_EDIT)
     assert not main_window.form_box.children  # no form should be shown
