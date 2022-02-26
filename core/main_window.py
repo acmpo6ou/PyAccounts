@@ -273,4 +273,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
         index = self.db_list.children.index(row)
         selected_db = self.databases[index]
-        WarningDialog(CONFIRM_DB_DELETION.format(selected_db.name)).run()
+
+        message = CONFIRM_DB_DELETION.format(selected_db.name)
+        response = WarningDialog(message).run()
+
+        if response == Gtk.ResponseType.YES:
+            self.delete_database(selected_db.name)

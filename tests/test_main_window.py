@@ -140,6 +140,37 @@ def test_confirm_database_deletion_dialog_message(databases, main_window):
         mock.assert_called_with(CONFIRM_DB_DELETION.format(db_name))
 
 
+def test_confirm_database_deletion_Yes(databases, main_window):
+    # select a database
+    row = main_window.db_list.children[1]
+    main_window.db_list.select_row(row)
+
+    main_window.delete_database = Mock()
+    with patch.object(core.main_window, "WarningDialog", autospec=True) as mock:
+        # press on delete database button, and choose Yes in confirmation dialog
+        mock.return_value.run.return_value = Gtk.ResponseType.YES
+        main_window.on_delete_database(None)
+
+        # the delete_database should have been called
+        db_name = main_window.databases[1].name
+        main_window.delete_database.assert_called_with(db_name)
+
+
+def test_confirm_database_deletion_No(databases, main_window):
+    # select a database
+    row = main_window.db_list.children[1]
+    main_window.db_list.select_row(row)
+
+    main_window.delete_database = Mock()
+    with patch.object(core.main_window, "WarningDialog", autospec=True) as mock:
+        # press on delete database button, and choose No in confirmation dialog
+        mock.return_value.run.return_value = Gtk.ResponseType.NO
+        main_window.on_delete_database(None)
+
+        # the MainWindow's delete_database shouldn't have been called
+        main_window.delete_database.assert_not_called()
+
+
 def test_delete_database_no_selection(databases, main_window):
     """Delete database button should display a warning in statusbar
     if there is no database selected."""
