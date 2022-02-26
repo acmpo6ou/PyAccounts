@@ -65,7 +65,6 @@ class WarningDialog(IconDialog):
             title="Warning!",
             message=message,
             icon="dialog-warning",
-            modal=True,
             buttons=("_No", Gtk.ResponseType.NO, "Yes", Gtk.ResponseType.YES),
             *args,
             **kwargs,
