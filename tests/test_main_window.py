@@ -14,15 +14,21 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import shutil
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import pytest
 from gi.repository import Gtk, GdkPixbuf
 
+import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
-from core.main_window import MainWindow, SELECT_DB_TO_EDIT, SELECT_DB_TO_DELETE
+from core.main_window import (
+    MainWindow,
+    SELECT_DB_TO_EDIT,
+    SELECT_DB_TO_DELETE,
+    CONFIRM_DB_DELETION,
+)
 from core.rename_database import RenameDatabase
 from core.widgets import StatusBar
 
@@ -118,6 +124,20 @@ def test_edit_database_no_selection(databases, main_window):
 
     statusbar.warning.assert_called_with(SELECT_DB_TO_EDIT)
     assert not main_window.form_box.children  # no form should be shown
+
+
+def test_confirm_database_deletion_dialog_message(databases, main_window):
+    # select a database
+    row = main_window.db_list.children[1]
+    main_window.db_list.select_row(row)
+
+    with patch.object(core.main_window, "WarningDialog", autospec=True) as mock:
+        # press on delete database button
+        main_window.on_delete_database(None)
+
+        # the confirmation dialog should have been displayed with the correct message
+        db_name = main_window.databases[1].name
+        mock.assert_called_with(CONFIRM_DB_DELETION.format(db_name))
 
 
 def test_delete_database_no_selection(databases, main_window):

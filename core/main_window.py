@@ -25,10 +25,11 @@ from core.edit_database import EditDatabase
 from core.gtk_utils import GladeTemplate, abc_list_sort
 from core.rename_database import RenameDatabase
 from core.settings import Settings
-from core.widgets import Window
+from core.widgets import Window, WarningDialog
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
+CONFIRM_DB_DELETION = "Delete <b>{}</b> database?"
 
 
 class MainWindow(Gtk.ApplicationWindow, Window):
@@ -269,3 +270,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         if not row:
             self.statusbar.warning(SELECT_DB_TO_DELETE)
             return
+
+        index = self.db_list.children.index(row)
+        selected_db = self.databases[index]
+        WarningDialog(CONFIRM_DB_DELETION.format(selected_db.name)).run()
