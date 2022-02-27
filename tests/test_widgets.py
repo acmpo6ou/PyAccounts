@@ -38,3 +38,11 @@ def test_statusbar_success(faker):
 
     statusbar.success(msg)
     assert statusbar.label.text == f"✔ {msg}"
+
+
+def test_statusbar_warning(faker):
+    msg = faker.sentence()
+    statusbar = StatusBar(Gtk.Label())
+
+    statusbar.warning(msg)
+    assert statusbar.label.text == f"✘ {msg}"

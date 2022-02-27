@@ -141,7 +141,7 @@ class StatusBar:
         """
         Displays a warning.
         """
-        # TODO: display ✘ before the message
+        self.message(f"<span color='#f04a50'>✘</span> {message}")
 
 
 class Window(Gtk.Window, GladeTemplate):
