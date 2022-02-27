@@ -135,7 +135,7 @@ class StatusBar:
         """
         Displays a success message.
         """
-        self.label.markup = f"<span color='#6db442'>✔</span> {message}"
+        self.message(f"<span color='#6db442'>✔</span> {message}")
 
     def warning(self, message: str):
         """
