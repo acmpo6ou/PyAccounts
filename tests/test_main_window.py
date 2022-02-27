@@ -28,6 +28,7 @@ from core.main_window import (
     SELECT_DB_TO_EDIT,
     SELECT_DB_TO_DELETE,
     CONFIRM_DB_DELETION,
+    SUCCESS_DB_DELETED,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
@@ -207,3 +208,22 @@ def test_delete_database_no_selection(databases, main_window):
 
     main_window.on_delete_database(None)
     statusbar.warning.assert_called_with(SELECT_DB_TO_DELETE)
+
+
+def test_delete_database_success(databases, main_window):
+    main_db = main_window.databases[2]
+    main_window.delete_database(main_db)
+
+    # a success message should be shown in statusbar
+    assert SUCCESS_DB_DELETED in main_window.statusbar.label.text
+
+    # the database should be removed from databases list
+    assert Database("main") not in main_window.databases
+
+    # and from db_list as well
+    for row in main_window.db_list.children:
+        label = row.children[0].children[-1]
+        assert label.text != "main"
+
+    # its .dba file should be deleted
+    assert not main_db.dba_file.exists()

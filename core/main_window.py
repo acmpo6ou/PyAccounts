@@ -22,7 +22,7 @@ import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
-from core.gtk_utils import GladeTemplate, abc_list_sort
+from core.gtk_utils import GladeTemplate, abc_list_sort, delete_item
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
 from core.settings import Settings
@@ -31,6 +31,7 @@ from core.widgets import Window, WarningDialog
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
 CONFIRM_DB_DELETION = "Delete <b>{}</b> database?"
+SUCCESS_DB_DELETED = "Database deleted successfully!"
 
 
 class MainWindow(Gtk.ApplicationWindow, Window):
@@ -156,6 +157,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         :param row: row containing selected database name.
         """
 
+        if not row:
+            return
+
         index = self.db_list.children.index(row)
         selected_db = self.databases[index]
 
@@ -256,15 +260,17 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             form = RenameDatabase(selected_db)
         self.show_form(form)
 
-    def delete_database(self, name: str):
+    def delete_database(self, database: Database):
         """
-        Deletes given database from disk and database list handling all errors.
-        :param name: name of the database to delete.
+        Deletes given database from disk and database list, handling all errors.
         """
 
-        # TODO: show success message in statusbar if database is deleted successfully
+        database.dba_file.unlink()
+        self.databases.remove(database)
+        delete_item(self.db_list, database.name)
+        self.statusbar.success(SUCCESS_DB_DELETED)
         # TODO: show error message if there is an error
-        # TODO: deselect any database and update database list (use ListBox.delete(name))
+        # TODO: hide all forms
 
     def on_delete_database(self, _):
         """
@@ -285,4 +291,4 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         response = WarningDialog(message).run()
 
         if response == Gtk.ResponseType.YES:
-            self.delete_database(selected_db.name)
+            self.delete_database(selected_db)
