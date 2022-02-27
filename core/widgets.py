@@ -18,7 +18,7 @@
 Contains custom GTK widgets.
 """
 
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, GObject, GLib
 
 from core.about import AboutDialog
 from core.gtk_utils import GladeTemplate, load_icon
@@ -119,11 +119,17 @@ class StatusBar:
     def __init__(self, label: Gtk.Label):
         self.label = label
 
-    def message(self, message: str):
+    def clear(self):
+        self.label.text = ""
+
+    def message(self, message: str, time=15):
         """
         Displays message that disappears in 15 seconds on status bar.
+        :param time: used in tests not to wait 15 seconds.
         """
-        # TODO: use GObject.timeout_add() to add callback to clear status bar in 15 seconds.
+
+        self.label.markup = message
+        GLib.timeout_add_seconds(time, self.clear)
 
     def success(self, message: str):
         """

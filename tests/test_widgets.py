@@ -13,9 +13,27 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import time
+
 from gi.repository import Gtk
 
 from core.widgets import StatusBar
+
+
+def test_statusbar_message(faker):
+    msg = faker.sentence()
+    statusbar = StatusBar(Gtk.Label())
+
+    statusbar.message(msg, 0.1)
+    assert statusbar.label.text == msg
+
+    # after 0.1 second the message should disappear
+    while True:
+        if not statusbar.label.text:
+            break
+
+        while Gtk.events_pending():
+            Gtk.main_iteration()
 
 
 def test_statusbar_success(faker):
