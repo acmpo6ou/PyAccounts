@@ -17,8 +17,11 @@
 """
 Contains various utilities to simplify development with GTK.
 """
+import time
 from enum import IntEnum
+from typing import Callable
 
+import pytest
 from gi.repository import GObject, Gtk, Gio
 
 
@@ -182,3 +185,22 @@ def get_mime_icon(path: str) -> Gtk.Image:
     file = Gio.File.new_for_path(path)
     info = file.query_info("standard::*", Gio.FileQueryInfoFlags.NONE, None)
     return load_icon(info.icon.names[0], 64)
+
+
+def wait_until(callback: Callable[[], bool], timeout=5):
+    """
+    Waits until the return value from callback becomes True, or until timeout expires.
+    """
+
+    __tracebackhide__ = True
+    start = time.time()
+    while True:
+        if callback():
+            break
+
+        time_passed = time.time() - start
+        if time_passed >= timeout:
+            pytest.fail()
+
+        while Gtk.events_pending():
+            Gtk.main_iteration()
