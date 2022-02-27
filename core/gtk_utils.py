@@ -76,10 +76,9 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
-def delete_item(self, item_name: str):
+def delete_item(list_box, item_name: str):
     """
-    An extension function for Gtk.ListBox.
-    Removes item from Gtk.ListBox by its name.
+    A helper function to remove an item from Gtk.ListBox by its name.
     """
 
     """
@@ -89,10 +88,6 @@ def delete_item(self, item_name: str):
             remove widget from self
             break
     """
-
-
-# now Gtk.ListBox will have a convenient method to remove it's items by name
-Gtk.ListBox.delete = delete_item
 
 
 class ListOrder(IntEnum):
