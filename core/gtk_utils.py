@@ -91,6 +91,10 @@ def delete_item(self, item_name: str):
     """
 
 
+# now Gtk.ListBox will have a convenient method to remove it's items by name
+Gtk.ListBox.delete = delete_item
+
+
 class ListOrder(IntEnum):
     """Used by abc_list_sort sort function to indicate the order of Gtk.ListBoxRow items."""
 
@@ -118,10 +122,6 @@ def abc_list_sort(row1: Gtk.ListBoxRow, row2: Gtk.ListBoxRow) -> ListOrder:
         return ListOrder.ROW1_ROW2
     else:
         return ListOrder.ROW2_ROW1
-
-
-# now Gtk.ListBox will have a convenient method to remove it's items by name
-Gtk.ListBox.delete = delete_item
 
 
 class GladeTemplate(Gtk.Bin):
