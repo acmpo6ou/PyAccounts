@@ -159,21 +159,6 @@ def test_create_database(src_dir, salt, accounts):
         assert data == ACCOUNTS_JSON
 
 
-def test_delete_database(src_dir, main_db):
-    # GIVEN we have two databases: main (provided by main_db fixture) and crypt
-    shutil.copy("tests/data/main.dba", src_dir / "crypt.dba")
-
-    # WHEN we delete main
-    db = Database("main")
-    db.delete()
-
-    # THEN its .dba file should be removed
-    assert not (src_dir / "main.dba").exists()
-
-    # and crypt.dba should be still there
-    assert (src_dir / "crypt.dba").exists()
-
-
 def test_rename_database(src_dir, main_db):
     db = Database("main")
     db.rename("crypt")
@@ -198,7 +183,7 @@ def test_database_saved_no_database(main_db, accounts):
     db = Database("main", "123", accounts)
     assert db.saved
 
-    db.delete()
+    db.dba_file.unlink()
     assert not db.saved
 
 

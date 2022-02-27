@@ -206,12 +206,6 @@ class Database:
             token = self.encrypt(data, self.password, salt)
             file.write(token)
 
-    def delete(self):
-        """
-        Deletes .dba file associated with this Database instance.
-        """
-        self.dba_file.unlink()
-
     def rename(self, name: str):
         """
         Renames .dba file associated with this Database instance.
@@ -231,6 +225,6 @@ class Database:
         :param accounts: new `accounts` dict for the database.
         """
 
-        self.delete()
+        self.dba_file.unlink()
         db = Database(name, password, accounts)
         db.create()
