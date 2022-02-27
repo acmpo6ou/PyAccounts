@@ -16,7 +16,7 @@
 import pytest
 from gi.repository import Gtk
 
-from core.gtk_utils import ListOrder, abc_list_sort
+from core.gtk_utils import ListOrder, abc_list_sort, delete_item
 
 
 @pytest.mark.parametrize(
@@ -40,3 +40,19 @@ def test_abc_list_sort(name1, name2, expected_order):
 
     order = abc_list_sort(*rows)
     assert order == expected_order
+
+
+def test_delete_item():
+    list_box = Gtk.ListBox()
+    for name in ("crypt", "data", "main"):
+        label = Gtk.Label(name)
+        box = Gtk.Box()
+        box.add(label)
+        list_box.add(box)
+
+    delete_item(list_box, "data")
+    assert len(list_box.children) == 2
+
+    for row in list_box.children:
+        label = row.children[0].children[0]
+        assert label.text != "data"
