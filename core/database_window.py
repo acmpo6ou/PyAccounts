@@ -36,7 +36,7 @@ class DatabaseWindow(Window):
     separator: Gtk.Paned
     form_box: Gtk.Box
     accounts_list: Gtk.ListBox
-    statusbar: Gtk.Statusbar
+    status_bar: Gtk.Label
     # </editor-fold>
 
     # TODO: use list comprehension, os.listdir(ACCOUNT_ICONS_DIR) and sorted(with custom function)
