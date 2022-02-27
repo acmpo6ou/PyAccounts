@@ -17,6 +17,7 @@ import time
 
 from gi.repository import Gtk
 
+from core.gtk_utils import wait_until
 from core.widgets import StatusBar
 
 
@@ -28,12 +29,7 @@ def test_statusbar_message(faker):
     assert statusbar.label.text == msg
 
     # after 0.1 second the message should disappear
-    while True:
-        if not statusbar.label.text:
-            break
-
-        while Gtk.events_pending():
-            Gtk.main_iteration()
+    wait_until(lambda: not statusbar.label.text)
 
 
 def test_statusbar_success(faker):
