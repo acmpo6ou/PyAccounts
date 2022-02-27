@@ -113,11 +113,11 @@ class DateChooserDialog(GladeTemplate):
 
 class StatusBar:
     """
-    A wrapper for Gtk.Statusbar to display messages that disappear in 15 seconds.
+    A wrapper around Gtk.Label to display messages that disappear in 15 seconds.
     """
 
-    def __init__(self, statusbar: Gtk.Statusbar):
-        self.statusbar = statusbar
+    def __init__(self, label: Gtk.Label):
+        self.label = label
 
     def message(self, message: str):
         """
@@ -129,7 +129,7 @@ class StatusBar:
         """
         Displays a success message.
         """
-        # TODO: display ✔ before the message
+        self.label.markup = f"<span color='#6db442'>✔</span> {message}"
 
     def warning(self, message: str):
         """
