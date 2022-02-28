@@ -81,13 +81,13 @@ class ErrorDialog(IconDialog):
             title="Error!",
             message=message,
             icon="dialog-error",
-            modal=True,
             *args,
             **kwargs,
         )
         details_label = Gtk.Label()
         details_label.markup = f"<span font_desc='Ubuntu Mono 20'>{details}</span>"
         details_label.selectable = True
+        details_label.line_wrap = True
         details_label.xalign = 0
         details_label.margin_start = 5
         details_label.margin_end = 5
