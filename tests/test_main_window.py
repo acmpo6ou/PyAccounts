@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import shutil
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, PropertyMock
 
 import pytest
 from gi.repository import Gtk, GdkPixbuf
@@ -29,10 +29,11 @@ from core.main_window import (
     SELECT_DB_TO_DELETE,
     CONFIRM_DB_DELETION,
     SUCCESS_DB_DELETED,
+    ERROR_DB_DELETION,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
-from core.widgets import StatusBar
+from core.widgets import StatusBar, ErrorDialog
 
 
 @pytest.fixture
@@ -231,3 +232,30 @@ def test_delete_database_success(databases, main_window):
 
     # no form should be shown
     assert not main_window.form_box.children
+
+
+@patch("core.main_window.ErrorDialog", autospec=True)
+@patch("core.main_window.Database.dba_file", new_callable=PropertyMock)
+def test_delete_database_error(
+    mock, dialog: "Mock[ErrorDialog]", databases, main_window, faker
+):
+    msg = faker.sentence()
+    mock.return_value.unlink.side_effect = Exception(msg)
+    main_db = Database("main")
+
+    # the ErrorDialog should be shown
+    main_window.delete_database(main_db)
+    dialog.assert_called_with(ERROR_DB_DELETION, f"Exception:\n{msg}")
+
+    # the database shouldn't be deleted from databases list
+    assert Database("main") in main_window.databases
+
+    # and from db_list
+    db_list_names = []
+    for row in main_window.db_list.children:
+        label = row.children[0].children[-1]
+        db_list_names.append(label.text)
+    assert "main" in db_list_names
+
+    # there shouldn't be any message shown in statusbar
+    assert not main_window.statusbar.label.text

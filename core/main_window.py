@@ -14,6 +14,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import glob
+import logging
+import traceback
 from pathlib import Path
 
 from gi.repository import Gtk, Gdk, GdkPixbuf
@@ -26,12 +28,14 @@ from core.gtk_utils import GladeTemplate, abc_list_sort, delete_item
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
 from core.settings import Settings
-from core.widgets import Window, WarningDialog
+from core.widgets import Window, WarningDialog, ErrorDialog
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
+
 CONFIRM_DB_DELETION = "Delete <b>{}</b> database?"
 SUCCESS_DB_DELETED = "Database deleted successfully!"
+ERROR_DB_DELETION = "Error deleting the database!"
 
 
 class MainWindow(Gtk.ApplicationWindow, Window):
@@ -59,6 +63,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.load_css()
 
         self.get_databases()
+        # self.databases = [Database("main")]
         self.load_databases()
         self.select_main_database()
 
@@ -265,13 +270,25 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Deletes given database from disk and database list, handling all errors.
         """
 
-        database.dba_file.unlink()
+        try:
+            database.dba_file.unlink()
+        except Exception as err:
+            logging.error(traceback.format_exc())
+
+            # fmt: off
+            error_class = str(err.__class__) \
+                .removeprefix("<class '") \
+                .removesuffix("'>")
+            # fmt: on
+
+            ErrorDialog(ERROR_DB_DELETION, f"{error_class}:\n{err}").run()
+            return
+
         self.databases.remove(database)
         delete_item(self.db_list, database.name)
 
         self.form_box.foreach(lambda form: self.form_box.remove(form))
         self.statusbar.success(SUCCESS_DB_DELETED)
-        # TODO: show error message if there is an error
 
     def on_delete_database(self, _):
         """
