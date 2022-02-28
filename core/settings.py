@@ -55,7 +55,7 @@ class SettingsDialog(GladeTemplate):
 
 
 @dataclass
-class Settings:
+class Config:
     """
     Represents app settings.
     """

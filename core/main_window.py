@@ -27,7 +27,7 @@ from core.edit_database import EditDatabase
 from core.gtk_utils import GladeTemplate, abc_list_sort, delete_item
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
-from core.settings import Settings
+from core.settings import Config
 from core.widgets import Window, WarningDialog, ErrorDialog
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
@@ -60,7 +60,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self._safe_clipboard = ""
 
         self.main_window = self
-        self.settings = Settings()
+        self.config = Config()
         self.load_css()
 
         self.get_databases()
