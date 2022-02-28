@@ -180,8 +180,8 @@ def test_confirm_database_deletion_Yes(databases, main_window):
         main_window.on_delete_database(None)
 
         # the delete_database should have been called
-        db_name = main_window.databases[1].name
-        main_window.delete_database.assert_called_with(db_name)
+        db = main_window.databases[1]
+        main_window.delete_database.assert_called_with(db)
 
 
 def test_confirm_database_deletion_No(databases, main_window):
