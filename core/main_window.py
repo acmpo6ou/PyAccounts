@@ -268,9 +268,10 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         database.dba_file.unlink()
         self.databases.remove(database)
         delete_item(self.db_list, database.name)
+
+        self.form_box.foreach(lambda form: self.form_box.remove(form))
         self.statusbar.success(SUCCESS_DB_DELETED)
         # TODO: show error message if there is an error
-        # TODO: hide all forms
 
     def on_delete_database(self, _):
         """
