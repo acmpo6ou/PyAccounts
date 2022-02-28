@@ -32,6 +32,7 @@ from core.widgets import Window, WarningDialog, ErrorDialog
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
+CONFIRM_QUIT = "Are you sure you want to quit?"
 
 CONFIRM_DB_DELETION = "Delete <b>{}</b> database?"
 SUCCESS_DB_DELETED = "Database deleted successfully!"
@@ -218,23 +219,21 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         # TODO: use `filename` property of dialog to access selected file path
         # TODO: call export_database
 
-    def do_delete_event(self, event):
+    def do_delete_event(self, _):
         """
-        Called when user tries to close the window, propagates event to on_quit.
-        NOTE: DO NOT move this method to Window superclass, or else it won't work.
-        """
-        return self.on_quit(event)
-
-    def on_quit(self, _) -> bool:
-        """
-        Checks if all databases are closed, if they are – quits, if they aren't – displays
-        confirmation dialog.
+        Checks if all databases are closed, if they are – quits, if any of them aren't –
+        displays confirmation dialog.
         :returns: True to prevent quiting and False to allow it.
         """
 
-        # TODO: use any() to check if there is any opened database
-        # TODO: call app.quit() to quit
-        # TODO: return True if user doesn't want to quit and False otherwise
+        if any(database.opened for database in self.databases):
+            response = WarningDialog(CONFIRM_QUIT).run()
+            if response == Gtk.ResponseType.NO:
+                return True
+        return False
+
+    def on_quit(self, _):
+        self.get_application().quit()
 
     def on_create_database(self, _):
         """

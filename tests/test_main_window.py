@@ -30,10 +30,11 @@ from core.main_window import (
     CONFIRM_DB_DELETION,
     SUCCESS_DB_DELETED,
     ERROR_DB_DELETION,
+    CONFIRM_QUIT,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
-from core.widgets import StatusBar, ErrorDialog
+from core.widgets import StatusBar, ErrorDialog, WarningDialog
 
 
 @pytest.fixture
@@ -259,3 +260,37 @@ def test_delete_database_error(
 
     # there shouldn't be any message shown in statusbar
     assert not main_window.statusbar.label.text
+
+
+def test_quit_all_databases_are_closed(databases, main_window):
+    # all databases are closed by default, so there shouldn't be any confirmation dialog
+    assert not main_window.do_delete_event(None)
+
+
+@patch("core.main_window.WarningDialog", autospec=True)
+def test_quit_a_database_is_opened(dialog: Mock, databases, main_window):
+    # there is an opened database
+    main_window.databases[0].password = "123"
+
+    main_window.do_delete_event(None)
+    dialog.assert_called_with(CONFIRM_QUIT)
+
+
+@patch("core.main_window.WarningDialog", autospec=True)
+def test_confirm_quit_No(dialog: Mock, databases, main_window):
+    # there is an opened database
+    main_window.databases[0].password = "123"
+
+    # choose No in the confirmation dialog
+    dialog.return_value.run.return_value = Gtk.ResponseType.NO
+    assert main_window.do_delete_event(None)
+
+
+@patch("core.main_window.WarningDialog", autospec=True)
+def test_confirm_quit_Yes(dialog: Mock, databases, main_window):
+    # there is an opened database
+    main_window.databases[0].password = "123"
+
+    # choose Yes in the confirmation dialog
+    dialog.return_value.run.return_value = Gtk.ResponseType.YES
+    assert not main_window.do_delete_event(None)
