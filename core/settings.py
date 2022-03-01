@@ -61,6 +61,7 @@ class Config:
     """
 
     separator_position = 1000
+    main_db = False
     general_font = "Ubuntu 30"
     monospace_font = "Ubuntu Mono 35"
 

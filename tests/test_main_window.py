@@ -294,3 +294,16 @@ def test_confirm_quit_Yes(dialog: Mock, databases, main_window):
     # choose Yes in the confirmation dialog
     dialog.return_value.run.return_value = Gtk.ResponseType.YES
     assert not main_window.do_delete_event(None)
+
+
+def test_select_main_database(databases, main_window):
+    # turn on the main database feature
+    main_window.config.main_db = True
+
+    main_window.select_main_database()
+
+    # the main database should be selected
+    row = main_window.db_list.selected_row
+    index = main_window.db_list.children.index(row)
+    selected_db = main_window.databases[index]
+    assert selected_db == Database("main")

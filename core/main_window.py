@@ -153,8 +153,18 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
     def select_main_database(self):
         """
-        If there is a database called `main` auto selects it.
+        If there is a database called `main` auto selects it
+        (but only if the appropriate feature is turned on).
         """
+
+        if not self.config.main_db:
+            return
+
+        for row in self.db_list.children:
+            label = row.children[0].children[-1]
+            if label.text == "main":
+                self.db_list.select_row(row)
+                break
         # TODO: call on_database_selected or send 'select' event to db_list
 
     def on_database_selected(self, _, row: Gtk.ListBoxRow):
