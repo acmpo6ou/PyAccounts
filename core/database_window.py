@@ -70,10 +70,9 @@ class DatabaseWindow(Window):
         """
 
         # TODO: set sort_func for accounts_list to sort alphabetically
-        # TODO: for each account create hbox with icon and label
-        # TODO: get icon using load_account_icon(), label is account name
-        # TODO: style label: xalign = 0, margin start = 5
-        # TODO: add() hbox to accounts_list
+        # TODO: for each account get icon using load_account_icon(), label is account name
+        # TODO: use add_list_item() to add accounts to accounts_list
+        # see MainWindow's load_databases for more details
 
     def load_account_icon(self, accountname: str):
         """
