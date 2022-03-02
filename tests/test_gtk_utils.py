@@ -16,7 +16,7 @@
 import pytest
 from gi.repository import Gtk
 
-from core.gtk_utils import ListOrder, abc_list_sort, delete_item
+from core.gtk_utils import ListOrder, abc_list_sort, delete_list_item
 
 
 @pytest.mark.parametrize(
@@ -50,7 +50,7 @@ def test_delete_item():
         box.add(label)
         list_box.add(box)
 
-    delete_item(list_box, "data")
+    delete_list_item(list_box, "data")
     assert len(list_box.children) == 2
 
     for row in list_box.children:

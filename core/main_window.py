@@ -24,7 +24,7 @@ import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
-from core.gtk_utils import GladeTemplate, abc_list_sort, delete_item, add_item
+from core.gtk_utils import GladeTemplate, abc_list_sort, delete_list_item, add_list_item
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
 from core.settings import Config
@@ -137,7 +137,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
 
         for db in self.databases:
-            add_item(self.db_list, pixbuf, db.name)
+            add_list_item(self.db_list, pixbuf, db.name)
 
     def select_main_database(self):
         """
@@ -289,7 +289,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             return
 
         self.databases.remove(database)
-        delete_item(self.db_list, database.name)
+        delete_list_item(self.db_list, database.name)
 
         self.form_box.foreach(lambda form: self.form_box.remove(form))
         self.statusbar.success(SUCCESS_DB_DELETED)

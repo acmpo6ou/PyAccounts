@@ -76,7 +76,7 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
-def add_item(list_box: Gtk.ListBox, pixbuf: GdkPixbuf.Pixbuf, item_name: str):
+def add_list_item(list_box: Gtk.ListBox, pixbuf: GdkPixbuf.Pixbuf, item_name: str):
     """
     A helper function to add an item with icon and label to Gtk.ListBox.
     """
@@ -98,7 +98,7 @@ def add_item(list_box: Gtk.ListBox, pixbuf: GdkPixbuf.Pixbuf, item_name: str):
     list_box.add(hbox)
 
 
-def delete_item(list_box: Gtk.ListBox, item_name: str):
+def delete_list_item(list_box: Gtk.ListBox, item_name: str):
     """
     A helper function to remove an item from Gtk.ListBox by its name.
     """
