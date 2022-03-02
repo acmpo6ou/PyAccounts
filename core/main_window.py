@@ -210,7 +210,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         dialog.add_button("Import", Gtk.ResponseType.ACCEPT)
 
         response = dialog.run()
-        dialog.destroy()  # this isn't done automatically by the `run` method for some reason
+        dialog.hide()
         if response == Gtk.ResponseType.ACCEPT:
             self.import_database(dialog.filename)
 
