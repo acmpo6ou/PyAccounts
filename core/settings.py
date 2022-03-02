@@ -34,7 +34,7 @@ class SettingsDialog(GladeTemplate):
         self.main_window = main_window
 
     def run(self):
-        self.parent_widget.run()
+        self.parent_widget.show()
 
     def on_cancel(self, _):
         self.destroy()
