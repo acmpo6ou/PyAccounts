@@ -24,7 +24,7 @@ import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
-from core.gtk_utils import GladeTemplate, abc_list_sort, delete_item
+from core.gtk_utils import GladeTemplate, abc_list_sort, delete_item, add_item
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
 from core.settings import Config
@@ -137,21 +137,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
 
         for db in self.databases:
-            icon = Gtk.Image.new_from_pixbuf(pixbuf)
-            icon.xalign = 0
-            icon.margin_start = 5
-
-            label = Gtk.Label(db.name)
-            label.xalign = 0
-            label.margin_start = 5
-            label.margin_end = 10
-
-            hbox = Gtk.Box()
-            hbox.homogeneous = False
-
-            hbox.add(icon)
-            hbox.add(label)
-            self.db_list.add(hbox)
+            add_item(self.db_list, pixbuf, db.name)
 
     def select_main_database(self):
         """

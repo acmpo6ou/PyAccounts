@@ -22,7 +22,7 @@ from enum import IntEnum
 from typing import Callable
 
 import pytest
-from gi.repository import GObject, Gtk, Gio
+from gi.repository import GObject, Gtk, Gio, GdkPixbuf
 
 
 # noinspection PyUnresolvedReferences
@@ -74,6 +74,28 @@ original_setattr = GObject.Object.__setattr__
 # replace __getattr__ and __setattr__ with our methods that provide fluent API
 GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
+
+
+def add_item(list_box: Gtk.ListBox, pixbuf: GdkPixbuf.Pixbuf, item_name: str):
+    """
+    A helper function to add an item with icon and label to Gtk.ListBox.
+    """
+
+    icon = Gtk.Image.new_from_pixbuf(pixbuf)
+    icon.xalign = 0
+    icon.margin_start = 5
+
+    label = Gtk.Label(item_name)
+    label.xalign = 0
+    label.margin_start = 5
+    label.margin_end = 10
+
+    hbox = Gtk.Box()
+    hbox.homogeneous = False
+
+    hbox.add(icon)
+    hbox.add(label)
+    list_box.add(hbox)
 
 
 def delete_item(list_box: Gtk.ListBox, item_name: str):
