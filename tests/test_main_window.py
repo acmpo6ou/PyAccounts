@@ -31,6 +31,7 @@ from core.main_window import (
     SUCCESS_DB_DELETED,
     ERROR_DB_DELETION,
     CONFIRM_QUIT,
+    IMPORT_DATABASE_TITLE,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
@@ -307,3 +308,26 @@ def test_select_main_database(databases, main_window):
     index = main_window.db_list.children.index(row)
     selected_db = main_window.databases[index]
     assert selected_db == Database("main")
+
+
+@patch("gi.repository.Gtk.FileChooserDialog", autospec=True)
+def test_import_dialog_Cancel(mock: "Mock[Gtk.FileChooserDialog]", main_window):
+    # choose Cancel in the dialog
+    mock.return_value.run.return_value = Gtk.ResponseType.CANCEL
+    main_window.import_database = Mock()
+
+    main_window.on_import_database()
+    main_window.import_database.assert_not_called()
+
+
+@patch("gi.repository.Gtk.FileChooserDialog", autospec=True)
+def test_import_dialog_Import(mock: "Mock[Gtk.FileChooserDialog]", main_window, faker):
+    # choose a file to import
+    filename = faker.file_name()
+    mock.return_value.filename = filename
+
+    mock.return_value.run.return_value = Gtk.ResponseType.ACCEPT
+    main_window.import_database = Mock()
+
+    main_window.on_import_database()
+    main_window.import_database.assert_called_with(filename)

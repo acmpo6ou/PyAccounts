@@ -30,6 +30,8 @@ from core.rename_database import RenameDatabase
 from core.settings import Config
 from core.widgets import Window, WarningDialog, ErrorDialog
 
+IMPORT_DATABASE_TITLE = "Import database"
+
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
 CONFIRM_QUIT = "Are you sure you want to quit?"
@@ -197,14 +199,19 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Displays import database dialog.
         """
 
-        # see FileChooserDialog docs for more details
-        # TODO: set dialog title to "Import database"
-        # TODO: allow only .dba files
-        # TODO: use Gtk.FileChooserAction.OPEN
-        # TODO: add 2 buttons: Cancel and Import
-        # TODO: import .dba file only if response is Gtk.ResponseType.ACCEPT
-        # TODO: use `filename` property of dialog to access selected file path
-        # TODO: call import_database
+        dialog = Gtk.FileChooserDialog(IMPORT_DATABASE_TITLE)
+
+        dba_filter = Gtk.FileFilter()
+        dba_filter.name = "Account database (*.dba)"
+        dba_filter.add_mime_type("application/account-database")
+        dialog.add_filter(dba_filter)
+
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        dialog.add_button("Import", Gtk.ResponseType.ACCEPT)
+
+        response = dialog.run()
+        if response == Gtk.ResponseType.ACCEPT:
+            self.import_database(dialog.filename)
 
     def export_database(self, name: str, path: str):
         """
