@@ -14,6 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import shutil
+from pathlib import Path
 from unittest.mock import Mock, patch, PropertyMock
 
 import pytest
@@ -32,6 +33,7 @@ from core.main_window import (
     ERROR_DB_DELETION,
     CONFIRM_QUIT,
     IMPORT_DATABASE_TITLE,
+    SUCCESS_DB_IMPORT,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
@@ -331,3 +333,20 @@ def test_import_dialog_Import(mock: "Mock[Gtk.FileChooserDialog]", main_window, 
 
     main_window.on_import_database()
     main_window.import_database.assert_called_with(filename)
+
+
+def test_import_database_success(src_dir, main_window):
+    main_window.import_database("tests/data/main.dba")
+
+    assert Path(src_dir / "main.dba").exists()
+    assert Database("main") in main_window.databases
+
+    # the database should appear in db_list
+    db_list_names = []
+    for row in main_window.db_list.children:
+        label = row.children[0].children[-1]
+        db_list_names.append(label.text)
+    assert "main" in db_list_names
+
+    # a success message should be shown in statusbar
+    assert SUCCESS_DB_IMPORT in main_window.statusbar.label.text

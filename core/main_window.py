@@ -15,6 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import glob
 import logging
+import shutil
 import traceback
 from pathlib import Path
 
@@ -31,6 +32,7 @@ from core.settings import Config
 from core.widgets import Window, WarningDialog, ErrorDialog
 
 IMPORT_DATABASE_TITLE = "Import database"
+SUCCESS_DB_IMPORT = "Database imported successfully!"
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
@@ -176,6 +178,17 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Imports given database handling all errors.
         :param path: path to database file we're trying to import.
         """
+
+        shutil.copy(path, core.SRC_DIR)
+
+        db = Database(Path(path).stem)
+        self.databases.append(db)
+        self.databases.sort()
+
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
+        add_list_item(self.db_list, pixbuf, db.name)
+
+        self.statusbar.success(SUCCESS_DB_IMPORT)
 
         # TODO: show success and error messages
         # TODO: validate database file size, whether database already exists;
