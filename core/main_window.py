@@ -190,6 +190,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Imports given database handling all errors.
         :param path: path to database file we're trying to import.
         """
+
         # TODO: show success and error messages
         # TODO: validate database file size, whether database already exists;
         #  update db_list and list widget
@@ -210,6 +211,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         dialog.add_button("Import", Gtk.ResponseType.ACCEPT)
 
         response = dialog.run()
+        dialog.destroy()  # this isn't done automatically by the `run` method for some reason
         if response == Gtk.ResponseType.ACCEPT:
             self.import_database(dialog.filename)
 
