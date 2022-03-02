@@ -187,6 +187,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
         add_list_item(self.db_list, pixbuf, db.name)
+        self.db_list.show_all()
 
         self.statusbar.success(SUCCESS_DB_IMPORT)
 
