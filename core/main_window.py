@@ -41,6 +41,8 @@ WARNING_DB_CORRUPTED = (
 )
 ERROR_DB_IMPORT = "Error importing database!"
 
+EXPORT_DATABASE_TITLE = "Export database"
+
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
 CONFIRM_QUIT = "Are you sure you want to quit?"
@@ -231,11 +233,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         if response == Gtk.ResponseType.ACCEPT:
             self.import_database(dialog.filename)
 
-    def export_database(self, name: str, path: str):
+    def export_database(self, database: Database, path: str):
         """
         Exports given database handling all errors.
-
-        :param name: name of the database we're trying to export.
         :param path: where to export the database.
         """
         # TODO: show success and error messages; call export_database
@@ -245,14 +245,35 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Displays export database dialog.
         """
 
-        # see FileChooserDialog docs for more details
-        # TODO: set dialog title to "Export database"
-        # TODO: set default file name to be <dbname>.dba
-        # TODO: use Gtk.FileChooserAction.SAVE
-        # TODO: add 2 buttons: Cancel and Export
-        # TODO: export .dba file only if response is Gtk.ResponseType.ACCEPT
-        # TODO: use `filename` property of dialog to access selected file path
-        # TODO: call export_database
+        dialog = Gtk.FileChooserDialog(
+            title=EXPORT_DATABASE_TITLE,
+            action=Gtk.FileChooserAction.SAVE,
+        )
+        self.dialog = dialog
+
+        # TODO: show warning in statusbar if there is no database selected
+        row = self.db_list.selected_row
+        # if not row:
+        #     self.statusbar.warning(SELECT_DB_TO_EDIT)
+        #     return
+
+        # set default file name of the export dialog to <db_name>.dba
+        index = self.db_list.children.index(row)
+        selected_db = self.databases[index]
+        dialog.current_name = selected_db.dba_file.name
+
+        dba_filter = Gtk.FileFilter()
+        dba_filter.name = "Account database (*.dba)"
+        dba_filter.add_mime_type("application/account-database")
+        dialog.add_filter(dba_filter)
+
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        dialog.add_button("Export", Gtk.ResponseType.ACCEPT)
+
+        response = dialog.run()
+        dialog.hide()
+        if response == Gtk.ResponseType.ACCEPT:
+            self.export_database(selected_db, dialog.filename)
 
     def do_delete_event(self, _):
         """

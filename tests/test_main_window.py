@@ -410,3 +410,37 @@ def test_import_database_error(dialog: Mock, mock_copy: Mock, src_dir, main_wind
     for row in main_window.db_list.children:
         label = row.children[0].children[-1]
         assert "main" != label.text
+
+
+@patch("gi.repository.Gtk.FileChooserDialog", autospec=True)
+def test_export_dialog_Cancel(mock: Mock, databases, main_window):
+    # select main database
+    row = main_window.db_list.children[2]
+    main_window.db_list.select_row(row)
+
+    # choose Cancel in the dialog
+    mock.return_value.run.return_value = Gtk.ResponseType.CANCEL
+    main_window.export_database = Mock()
+
+    main_window.on_export_database()
+    main_window.export_database.assert_not_called()
+
+
+@patch("gi.repository.Gtk.FileChooserDialog", autospec=True)
+def test_export_dialog_Export(mock: Mock, databases, main_window, faker):
+    # select main database
+    row = main_window.db_list.children[2]
+    main_window.db_list.select_row(row)
+
+    # choose export location
+    filename = faker.file_name()
+    mock.return_value.filename = filename
+
+    mock.return_value.run.return_value = Gtk.ResponseType.ACCEPT
+    main_window.export_database = Mock()
+
+    main_window.on_export_database()
+    main_db = main_window.databases[2]
+
+    assert main_window.dialog.current_name == "main.dba"
+    main_window.export_database.assert_called_with(main_db, filename)
