@@ -35,6 +35,10 @@ from core.widgets import Window, WarningDialog, ErrorDialog, IconDialog
 IMPORT_DATABASE_TITLE = "Import database"
 SUCCESS_DB_IMPORT = "Database imported successfully!"
 WARNING_DB_EXISTS = "The database you are trying to import already exists!"
+WARNING_DB_CORRUPTED = (
+    "The database you are trying to import is probably corrupted.\n"
+    "It's file size should be no smaller than 116 bytes."
+)
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
@@ -185,6 +189,10 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             IconDialog("Warning!", WARNING_DB_EXISTS, "dialog-warning").run()
             return
 
+        if os.path.getsize(path) < 116:
+            IconDialog("Warning!", WARNING_DB_CORRUPTED, "dialog-warning").run()
+            return
+
         shutil.copy(path, core.SRC_DIR)
 
         db = Database(Path(path).stem)
@@ -198,8 +206,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.statusbar.success(SUCCESS_DB_IMPORT)
 
         # TODO: show success and error messages
-        # TODO: validate database file size, whether database already exists;
-        #  update db_list and list widget
 
     def on_import_database(self, *args):
         """

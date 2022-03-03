@@ -35,6 +35,7 @@ from core.main_window import (
     IMPORT_DATABASE_TITLE,
     SUCCESS_DB_IMPORT,
     WARNING_DB_EXISTS,
+    WARNING_DB_CORRUPTED,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
@@ -369,3 +370,22 @@ def test_import_database_already_exists(dialog: Mock, src_dir, main_window):
     # the statusbar should be empty
     assert not main_window.statusbar.label.text
 
+
+@patch("core.main_window.IconDialog", autospec=True)
+def test_import_corrupted_database(dialog: Mock, src_dir, main_window):
+    IconDialog.run = lambda _: None
+    main_window.import_database("tests/data/corrupted.dba")
+
+    dialog.assert_called_with("Warning!", WARNING_DB_CORRUPTED, "dialog-warning")
+    dialog.return_value.run.assert_called()
+
+    assert not Path(src_dir / "corrupted.dba").exists()
+    assert Database("corrupted") not in main_window.databases
+
+    # the database shouldn't be in db_list
+    for row in main_window.db_list.children:
+        label = row.children[0].children[-1]
+        assert "corrupted" != label.text
+
+    # the statusbar should be empty
+    assert not main_window.statusbar.label.text
