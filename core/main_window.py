@@ -39,6 +39,7 @@ WARNING_DB_CORRUPTED = (
     "The database you are trying to import is probably corrupted.\n"
     "It's file size should be no smaller than 116 bytes."
 )
+ERROR_DB_IMPORT = "Error importing database!"
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
@@ -193,7 +194,12 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             IconDialog("Warning!", WARNING_DB_CORRUPTED, "dialog-warning").run()
             return
 
-        shutil.copy(path, core.SRC_DIR)
+        try:
+            shutil.copy(path, core.SRC_DIR)
+        except Exception as err:
+            logging.error(traceback.format_exc())
+            ErrorDialog(ERROR_DB_IMPORT, err).run()
+            return
 
         db = Database(Path(path).stem)
         self.databases.append(db)
@@ -204,8 +210,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.db_list.show_all()
 
         self.statusbar.success(SUCCESS_DB_IMPORT)
-
-        # TODO: show success and error messages
 
     def on_import_database(self, *args):
         """

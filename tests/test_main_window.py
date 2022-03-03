@@ -32,14 +32,14 @@ from core.main_window import (
     SUCCESS_DB_DELETED,
     ERROR_DB_DELETION,
     CONFIRM_QUIT,
-    IMPORT_DATABASE_TITLE,
     SUCCESS_DB_IMPORT,
     WARNING_DB_EXISTS,
     WARNING_DB_CORRUPTED,
+    ERROR_DB_IMPORT,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
-from core.widgets import StatusBar, ErrorDialog, WarningDialog, IconDialog
+from core.widgets import StatusBar, ErrorDialog, IconDialog
 
 
 @pytest.fixture
@@ -389,3 +389,24 @@ def test_import_corrupted_database(dialog: Mock, src_dir, main_window):
 
     # the statusbar should be empty
     assert not main_window.statusbar.label.text
+
+
+@patch("shutil.copy", autospec=True)
+@patch("core.main_window.ErrorDialog", autospec=True)
+def test_import_database_error(dialog: Mock, mock_copy: Mock, src_dir, main_window, faker):
+    err = Exception(faker.sentence())
+    mock_copy.side_effect = err
+    ErrorDialog.run = lambda _: None
+
+    main_window.import_database("tests/data/main.dba")
+
+    dialog.assert_called_with(ERROR_DB_IMPORT, err)
+    dialog.return_value.run.assert_called()
+
+    assert Database("main") not in main_window.databases
+    assert not main_window.statusbar.label.text
+
+    # the database shouldn't be in db_list
+    for row in main_window.db_list.children:
+        label = row.children[0].children[-1]
+        assert "main" != label.text
