@@ -13,12 +13,17 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import typing
 
 from gi.repository import Gtk
 
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.widgets import ValidateDbNameMixin
+
+
+if typing.TYPE_CHECKING:
+    from core.main_window import MainWindow
 
 
 class EditDatabase(ValidateDbNameMixin, CreateDatabase):
@@ -36,8 +41,8 @@ class EditDatabase(ValidateDbNameMixin, CreateDatabase):
 
     APPLY_BUTTON_TEXT = "_Save"
 
-    def __init__(self, database: Database):
-        super().__init__()
+    def __init__(self, database: Database, main_window: "MainWindow"):
+        super().__init__(main_window)
         self.database = database
         # TODO: change title text to `Edit [database name] database`
         # TODO: make database name cursive

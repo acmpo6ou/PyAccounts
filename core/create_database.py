@@ -13,10 +13,14 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import typing
 
 from gi.repository import Gtk
 
 from core.widgets import CreateForm
+
+if typing.TYPE_CHECKING:
+    from core.main_window import MainWindow
 
 
 class CreateDatabase(CreateForm):
@@ -32,8 +36,9 @@ class CreateDatabase(CreateForm):
     passwords_diff_error: Gtk.Label
     # </editor-fold>
 
-    def __init__(self):
+    def __init__(self, main_window: "MainWindow"):
         super().__init__("create_edit_database")
+        self.main_window = main_window
 
     def on_apply(self, _):
         """

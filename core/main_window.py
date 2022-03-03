@@ -305,7 +305,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Displays create database form.
         """
 
-        form = CreateDatabase()
+        form = CreateDatabase(self)
         self.show_form(form)
 
     def on_edit_database(self, _):
@@ -324,7 +324,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         selected_db = self.databases[index]
 
         if selected_db.opened:
-            form = EditDatabase(selected_db)
+            form = EditDatabase(selected_db, self)
         else:
             form = RenameDatabase(selected_db)
         self.show_form(form)
