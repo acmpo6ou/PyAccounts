@@ -169,7 +169,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             if label.text == "main":
                 self.db_list.select_row(row)
                 break
-        # TODO: call on_database_selected or send 'select' event to db_list
 
     def on_database_selected(self, _, row: Gtk.ListBoxRow):
         """
