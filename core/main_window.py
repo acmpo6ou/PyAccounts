@@ -114,7 +114,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Puts `value` into safe clipboard and starts one minute timer to auto clear the clipboard.
         This is done for safety.
         """
+
         # TODO: use GObject.timeout_add() to add callback to clear safe clipboard
+        # TODO: use it correctly! without overwriting the timer when copying again
 
     @staticmethod
     def load_css():
