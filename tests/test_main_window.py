@@ -243,13 +243,13 @@ def test_delete_database_success(databases, main_window):
 def test_delete_database_error(
     mock, dialog: "Mock[ErrorDialog]", databases, main_window, faker
 ):
-    msg = faker.sentence()
-    mock.return_value.unlink.side_effect = Exception(msg)
+    err = Exception(faker.sentence())
+    mock.return_value.unlink.side_effect = err
     main_db = Database("main")
 
     # the ErrorDialog should be shown
     main_window.delete_database(main_db)
-    dialog.assert_called_with(ERROR_DB_DELETION, f"Exception:\n{msg}")
+    dialog.assert_called_with(ERROR_DB_DELETION, err)
 
     # the database shouldn't be deleted from databases list
     assert Database("main") in main_window.databases

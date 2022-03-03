@@ -76,7 +76,7 @@ class ErrorDialog(IconDialog):
     Dialog with error icon, error message and details.
     """
 
-    def __init__(self, message: str, details: str, *args, **kwargs):
+    def __init__(self, message: str, err: Exception, *args, **kwargs):
         super().__init__(
             title="Error!",
             message=message,
@@ -84,6 +84,14 @@ class ErrorDialog(IconDialog):
             *args,
             **kwargs,
         )
+
+        # fmt: off
+        error_class = str(err.__class__) \
+            .removeprefix("<class '") \
+            .removesuffix("'>")
+        # fmt: on
+        details = f"{error_class}:\n{err}"
+
         details_label = Gtk.Label()
         details_label.markup = f"<span font_desc='Ubuntu Mono 20'>{details}</span>"
         details_label.selectable = True

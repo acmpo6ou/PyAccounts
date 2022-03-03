@@ -292,14 +292,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             database.dba_file.unlink()
         except Exception as err:
             logging.error(traceback.format_exc())
-
-            # fmt: off
-            error_class = str(err.__class__) \
-                .removeprefix("<class '") \
-                .removesuffix("'>")
-            # fmt: on
-
-            ErrorDialog(ERROR_DB_DELETION, f"{error_class}:\n{err}").run()
+            ErrorDialog(ERROR_DB_DELETION, err).run()
             return
 
         self.databases.remove(database)
