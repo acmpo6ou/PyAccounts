@@ -15,6 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import glob
 import logging
+import os
 import shutil
 import traceback
 from pathlib import Path
@@ -29,10 +30,11 @@ from core.gtk_utils import GladeTemplate, abc_list_sort, delete_list_item, add_l
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
 from core.settings import Config
-from core.widgets import Window, WarningDialog, ErrorDialog
+from core.widgets import Window, WarningDialog, ErrorDialog, IconDialog
 
 IMPORT_DATABASE_TITLE = "Import database"
 SUCCESS_DB_IMPORT = "Database imported successfully!"
+WARNING_DB_EXISTS = "The database you are trying to import already exists!"
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
@@ -178,6 +180,10 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Imports given database handling all errors.
         :param path: path to database file we're trying to import.
         """
+
+        if f"{Path(path).stem}.dba" in os.listdir(core.SRC_DIR):
+            IconDialog("Warning!", WARNING_DB_EXISTS, "dialog-warning").run()
+            return
 
         shutil.copy(path, core.SRC_DIR)
 

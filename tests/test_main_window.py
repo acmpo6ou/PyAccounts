@@ -34,10 +34,11 @@ from core.main_window import (
     CONFIRM_QUIT,
     IMPORT_DATABASE_TITLE,
     SUCCESS_DB_IMPORT,
+    WARNING_DB_EXISTS,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
-from core.widgets import StatusBar, ErrorDialog, WarningDialog
+from core.widgets import StatusBar, ErrorDialog, WarningDialog, IconDialog
 
 
 @pytest.fixture
@@ -335,7 +336,8 @@ def test_import_dialog_Import(mock: "Mock[Gtk.FileChooserDialog]", main_window, 
     main_window.import_database.assert_called_with(filename)
 
 
-def test_import_database_success(src_dir, main_window):
+@patch("core.main_window.IconDialog", autospec=True)
+def test_import_database_success(dialog: Mock, src_dir, main_window):
     main_window.import_database("tests/data/main.dba")
 
     assert Path(src_dir / "main.dba").exists()
@@ -350,3 +352,20 @@ def test_import_database_success(src_dir, main_window):
 
     # a success message should be shown in statusbar
     assert SUCCESS_DB_IMPORT in main_window.statusbar.label.text
+
+    # there shouldn't be any dialogs shown
+    dialog.assert_not_called()
+
+
+@patch("core.main_window.IconDialog", autospec=True)
+def test_import_database_already_exists(dialog: Mock, src_dir, main_window):
+    IconDialog.run = lambda _: None
+    shutil.copy("tests/data/main.dba", src_dir)
+    main_window.import_database("tests/data/main.dba")
+
+    dialog.assert_called_with("Warning!", WARNING_DB_EXISTS, "dialog-warning")
+    dialog.return_value.run.assert_called()
+
+    # the statusbar should be empty
+    assert not main_window.statusbar.label.text
+
