@@ -37,6 +37,7 @@ from core.main_window import (
     WARNING_DB_CORRUPTED,
     ERROR_DB_IMPORT,
     SELECT_DB_TO_EXPORT,
+    SUCCESS_DB_EXPORT,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
@@ -454,3 +455,14 @@ def test_export_database_no_selection(mock: Mock, databases, main_window, faker)
 
     assert SELECT_DB_TO_EXPORT in main_window.statusbar.label.text
     mock.return_value.run.assert_not_called()
+
+
+def test_export_database_success(databases, main_window, src_dir):
+    main_db = main_window.databases[2]
+    test_dir = src_dir / "test"
+    test_dir.mkdir()
+
+    main_window.export_database(main_db, test_dir)
+
+    assert (test_dir / "main.dba").exists()
+    assert SUCCESS_DB_EXPORT in main_window.statusbar.label.text

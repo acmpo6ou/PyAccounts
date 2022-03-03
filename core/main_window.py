@@ -43,6 +43,7 @@ ERROR_DB_IMPORT = "Error importing database!"
 
 EXPORT_DATABASE_TITLE = "Export database"
 SELECT_DB_TO_EXPORT = "Please select a database to export."
+SUCCESS_DB_EXPORT = "Database exported successfully!"
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
@@ -239,7 +240,11 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Exports given database handling all errors.
         :param path: where to export the database.
         """
-        # TODO: show success and error messages; call export_database
+
+        shutil.copy(database.dba_file, path)
+        self.statusbar.success(SUCCESS_DB_EXPORT)
+
+        # TODO: show success and error messages
 
     def on_export_database(self, *args):
         """
@@ -252,7 +257,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         )
         self.dialog = dialog
 
-        # TODO: show warning in statusbar if there is no database selected
         row = self.db_list.selected_row
         if not row:
             self.statusbar.warning(SELECT_DB_TO_EXPORT)
