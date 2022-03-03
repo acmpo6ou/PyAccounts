@@ -38,6 +38,7 @@ from core.main_window import (
     ERROR_DB_IMPORT,
     SELECT_DB_TO_EXPORT,
     SUCCESS_DB_EXPORT,
+    ERROR_DB_EXPORT,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
@@ -466,3 +467,17 @@ def test_export_database_success(databases, main_window, src_dir):
 
     assert (test_dir / "main.dba").exists()
     assert SUCCESS_DB_EXPORT in main_window.statusbar.label.text
+
+
+@patch("shutil.copy", autospec=True)
+@patch("core.main_window.ErrorDialog", autospec=True)
+def test_export_database_error(dialog: Mock, mock_copy: Mock, main_window, faker):
+    err = Exception(faker.sentence())
+    mock_copy.side_effect = err
+    ErrorDialog.run = lambda _: None
+
+    main_window.export_database(Database("main"), "")
+
+    dialog.assert_called_with(ERROR_DB_EXPORT, err)
+    dialog.return_value.run.assert_called()
+    assert not main_window.statusbar.label.text
