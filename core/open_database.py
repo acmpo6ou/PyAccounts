@@ -50,5 +50,14 @@ class OpenDatabase(GladeTemplate):
         Hides incorrect_password tip.
         """
 
-    def on_toggle_password_visibility(self, _):
+    def on_icon_press(self, _, icon_pos, __):
+        if icon_pos == Gtk.EntryIconPosition.PRIMARY:
+            self.toggle_password_visibility()
+        else:
+            self.clear_password()
+
+    def toggle_password_visibility(self):
+        ...
+
+    def clear_password(self):
         ...

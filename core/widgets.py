@@ -288,12 +288,21 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
         #  appear greyed out, so we just remove it and display the emoji only when button is
         #  enabled"
 
-    def on_pass_toggle(self, *args):
-        """
-        Toggles password visibility of both password fields.
-        """
-
     def on_generate_password(self, _):
         """
         Displays dialog to generate password.
         """
+
+    def on_icon_press(self, entry, icon_pos, _):
+        if icon_pos == Gtk.EntryIconPosition.PRIMARY:
+            self.toggle_password_visibility()
+        else:
+            self.clear_password(entry)
+
+    def toggle_password_visibility(self):
+        """
+        Toggles password visibility of both password fields.
+        """
+
+    def clear_password(self, entry: Gtk.Entry):
+        ...
