@@ -156,11 +156,8 @@ def test_edit_database_no_selection(databases, main_window):
     """Edit database button should display a warning in statusbar
     if there is no database selected."""
 
-    statusbar = Mock(StatusBar)
-    main_window.statusbar = statusbar
     main_window.on_edit_database(None)
-
-    statusbar.warning.assert_called_with(SELECT_DB_TO_EDIT)
+    assert main_window.statusbar.label.text == f"✘ {SELECT_DB_TO_EDIT}"
     assert not main_window.form_box.children  # no form should be shown
 
 
@@ -212,12 +209,8 @@ def test_confirm_database_deletion_No(databases, main_window):
 def test_delete_database_no_selection(databases, main_window):
     """Delete database button should display a warning in statusbar
     if there is no database selected."""
-
-    statusbar = Mock(StatusBar)
-    main_window.statusbar = statusbar
-
     main_window.on_delete_database(None)
-    statusbar.warning.assert_called_with(SELECT_DB_TO_DELETE)
+    assert main_window.statusbar.label.text == f"✘ {SELECT_DB_TO_DELETE}"
 
 
 def test_delete_database_success(databases, main_window):
@@ -226,7 +219,7 @@ def test_delete_database_success(databases, main_window):
     main_window.delete_database(main_db)
 
     # a success message should be shown in statusbar
-    assert SUCCESS_DB_DELETED in main_window.statusbar.label.text
+    assert main_window.statusbar.label.text == f"✔ {SUCCESS_DB_DELETED}"
 
     # the database should be removed from databases list
     assert Database("main") not in main_window.databases
@@ -355,7 +348,7 @@ def test_import_database_success(dialog: Mock, src_dir, main_window):
     assert "main" in db_list_names
 
     # a success message should be shown in statusbar
-    assert SUCCESS_DB_IMPORT in main_window.statusbar.label.text
+    assert main_window.statusbar.label.text == f"✔ {SUCCESS_DB_IMPORT}"
 
     # there shouldn't be any dialogs shown
     dialog.assert_not_called()
@@ -454,7 +447,7 @@ def test_export_database_no_selection(mock: Mock, databases, main_window, faker)
     # no database is selected
     main_window.on_export_database()
 
-    assert SELECT_DB_TO_EXPORT in main_window.statusbar.label.text
+    assert main_window.statusbar.label.text == f"✘ {SELECT_DB_TO_EXPORT}"
     mock.return_value.run.assert_not_called()
 
 
@@ -466,7 +459,7 @@ def test_export_database_success(databases, main_window, src_dir):
     main_window.export_database(main_db, test_dir)
 
     assert (test_dir / "main.dba").exists()
-    assert SUCCESS_DB_EXPORT in main_window.statusbar.label.text
+    assert main_window.statusbar.label.text == f"✔ {SUCCESS_DB_EXPORT}"
 
 
 @patch("shutil.copy", autospec=True)
