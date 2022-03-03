@@ -170,7 +170,6 @@ class Window(Gtk.Window, GladeTemplate):
         self.shortcuts = Gtk.AccelGroup()
         self.add_accel_group(self.shortcuts)
 
-        # TODO: test shortcuts
         # F1 to open About dialog
         self.shortcuts.connect(
             Gdk.keyval_from_name("F1"),

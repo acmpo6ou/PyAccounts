@@ -84,7 +84,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.load_databases()
         self.select_main_database()
 
-        # TODO: test shortcuts
         # Ctrl+I to import database
         self.shortcuts.connect(
             Gdk.keyval_from_name("i"),

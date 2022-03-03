@@ -52,7 +52,6 @@ class DatabaseWindow(Window):
         self.main_window = main_window
         self.database = database
 
-        # TODO: test shortcuts
         # Ctrl+S to save database
         self.shortcuts.connect(
             Gdk.keyval_from_name("s"),
