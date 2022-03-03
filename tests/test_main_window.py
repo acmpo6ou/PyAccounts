@@ -36,6 +36,7 @@ from core.main_window import (
     WARNING_DB_EXISTS,
     WARNING_DB_CORRUPTED,
     ERROR_DB_IMPORT,
+    SELECT_DB_TO_EXPORT,
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
@@ -444,3 +445,12 @@ def test_export_dialog_Export(mock: Mock, databases, main_window, faker):
 
     assert main_window.dialog.current_name == "main.dba"
     main_window.export_database.assert_called_with(main_db, filename)
+
+
+@patch("gi.repository.Gtk.FileChooserDialog", autospec=True)
+def test_export_database_no_selection(mock: Mock, databases, main_window, faker):
+    # no database is selected
+    main_window.on_export_database()
+
+    assert SELECT_DB_TO_EXPORT in main_window.statusbar.label.text
+    mock.return_value.run.assert_not_called()

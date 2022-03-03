@@ -42,6 +42,7 @@ WARNING_DB_CORRUPTED = (
 ERROR_DB_IMPORT = "Error importing database!"
 
 EXPORT_DATABASE_TITLE = "Export database"
+SELECT_DB_TO_EXPORT = "Please select a database to export."
 
 SELECT_DB_TO_EDIT = "Please select a database to edit."
 SELECT_DB_TO_DELETE = "Please select a database to delete."
@@ -253,9 +254,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
         # TODO: show warning in statusbar if there is no database selected
         row = self.db_list.selected_row
-        # if not row:
-        #     self.statusbar.warning(SELECT_DB_TO_EDIT)
-        #     return
+        if not row:
+            self.statusbar.warning(SELECT_DB_TO_EXPORT)
+            return
 
         # set default file name of the export dialog to <db_name>.dba
         index = self.db_list.children.index(row)
