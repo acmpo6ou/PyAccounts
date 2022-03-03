@@ -13,12 +13,27 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import shutil
+
 import pytest
 
 import core
+from core.main_window import MainWindow
 
 
 @pytest.fixture()
 def src_dir(monkeypatch, tmp_path):
     monkeypatch.setattr(core, "SRC_DIR", tmp_path)
     return tmp_path
+
+
+@pytest.fixture
+def databases(src_dir):
+    shutil.copy("tests/data/main.dba", src_dir)
+    shutil.copy("tests/data/main.dba", src_dir / "crypt.dba")
+    shutil.copy("tests/data/main.dba", src_dir / "data.dba")
+
+
+@pytest.fixture
+def main_window():
+    return MainWindow()

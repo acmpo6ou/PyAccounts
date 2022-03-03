@@ -17,7 +17,6 @@ import shutil
 from pathlib import Path
 from unittest.mock import Mock, patch, PropertyMock
 
-import pytest
 from gi.repository import Gtk, GdkPixbuf
 
 import core
@@ -42,19 +41,7 @@ from core.main_window import (
 )
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
-from core.widgets import StatusBar, ErrorDialog, IconDialog
-
-
-@pytest.fixture
-def databases(src_dir):
-    shutil.copy("tests/data/main.dba", src_dir)
-    shutil.copy("tests/data/main.dba", src_dir / "crypt.dba")
-    shutil.copy("tests/data/main.dba", src_dir / "data.dba")
-
-
-@pytest.fixture
-def main_window():
-    return MainWindow()
+from core.widgets import ErrorDialog, IconDialog
 
 
 def test_get_databases(databases, main_window):
