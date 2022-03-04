@@ -455,7 +455,7 @@ Author: Bohdan Kolvakh
                 <property name="secondary-icon-name">dialog-close</property>
                 <property name="input-purpose">password</property>
                 <signal name="changed" handler="on_apply_enabled" swapped="no"/>
-                <signal name="icon-press" handler="on_pass_toggle" swapped="no"/>
+                <signal name="icon-press" handler="on_icon_press" swapped="no"/>
               </object>
               <packing>
                 <property name="left-attach">1</property>
