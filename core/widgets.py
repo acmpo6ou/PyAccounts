@@ -213,7 +213,7 @@ class Window(Gtk.Window, GladeTemplate):
 
 
 class FilterDbNameMixin:
-    def on_filter_name(self):
+    def on_filter_name(self, entry: Gtk.Entry):
         """
         Removes unallowed characters from database name.
         Shows a warning explaining the user that he's trying to enter unallowed characters.
@@ -252,6 +252,13 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
     """
     Super class for CreateDatabase and CreateAccount.
     """
+    # <editor-fold>
+    name: Gtk.Entry
+    password: Gtk.Entry
+    name_error: Gtk.Label
+    password_error: Gtk.Label
+    passwords_diff_error: Gtk.Label
+    # </editor-fold>
 
     APPLY_BUTTON_TEXT = "_Create"
 
@@ -264,6 +271,14 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
         * name field contains name that is already taken
         :return: True if name is valid.
         """
+
+        if self.name.text == "":
+            self.name_error.show()
+            return False
+        else:
+            self.name_error.hide()
+            return True
+
         # TODO: use `items` property to check if name already exists (this property will be
         #  implemented by subclasses)
 
@@ -281,6 +296,8 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
         """
         Enables or disables apply button depending on whether there are errors in the form.
         """
+        self.validate_name()
+
         # TODO: use validate_passwords and validate_name
         # TODO: set button text to `APPLY_BUTTON_TEXT` when disabled;
         #  and to `✨ APPLY_BUTTON_TEXT` when enabled

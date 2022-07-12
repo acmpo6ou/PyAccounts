@@ -36,6 +36,10 @@ class CreateDatabase(CreateForm):
     passwords_diff_error: Gtk.Label
     # </editor-fold>
 
+    @property
+    def items(self):
+        return [database.name for database in self.main_window.databases]
+
     def __init__(self, main_window: "MainWindow"):
         super().__init__("create_edit_database")
         self.main_window = main_window
