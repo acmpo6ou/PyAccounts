@@ -57,3 +57,23 @@ def test_filter_name(form):
     form.name.text = "-c/l(e)a%n. n$a!m*e_"
     assert form.name.text == "-cl(e)an. name_"
     assert form.main_window.statusbar.label.text == f"✘ {UNALLOWED_CHARS_WARNING}"
+
+
+def test_password_errors(form):
+    form.password.text = "123"
+    form.repeat_password.text = "321"
+    wait_until(lambda: not form.password_error.mapped)
+    wait_until(lambda: form.passwords_diff_error.mapped)
+    assert not form.validate_passwords()
+
+    form.password.text = ""
+    form.repeat_password.text = ""
+    wait_until(lambda: form.password_error.mapped)
+    wait_until(lambda: not form.passwords_diff_error.mapped)
+    assert not form.validate_passwords()
+
+    form.password.text = "123"
+    form.repeat_password.text = "123"
+    wait_until(lambda: not form.password_error.mapped)
+    wait_until(lambda: not form.passwords_diff_error.mapped)
+    assert form.validate_passwords()

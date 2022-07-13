@@ -276,6 +276,7 @@ class CreateForm(GladeTemplate):
     # <editor-fold>
     name: Gtk.Entry
     password: Gtk.Entry
+    repeat_password: Gtk.Entry
     name_error: Gtk.Label
     password_error: Gtk.Label
     passwords_diff_error: Gtk.Label
@@ -317,12 +318,28 @@ class CreateForm(GladeTemplate):
         * passwords from password fields don't match
         :return: True if passwords are valid.
         """
+        result = True
+
+        if self.password.text != self.repeat_password.text:
+            self.passwords_diff_error.show()
+            result = False
+        else:
+            self.passwords_diff_error.hide()
+
+        if self.password.text == "":
+            self.password_error.show()
+            result = False
+        else:
+            self.password_error.hide()
+
+        return result
 
     def on_apply_enabled(self, _):
         """
         Enables or disables apply button depending on whether there are errors in the form.
         """
         self.validate_name()
+        self.validate_passwords()
 
         # TODO: use validate_passwords and validate_name
         # TODO: set button text to `APPLY_BUTTON_TEXT` when disabled;
