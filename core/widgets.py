@@ -21,8 +21,11 @@ Contains custom GTK widgets.
 from gi.repository import Gtk, Gdk, GObject, GLib
 
 from core.about import AboutDialog
+from core.database_utils import Database
 from core.gtk_utils import GladeTemplate, load_icon
 from core.settings import SettingsDialog
+
+NAME_TAKEN_ERROR = "This name is already taken!"
 
 
 class IconDialog(Gtk.Dialog):
@@ -258,6 +261,7 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
     name_error: Gtk.Label
     password_error: Gtk.Label
     passwords_diff_error: Gtk.Label
+    items: list[Database]
     # </editor-fold>
 
     APPLY_BUTTON_TEXT = "_Create"
@@ -274,13 +278,17 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
 
         if self.name.text == "":
             self.name_error.show()
+            # TODO: set name_error text
             return False
         else:
             self.name_error.hide()
-            return True
 
-        # TODO: use `items` property to check if name already exists (this property will be
-        #  implemented by subclasses)
+        if self.name.text in self.items:
+            self.name_error.show()
+            self.name_error.text = NAME_TAKEN_ERROR
+            return False
+
+        return True
 
     def validate_passwords(self) -> bool:
         """
