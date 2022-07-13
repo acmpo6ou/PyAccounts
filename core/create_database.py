@@ -17,13 +17,13 @@ import typing
 
 from gi.repository import Gtk
 
-from core.widgets import CreateForm
+from core.widgets import CreateForm, FilterDbNameMixin
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
 
 
-class CreateDatabase(CreateForm):
+class CreateDatabase(CreateForm, FilterDbNameMixin):
     # <editor-fold>
     parent_widget: Gtk.Box
     title: Gtk.Label

@@ -252,7 +252,7 @@ class AttachedFilesMixin:
         """
 
 
-class CreateForm(GladeTemplate, FilterDbNameMixin):
+class CreateForm(GladeTemplate):
     """
     Super class for CreateDatabase and CreateAccount.
     """
