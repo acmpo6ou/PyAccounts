@@ -18,7 +18,7 @@ import pytest
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.gtk_utils import wait_until
-from core.widgets import NAME_TAKEN_ERROR, EMPTY_NAME_ERROR
+from core.widgets import NAME_TAKEN_ERROR, EMPTY_NAME_ERROR, UNALLOWED_CHARS_WARNING
 
 
 @pytest.fixture
@@ -47,3 +47,13 @@ def test_name_error(form):
     wait_until(lambda: form.name_error.mapped)
     assert form.name_error.text == EMPTY_NAME_ERROR
     assert not form.validate_name()
+
+
+def test_filter_name(form):
+    form.name.text = "clean name"
+    assert form.name.text == "clean name"
+    assert form.main_window.statusbar.label.text == ""
+
+    form.name.text = "-c/l(e)a%n. n$a!m*e_"
+    assert form.name.text == "-cl(e)an. name_"
+    assert form.main_window.statusbar.label.text == f"✘ {UNALLOWED_CHARS_WARNING}"

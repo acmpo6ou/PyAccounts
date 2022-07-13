@@ -17,16 +17,24 @@
 """
 Contains custom GTK widgets.
 """
+import re
+import typing
 
-from gi.repository import Gtk, Gdk, GObject, GLib
+from gi.repository import Gtk, Gdk, GLib
 
 from core.about import AboutDialog
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate, load_icon
 from core.settings import SettingsDialog
 
+if typing.TYPE_CHECKING:
+    from core.main_window import MainWindow
+
 NAME_TAKEN_ERROR = "This name is already taken!"
 EMPTY_NAME_ERROR = "Please, provide a name!"
+UNALLOWED_CHARS_WARNING =\
+    "Only latin symbols, numbers and .()-_ are allowed" \
+    " to use in the database name."
 
 
 class IconDialog(Gtk.Dialog):
@@ -217,11 +225,20 @@ class Window(Gtk.Window, GladeTemplate):
 
 
 class FilterDbNameMixin:
+    main_window: "MainWindow"
+
     def on_filter_name(self, entry: Gtk.Entry):
         """
         Removes unallowed characters from database name.
         Shows a warning explaining the user that he's trying to enter unallowed characters.
         """
+
+        old_name = entry.text
+        cleaned = re.sub(r"[^-_().a-zA-Z ]", '', entry.text)
+        entry.text = cleaned
+
+        if cleaned != old_name:
+            self.main_window.statusbar.warning(UNALLOWED_CHARS_WARNING)
 
 
 class ValidateDbNameMixin:
