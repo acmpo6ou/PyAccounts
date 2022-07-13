@@ -18,35 +18,32 @@ import pytest
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.gtk_utils import wait_until
-from core.widgets import NAME_TAKEN_ERROR
+from core.widgets import NAME_TAKEN_ERROR, EMPTY_NAME_ERROR
 
 
 @pytest.fixture
 def form(databases, main_window):
     form = CreateDatabase(main_window)
+    main_window.databases = [Database("main")]
     main_window.show_form(form)
     main_window.show_all()
     return form
 
 
-def test_empty_name_error(form):
-    form.name.text = ""
-    wait_until(lambda: form.name_error.mapped)
-    assert not form.validate_name()
-
-    form.name.text = "not empty"
-    wait_until(lambda: not form.name_error.mapped)
-    assert form.validate_name()
-
-
-def test_name_taken_error(form):
-    form.main_window.databases = [Database("main")]
-
+def test_name_error(form):
+    # name field contains a name that isn't taken
     form.name.text = "good name"
     wait_until(lambda: not form.name_error.mapped)
     assert form.validate_name()
 
+    # name field has a name that is already taken
     form.name.text = "main"
     wait_until(lambda: form.name_error.mapped)
     assert form.name_error.text == NAME_TAKEN_ERROR
+    assert not form.validate_name()
+
+    # name field is empty
+    form.name.text = ""
+    wait_until(lambda: form.name_error.mapped)
+    assert form.name_error.text == EMPTY_NAME_ERROR
     assert not form.validate_name()

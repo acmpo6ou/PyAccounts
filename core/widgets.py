@@ -26,6 +26,7 @@ from core.gtk_utils import GladeTemplate, load_icon
 from core.settings import SettingsDialog
 
 NAME_TAKEN_ERROR = "This name is already taken!"
+EMPTY_NAME_ERROR = "Please, provide a name!"
 
 
 class IconDialog(Gtk.Dialog):
@@ -278,7 +279,7 @@ class CreateForm(GladeTemplate, FilterDbNameMixin):
 
         if self.name.text == "":
             self.name_error.show()
-            # TODO: set name_error text
+            self.name_error.text = EMPTY_NAME_ERROR
             return False
         else:
             self.name_error.hide()
