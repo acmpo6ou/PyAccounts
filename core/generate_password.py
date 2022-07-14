@@ -32,6 +32,8 @@ class GenPassDialog(GladeTemplate):
     punctuation: Gtk.CheckButton
     # </editor-fold>
 
+    PASSWORD_LENGTH = 16
+
     """
     A dialog to generate password.
     """
@@ -39,6 +41,7 @@ class GenPassDialog(GladeTemplate):
     def __init__(self, pass1: Gtk.Entry, pass2: Gtk.Entry):
         super().__init__("generate_password")
 
+        # TODO: set password length to PASSWORD_LENGTH
         self.pass1 = pass1
         self.pass2 = pass2
 
@@ -64,7 +67,7 @@ class GenPassDialog(GladeTemplate):
         # specified in `chars` and if it doesn't, we regenerate password
         # TODO: implement password regeneration
 
-    def on_generate(self, _):
+    def on_generate(self, _=None):
         """
         Generates password and fills pass1 and pass2 password fields with it.
         """
@@ -83,3 +86,4 @@ class GenPassDialog(GladeTemplate):
         fill password fields with generated password
         hide dialog
         """
+        # TODO: save last password length in PASSWORD_LENGTH
