@@ -43,3 +43,14 @@ def test_generate_password(nums, lower, upper, punct):
     assert any(c in pass1.text for c in ascii_lowercase) == lower
     assert any(c in pass1.text for c in ascii_uppercase) == upper
     assert any(c in pass1.text for c in punctuation) == punct
+
+
+def test_save_load_password_length():
+    GenPassDialog.PASSWORD_LENGTH = 8
+    dialog = GenPassDialog(Gtk.Entry(), Gtk.Entry())
+    assert dialog.length.value == 8.0
+
+    dialog.length.value = 32.0
+    dialog.on_generate()
+    assert GenPassDialog.PASSWORD_LENGTH == 32.0
+

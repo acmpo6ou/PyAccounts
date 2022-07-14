@@ -41,7 +41,7 @@ class GenPassDialog(GladeTemplate):
     def __init__(self, pass1: Gtk.Entry, pass2: Gtk.Entry):
         super().__init__("generate_password")
 
-        # TODO: set password length to PASSWORD_LENGTH
+        self.length.value = self.PASSWORD_LENGTH
         self.pass1 = pass1
         self.pass2 = pass2
 
@@ -88,4 +88,5 @@ class GenPassDialog(GladeTemplate):
         self.pass1.text = password
         self.pass2.text = password
 
-        # TODO: save last password length in PASSWORD_LENGTH
+        GenPassDialog.PASSWORD_LENGTH = self.length.value
+        self.parent_widget.hide()
