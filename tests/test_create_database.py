@@ -90,3 +90,19 @@ def test_toggle_password_visibility(form):
     form.toggle_password_visibility()
     assert not form.password.visibility
     assert not form.repeat_password.visibility
+
+
+def test_clear_password(form):
+    form.password.text = "123"
+    form.repeat_password.text = "123"
+
+    form.clear_password(form.password)
+    assert not form.password.text
+    assert form.repeat_password.text == "123"
+
+    form.password.text = "123"
+    form.repeat_password.text = "123"
+
+    form.clear_password(form.repeat_password)
+    assert form.password.text == "123"
+    assert not form.repeat_password.text

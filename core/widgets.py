@@ -376,5 +376,6 @@ class CreateForm(GladeTemplate):
             Gtk.EntryIconPosition.PRIMARY, icon_name
         )
 
-    def clear_password(self, entry: Gtk.Entry):
-        ...
+    @staticmethod
+    def clear_password(entry: Gtk.Entry):
+        entry.text = ""
