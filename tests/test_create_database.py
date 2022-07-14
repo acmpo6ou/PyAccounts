@@ -106,3 +106,21 @@ def test_clear_password(form):
     form.clear_password(form.repeat_password)
     assert form.password.text == "123"
     assert not form.repeat_password.text
+
+
+def test_apply_button_enabled(form):
+    # enter correct name and password
+    form.name.text = "good name"
+    form.password.text = "123"
+    form.repeat_password.text = "123"
+
+    assert form.apply.sensitive
+    assert form.apply.label == f"✨ {form.APPLY_BUTTON_TEXT}"
+
+    # enter incorrect name and password
+    form.name.text = ""
+    form.password.text = ""
+    form.repeat_password.text = ""
+
+    assert not form.apply.sensitive
+    assert form.apply.label == form.APPLY_BUTTON_TEXT

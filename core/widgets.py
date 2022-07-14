@@ -280,6 +280,7 @@ class CreateForm(GladeTemplate):
     name_error: Gtk.Label
     password_error: Gtk.Label
     passwords_diff_error: Gtk.Label
+    apply: Gtk.Button
     items: list[Database]
     # </editor-fold>
 
@@ -338,15 +339,16 @@ class CreateForm(GladeTemplate):
         """
         Enables or disables apply button depending on whether there are errors in the form.
         """
-        self.validate_name()
-        self.validate_passwords()
 
-        # TODO: use validate_passwords and validate_name
-        # TODO: set button text to `APPLY_BUTTON_TEXT` when disabled;
-        #  and to `✨ APPLY_BUTTON_TEXT` when enabled
-        # TODO: add comment "This is needed because when button is disabled the ✨ emoji doesn't
-        #  appear greyed out, so we just remove it and display the emoji only when button is
-        #  enabled"
+        name_good = self.validate_name()
+        passwords_good = self.validate_passwords()
+        self.apply.sensitive = name_good and passwords_good
+
+        # This is needed because when button is disabled the ✨ emoji
+        # doesn't appear greyed out, so we just remove it
+        # and display the emoji only when button is enabled
+        emoji = "✨ " if name_good and passwords_good else ""
+        self.apply.label = f"{emoji}{self.APPLY_BUTTON_TEXT}"
 
     def on_generate_password(self, _):
         """
