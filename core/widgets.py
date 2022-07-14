@@ -24,6 +24,7 @@ from gi.repository import Gtk, Gdk, GLib
 
 from core.about import AboutDialog
 from core.database_utils import Database
+from core.generate_password import GenPassDialog
 from core.gtk_utils import GladeTemplate, load_icon
 from core.settings import SettingsDialog
 
@@ -354,6 +355,7 @@ class CreateForm(GladeTemplate):
         """
         Displays dialog to generate password.
         """
+        GenPassDialog(self.password, self.repeat_password).show_all()
 
     def on_icon_press(self, entry, icon_pos, _):
         if icon_pos == Gtk.EntryIconPosition.PRIMARY:
