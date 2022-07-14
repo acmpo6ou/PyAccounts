@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-
+import secrets
 from string import digits, ascii_lowercase, ascii_uppercase, punctuation
 
 from gi.repository import Gtk
@@ -55,17 +55,25 @@ class GenPassDialog(GladeTemplate):
         :param length: length of password to generate.
         :param chars: list of strings with characters from which to generate password.
         """
-        # TODO: uncomment this
-        # concatenate all character strings from `chars` into one big string
-        # chars_str = "".join(chars)
-        # generate purely random password from characters of chars_str
-        # "".join(secrets.choice(chars_str) for _ in range(length))
+        if not chars:
+            return ""
 
-        # Because password generates randomly it won't necessarily contain all characters that
-        # are specified in `chars`.
-        # So here we check that generated password contains at least one character from each string
-        # specified in `chars` and if it doesn't, we regenerate password
-        # TODO: implement password regeneration
+        # concatenate all character strings from `chars` into one big string
+        chars_str = "".join(chars)
+        # generate purely random password from characters of chars_str
+        password = "".join(secrets.choice(chars_str) for _ in range(int(length)))
+
+        # Because password generates randomly it won't necessarily contain
+        # all characters that are specified in `chars`.
+        # So here we check that generated password contains at least one
+        # character from each string specified in `chars` and if it doesn't, we regenerate password
+        is_good = True
+        for s in chars:
+            is_good = is_good and any(c in password for c in s)
+
+        if not is_good:
+            password = self.genpass(length, chars)
+        return password
 
     def on_generate(self, _=None):
         """
@@ -74,16 +82,10 @@ class GenPassDialog(GladeTemplate):
 
         all_chars = (digits, ascii_lowercase, ascii_uppercase, punctuation)
         checkboxes = (self.numbers, self.lower, self.upper, self.punctuation)
-        chars = []
+        chars = [all_chars[i] for i, checkbox in enumerate(checkboxes) if checkbox.active]
 
-        """
-        For each index, checkbox in enumerate checkboxes:
-            if it is checked:
-                get characters associated with that checkbox (using all_chars[index])
-                add them to chars
+        password = self.genpass(self.length.value, chars)
+        self.pass1.text = password
+        self.pass2.text = password
 
-        call genpass passing it chars and password length
-        fill password fields with generated password
-        hide dialog
-        """
         # TODO: save last password length in PASSWORD_LENGTH
