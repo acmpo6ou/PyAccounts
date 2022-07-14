@@ -77,3 +77,16 @@ def test_password_errors(form):
     wait_until(lambda: not form.password_error.mapped)
     wait_until(lambda: not form.passwords_diff_error.mapped)
     assert form.validate_passwords()
+
+
+def test_toggle_password_visibility(form):
+    assert not form.password.visibility
+    assert not form.repeat_password.visibility
+
+    form.toggle_password_visibility()
+    assert form.password.visibility
+    assert form.repeat_password.visibility
+
+    form.toggle_password_visibility()
+    assert not form.password.visibility
+    assert not form.repeat_password.visibility

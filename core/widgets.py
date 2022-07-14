@@ -364,5 +364,17 @@ class CreateForm(GladeTemplate):
         Toggles password visibility of both password fields.
         """
 
+        visibility = self.password.visibility
+        self.password.visibility = not visibility
+        self.repeat_password.visibility = not visibility
+
+        icon_name = "visibility" if visibility else "image-red-eye"
+        self.password.set_icon_from_icon_name(
+            Gtk.EntryIconPosition.PRIMARY, icon_name
+        )
+        self.repeat_password.set_icon_from_icon_name(
+            Gtk.EntryIconPosition.PRIMARY, icon_name
+        )
+
     def clear_password(self, entry: Gtk.Entry):
         ...
