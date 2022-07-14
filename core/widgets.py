@@ -234,7 +234,7 @@ class FilterDbNameMixin:
         """
 
         old_name = entry.text
-        cleaned = re.sub(r"[^-_().a-zA-Z ]", '', entry.text)
+        cleaned = re.sub(r"[^-_().a-zA-Z\d ]", '', entry.text)
         entry.text = cleaned
 
         if cleaned != old_name:

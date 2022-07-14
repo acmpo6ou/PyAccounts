@@ -54,8 +54,8 @@ def test_filter_name(form):
     assert form.name.text == "clean name"
     assert form.main_window.statusbar.label.text == ""
 
-    form.name.text = "-c/l(e)a%n. n$a!m*e_"
-    assert form.name.text == "-cl(e)an. name_"
+    form.name.text = "-c/l(e)a%n. n$a!m*e_1"
+    assert form.name.text == "-cl(e)an. name_1"
     assert form.main_window.statusbar.label.text == f"✘ {UNALLOWED_CHARS_WARNING}"
 
 
