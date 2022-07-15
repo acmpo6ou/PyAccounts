@@ -54,3 +54,16 @@ def test_save_load_password_length():
     dialog.on_generate()
     assert GenPassDialog.PASSWORD_LENGTH == 32.0
 
+
+def test_save_load_checkboxes_state():
+    GenPassDialog.CHECKBOXES_STATE = (True, False, True, False)
+    dialog = GenPassDialog(Gtk.Entry(), Gtk.Entry())
+
+    assert dialog.numbers.active
+    assert not dialog.lower.active
+    assert dialog.upper.active
+    assert not dialog.punctuation.active
+
+    dialog.upper.active = False
+    dialog.on_generate()
+    assert GenPassDialog.CHECKBOXES_STATE == (True, False, False, False)

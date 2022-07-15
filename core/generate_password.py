@@ -33,7 +33,7 @@ class GenPassDialog(GladeTemplate):
     # </editor-fold>
 
     PASSWORD_LENGTH = 16
-
+    CHECKBOXES_STATE = (True, True, True, True)
     """
     A dialog to generate password.
     """
@@ -41,9 +41,17 @@ class GenPassDialog(GladeTemplate):
     def __init__(self, pass1: Gtk.Entry, pass2: Gtk.Entry):
         super().__init__("generate_password")
 
-        self.length.value = self.PASSWORD_LENGTH
         self.pass1 = pass1
         self.pass2 = pass2
+
+        # load last values of length and checkboxes
+        self.length.value = self.PASSWORD_LENGTH
+        (
+            self.numbers.active,
+            self.lower.active,
+            self.upper.active,
+            self.punctuation.active,
+        ) = self.CHECKBOXES_STATE
 
     def on_cancel(self, _):
         self.parent_widget.hide()
@@ -82,11 +90,20 @@ class GenPassDialog(GladeTemplate):
 
         all_chars = (digits, ascii_lowercase, ascii_uppercase, punctuation)
         checkboxes = (self.numbers, self.lower, self.upper, self.punctuation)
-        chars = [all_chars[i] for i, checkbox in enumerate(checkboxes) if checkbox.active]
+        chars = [
+            all_chars[i] for i, checkbox in enumerate(checkboxes) if checkbox.active
+        ]
 
         password = self.genpass(self.length.value, chars)
         self.pass1.text = password
         self.pass2.text = password
 
+        # save last used length and checkboxes values
         GenPassDialog.PASSWORD_LENGTH = self.length.value
+        GenPassDialog.CHECKBOXES_STATE = (
+            self.numbers.active,
+            self.lower.active,
+            self.upper.active,
+            self.punctuation.active,
+        )
         self.parent_widget.hide()
