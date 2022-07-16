@@ -17,6 +17,8 @@
 """
 Contains various utilities to simplify development with GTK.
 """
+
+import contextlib
 import time
 from enum import IntEnum
 from typing import Callable
@@ -57,11 +59,9 @@ def _setattr(self, item: str, value):
     >>> label.angle = 90
     Which is a more pythonic API.
     """
-    try:
-        return setattr(self.props, item, value)
-    except AttributeError:
-        pass
 
+    with contextlib.suppress(AttributeError):
+        return setattr(self.props, item, value)
     try:
         getattr(self, f"set_{item}")(value)
     except AttributeError:
@@ -209,10 +209,8 @@ def wait_until(callback: Callable[[], bool], timeout=5):
 
     __tracebackhide__ = True
     start = time.time()
-    while True:
-        if callback():
-            break
 
+    while not callback():
         time_passed = time.time() - start
         if time_passed >= timeout:
             pytest.fail()
