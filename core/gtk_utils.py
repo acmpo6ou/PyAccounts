@@ -96,6 +96,7 @@ def add_list_item(list_box: Gtk.ListBox, pixbuf: GdkPixbuf.Pixbuf, item_name: st
     hbox.add(icon)
     hbox.add(label)
     list_box.add(hbox)
+    hbox.show_all()
 
 
 def delete_list_item(list_box: Gtk.ListBox, item_name: str):
