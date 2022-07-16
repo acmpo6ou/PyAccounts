@@ -19,6 +19,8 @@ from gi.repository import Gtk
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
 
+OPEN_DB_TITLE = "Open <i>{}</i> database"
+
 
 class OpenDatabase(GladeTemplate):
     # <editor-fold>
@@ -27,15 +29,14 @@ class OpenDatabase(GladeTemplate):
     open_button: Gtk.Button
     incorrect_password: Gtk.Label
     password: Gtk.Entry
+
     # </editor-fold>
 
     def __init__(self, database: Database):
         super().__init__("open_database")
         self.vexpand = True
         self.database = database
-
-        # TODO: change form title to `Open [database name] database`.
-        # TODO: make database name cursive
+        self.title.markup = OPEN_DB_TITLE.format(database.name)
 
     def on_open_database(self, _):
         """
