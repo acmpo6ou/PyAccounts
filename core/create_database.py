@@ -15,8 +15,10 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import typing
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GdkPixbuf
 
+from core.database_utils import Database
+from core.gtk_utils import add_list_item
 from core.widgets import CreateForm, FilterDbNameMixin
 
 if typing.TYPE_CHECKING:
@@ -44,12 +46,18 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
         super().__init__("create_edit_database")
         self.main_window = main_window
 
-    def on_apply(self, _):
+    def on_apply(self, _=None):
         """
         Creates database using form data and handling all errors
         """
 
-        # TODO: create database, add it to databases list, update list of databases,
-        #  open database window
+        database = Database(self.name.text, self.password.text)
+        self.main_window.databases.append(database)
+        self.main_window.databases.sort(key=lambda db: db.name)
+
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
+        add_list_item(self.main_window.db_list, pixbuf, database.name)
+        # TODO: fix database not showing in db_list
+        # TODO: open database window
         # TODO: on error show error dialog
         # TODO: destroy form on success

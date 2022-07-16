@@ -24,7 +24,6 @@ from core.widgets import NAME_TAKEN_ERROR, EMPTY_NAME_ERROR, UNALLOWED_CHARS_WAR
 @pytest.fixture
 def form(databases, main_window):
     form = CreateDatabase(main_window)
-    main_window.databases = [Database("main")]
     main_window.show_form(form)
     main_window.show_all()
     return form
@@ -124,3 +123,20 @@ def test_apply_button_enabled(form):
 
     assert not form.apply.sensitive
     assert form.apply.label == form.APPLY_BUTTON_TEXT
+
+
+def test_create_database_success(form, src_dir):
+    form.name.text = "db"
+    form.password.text = "123"
+    form.repeat_password.text = "123"
+    form.on_apply()
+
+    # database is added and databases list is sorted
+    expected_db = Database("db", "123")
+    databases = form.main_window.databases
+    assert expected_db in databases
+    assert [db.name for db in databases] == ["crypt", "data", "db", "main"]
+
+    # db_list is also updated
+    db_names = [row.children[0].children[-1].text for row in form.main_window.db_list.children]
+    assert db_names == ["crypt", "data", "db", "main"]
