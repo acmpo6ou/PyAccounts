@@ -23,6 +23,7 @@ import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
+from core.gtk_utils import item_name
 from core.main_window import (
     MainWindow,
     SELECT_DB_TO_EDIT,
@@ -213,8 +214,7 @@ def test_delete_database_success(databases, main_window):
 
     # and from db_list as well
     for row in main_window.db_list.children:
-        label = row.children[0].children[-1]
-        assert label.text != "main"
+        assert item_name(row) != "main"
 
     # its .dba file should be deleted
     assert not main_db.dba_file.exists()
@@ -240,10 +240,7 @@ def test_delete_database_error(
     assert Database("main") in main_window.databases
 
     # and from db_list
-    db_list_names = []
-    for row in main_window.db_list.children:
-        label = row.children[0].children[-1]
-        db_list_names.append(label.text)
+    db_list_names = [item_name(row) for row in main_window.db_list.children]
     assert "main" in db_list_names
 
     # there shouldn't be any message shown in statusbar
@@ -328,10 +325,7 @@ def test_import_database_success(dialog: Mock, src_dir, main_window):
     assert Database("main") in main_window.databases
 
     # the database should appear in db_list
-    db_list_names = []
-    for row in main_window.db_list.children:
-        label = row.children[0].children[-1]
-        db_list_names.append(label.text)
+    db_list_names = [item_name(row) for row in main_window.db_list.children]
     assert "main" in db_list_names
 
     # a success message should be shown in statusbar
@@ -367,8 +361,7 @@ def test_import_corrupted_database(dialog: Mock, src_dir, main_window):
 
     # the database shouldn't be in db_list
     for row in main_window.db_list.children:
-        label = row.children[0].children[-1]
-        assert "corrupted" != label.text
+        assert "corrupted" != item_name(row)
 
     # the statusbar should be empty
     assert not main_window.statusbar.label.text
@@ -391,8 +384,7 @@ def test_import_database_error(dialog: Mock, mock_copy: Mock, src_dir, main_wind
 
     # the database shouldn't be in db_list
     for row in main_window.db_list.children:
-        label = row.children[0].children[-1]
-        assert "main" != label.text
+        assert "main" != item_name(row)
 
 
 @patch("gi.repository.Gtk.FileChooserDialog", autospec=True)

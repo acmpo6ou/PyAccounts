@@ -17,7 +17,7 @@ import pytest
 
 from core.create_database import CreateDatabase
 from core.database_utils import Database
-from core.gtk_utils import wait_until
+from core.gtk_utils import wait_until, item_name
 from core.widgets import NAME_TAKEN_ERROR, EMPTY_NAME_ERROR, UNALLOWED_CHARS_WARNING
 
 
@@ -141,8 +141,7 @@ def test_create_database_success(form, src_dir):
     assert [db.name for db in databases] == ["crypt", "data", "db", "main"]
 
     # db_list is also updated
-    # TODO: refactor row.children[0].children[-1]
-    db_names = [row.children[0].children[-1].text for row in form.main_window.db_list.children]
+    db_names = [item_name(row) for row in form.main_window.db_list.children]
     assert db_names == ["crypt", "data", "db", "main"]
 
     # the create database form should be hidden

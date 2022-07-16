@@ -26,7 +26,7 @@ import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
-from core.gtk_utils import GladeTemplate, abc_list_sort, delete_list_item, add_list_item
+from core.gtk_utils import GladeTemplate, abc_list_sort, delete_list_item, add_list_item, item_name
 from core.open_database import OpenDatabase
 from core.rename_database import RenameDatabase
 from core.settings import Config
@@ -164,8 +164,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             return
 
         for row in self.db_list.children:
-            label = row.children[0].children[-1]
-            if label.text == "main":
+            if item_name(row) == "main":
                 self.db_list.select_row(row)
                 break
 
