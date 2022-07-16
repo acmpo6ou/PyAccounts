@@ -18,6 +18,7 @@ import typing
 from gi.repository import Gtk, GdkPixbuf
 
 from core.database_utils import Database
+from core.database_window import DatabaseWindow
 from core.gtk_utils import add_list_item
 from core.widgets import CreateForm, FilterDbNameMixin
 
@@ -36,6 +37,7 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
     name_error: Gtk.Label
     password_error: Gtk.Label
     passwords_diff_error: Gtk.Label
+
     # </editor-fold>
 
     @property
@@ -52,12 +54,14 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
         """
 
         database = Database(self.name.text, self.password.text)
+        database.create()
+
         self.main_window.databases.append(database)
         self.main_window.databases.sort(key=lambda db: db.name)
 
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
         add_list_item(self.main_window.db_list, pixbuf, database.name)
-        # TODO: fix database not showing in db_list
-        # TODO: open database window
+
+        self.main_window.form_box.remove(self)
+        DatabaseWindow(database, self.main_window).present()
         # TODO: on error show error dialog
-        # TODO: destroy form on success

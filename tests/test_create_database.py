@@ -131,6 +131,9 @@ def test_create_database_success(form, src_dir):
     form.repeat_password.text = "123"
     form.on_apply()
 
+    # the database file should be created
+    assert (src_dir / "db.dba").exists()
+
     # database is added and databases list is sorted
     expected_db = Database("db", "123")
     databases = form.main_window.databases
@@ -138,5 +141,9 @@ def test_create_database_success(form, src_dir):
     assert [db.name for db in databases] == ["crypt", "data", "db", "main"]
 
     # db_list is also updated
+    # TODO: refactor row.children[0].children[-1]
     db_names = [row.children[0].children[-1].text for row in form.main_window.db_list.children]
     assert db_names == ["crypt", "data", "db", "main"]
+
+    # the create database form should be hidden
+    assert len(form.main_window.form_box.children) == 0
