@@ -13,6 +13,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import logging
+import traceback
 import typing
 
 from gi.repository import Gtk, GdkPixbuf
@@ -20,10 +22,13 @@ from gi.repository import Gtk, GdkPixbuf
 from core.database_utils import Database
 from core.database_window import DatabaseWindow
 from core.gtk_utils import add_list_item
-from core.widgets import CreateForm, FilterDbNameMixin
+from core.widgets import CreateForm, FilterDbNameMixin, ErrorDialog
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
+
+
+ERROR_DB_CREATION = "Error creating database!"
 
 
 class CreateDatabase(CreateForm, FilterDbNameMixin):
@@ -50,11 +55,16 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
 
     def on_apply(self, _=None):
         """
-        Creates database using form data and handling all errors
+        Creates database using form data and handling all errors.
         """
 
         database = Database(self.name.text, self.password.text)
-        database.create()
+        try:
+            database.create()
+        except Exception as err:
+            logging.error(traceback.format_exc())
+            ErrorDialog(ERROR_DB_CREATION, err).run()
+            return
 
         self.main_window.databases.append(database)
         self.main_window.databases.sort(key=lambda db: db.name)
@@ -64,4 +74,3 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
 
         self.main_window.form_box.remove(self)
         DatabaseWindow(database, self.main_window).present()
-        # TODO: on error show error dialog

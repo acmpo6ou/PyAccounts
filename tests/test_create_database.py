@@ -13,12 +13,14 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from unittest.mock import PropertyMock, patch, Mock
+
 import pytest
 
-from core.create_database import CreateDatabase
+from core.create_database import CreateDatabase, ERROR_DB_CREATION
 from core.database_utils import Database
 from core.gtk_utils import wait_until, item_name
-from core.widgets import NAME_TAKEN_ERROR, EMPTY_NAME_ERROR, UNALLOWED_CHARS_WARNING
+from core.widgets import NAME_TAKEN_ERROR, EMPTY_NAME_ERROR, UNALLOWED_CHARS_WARNING, ErrorDialog
 
 
 @pytest.fixture
@@ -146,3 +148,30 @@ def test_create_database_success(form, src_dir):
 
     # the create database form should be hidden
     assert len(form.main_window.form_box.children) == 0
+
+
+@patch("core.create_database.ErrorDialog", autospec=True)
+@patch("core.create_database.Database.dba_file", new_callable=PropertyMock)
+def test_create_database_error(mock, dialog: "Mock[ErrorDialog]", form, faker):
+    err = Exception(faker.sentence())
+    mock.side_effect = err
+
+    form.name.text = "db"
+    form.password.text = "123"
+    form.repeat_password.text = "123"
+
+    form.on_apply()
+    dialog.assert_called_with(ERROR_DB_CREATION, err)
+
+    # database shouldn't be added to the list
+    unexpected_db = Database("db", "123")
+    databases = form.main_window.databases
+    assert unexpected_db not in databases
+    assert [db.name for db in databases] == ["crypt", "data", "main"]
+
+    # db_list shouldn't contain the database
+    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    assert db_names == ["crypt", "data", "main"]
+
+    # the create database form shouldn't be hidden
+    assert form.main_window.form_box.children[0].__class__ == CreateDatabase
