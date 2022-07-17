@@ -13,6 +13,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import logging
+import traceback
 import typing
 
 from cryptography.fernet import InvalidToken
@@ -21,11 +23,13 @@ from gi.repository import Gtk, GLib
 from core.database_utils import Database
 from core.database_window import DatabaseWindow
 from core.gtk_utils import GladeTemplate
+from core.widgets import ErrorDialog
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
 
 OPEN_DB_TITLE = "Open <i>{}</i> database"
+ERROR_DB_OPENING = "Error opening database!"
 
 
 class OpenDatabase(GladeTemplate):
@@ -61,10 +65,14 @@ class OpenDatabase(GladeTemplate):
             self.incorrect_password.show()
             self.database.password = None
             return
+        except Exception as err:
+            logging.error(traceback.format_exc())
+            ErrorDialog(ERROR_DB_OPENING, err).run()
+            self.database.password = None
+            return
 
         self.destroy()
         DatabaseWindow(self.database, self.main_window).present()
-        # TODO: handle all errors
 
     def on_password_changed(self, _):
         """

@@ -13,10 +13,13 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from unittest.mock import patch, PropertyMock, Mock
+
 import pytest
 
 from core.gtk_utils import wait_until
-from core.open_database import OpenDatabase
+from core.open_database import OpenDatabase, ERROR_DB_OPENING
+from core.widgets import ErrorDialog
 
 
 @pytest.fixture
@@ -63,3 +66,19 @@ def test_open_database_incorrect_password(form):
     # when the user starts typing again, the error should disappear
     form.password.text = "pass"
     assert not form.incorrect_password.mapped
+
+
+@patch("core.open_database.ErrorDialog", autospec=True)
+@patch("core.open_database.Database.dba_file", new_callable=PropertyMock)
+def test_open_database_error(mock, dialog: "Mock[ErrorDialog]", form, faker):
+    err = Exception(faker.sentence())
+    mock.side_effect = err
+
+    form.on_open_database()
+    dialog.assert_called_with(ERROR_DB_OPENING, err)
+
+    # the open database form shouldn't be hidden
+    assert form.main_window.form_box.children[0].__class__ == OpenDatabase
+
+    # database password should be cleared
+    assert form.main_window.databases[2].password is None
