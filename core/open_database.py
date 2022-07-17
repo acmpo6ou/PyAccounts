@@ -58,7 +58,7 @@ class OpenDatabase(GladeTemplate):
             self.clear_password()
 
     def toggle_password_visibility(self):
-        ...
+        self.password.visibility = not self.password.visibility
 
     def clear_password(self):
-        ...
+        self.password.text = ""

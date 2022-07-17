@@ -28,3 +28,17 @@ def form(databases, main_window):
 
 def test_form_title(form):
     assert form.title.text == "Open main database"
+
+
+def test_toggle_password(form):
+    assert not form.password.visibility
+    form.toggle_password_visibility()
+    assert form.password.visibility
+    form.toggle_password_visibility()
+    assert not form.password.visibility
+
+
+def test_clear_password(form):
+    form.password.text = "123"
+    form.clear_password()
+    assert not form.password.text
