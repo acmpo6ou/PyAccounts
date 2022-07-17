@@ -72,5 +72,5 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
         add_list_item(self.main_window.db_list, pixbuf, database.name)
 
-        self.main_window.form_box.remove(self)
+        self.destroy()
         DatabaseWindow(database, self.main_window).present()
