@@ -15,6 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import typing
 
+from cryptography.fernet import InvalidToken
 from gi.repository import Gtk, GLib
 
 from core.database_utils import Database
@@ -54,14 +55,22 @@ class OpenDatabase(GladeTemplate):
         Opens database window on success.
         """
 
-        self.database.open(self.password.text)
+        try:
+            self.database.open(self.password.text)
+        except InvalidToken:
+            self.incorrect_password.show()
+            self.database.password = None
+            return
+
         self.destroy()
         DatabaseWindow(self.database, self.main_window).present()
+        # TODO: handle all errors
 
     def on_password_changed(self, _):
         """
-        Hides incorrect_password tip.
+        Hides incorrect_password error when the user starts typing.
         """
+        self.incorrect_password.hide()
 
     def on_icon_press(self, _, icon_pos, __):
         if icon_pos == Gtk.EntryIconPosition.PRIMARY:

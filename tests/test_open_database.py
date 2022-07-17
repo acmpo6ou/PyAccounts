@@ -15,6 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import pytest
 
+from core.gtk_utils import wait_until
 from core.open_database import OpenDatabase
 
 
@@ -51,3 +52,14 @@ def test_open_database_success(form: OpenDatabase):
     assert not form.incorrect_password.mapped
     assert form.main_window.databases[2].password == "123"
     assert len(form.main_window.form_box.children) == 0
+
+
+def test_open_database_incorrect_password(form):
+    form.password.text = "pas"
+    form.on_open_database()
+    wait_until(lambda: form.incorrect_password.mapped)
+    assert form.main_window.databases[2].password is None
+
+    # when the user starts typing again, the error should disappear
+    form.password.text = "pass"
+    assert not form.incorrect_password.mapped
