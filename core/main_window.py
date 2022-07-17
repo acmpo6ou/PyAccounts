@@ -181,7 +181,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         selected_db = self.databases[index]
 
         if not selected_db.opened:
-            form = OpenDatabase(selected_db)
+            form = OpenDatabase(selected_db, self)
             self.show_form(form)
 
     def import_database(self, path: str):

@@ -15,12 +15,12 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import pytest
 
-from core.open_database import OpenDatabase, OPEN_DB_TITLE
+from core.open_database import OpenDatabase
 
 
 @pytest.fixture
 def form(databases, main_window):
-    form = OpenDatabase(main_window.databases[2])
+    form = OpenDatabase(main_window.databases[2], main_window)
     main_window.show_form(form)
     main_window.show_all()
     return form
@@ -42,3 +42,12 @@ def test_clear_password(form):
     form.password.text = "123"
     form.clear_password()
     assert not form.password.text
+
+
+def test_open_database_success(form: OpenDatabase):
+    form.password.text = "123"
+    form.on_open_database()
+
+    assert not form.incorrect_password.mapped
+    assert form.main_window.databases[2].password == "123"
+    assert len(form.main_window.form_box.children) == 0

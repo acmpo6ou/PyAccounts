@@ -13,11 +13,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import typing
 
 from gi.repository import Gtk
 
 from core.database_utils import Database
+from core.database_window import DatabaseWindow
 from core.gtk_utils import GladeTemplate
+
+if typing.TYPE_CHECKING:
+    from core.main_window import MainWindow
 
 OPEN_DB_TITLE = "Open <i>{}</i> database"
 
@@ -32,19 +37,25 @@ class OpenDatabase(GladeTemplate):
 
     # </editor-fold>
 
-    def __init__(self, database: Database):
+    def __init__(self, database: Database, main_window: "MainWindow"):
         super().__init__("open_database")
         self.vexpand = True
         self.database = database
-        self.title.markup = OPEN_DB_TITLE.format(database.name)
+        self.main_window = main_window
 
-    def on_open_database(self, _):
+        self.title.markup = OPEN_DB_TITLE.format(database.name)
+        # TODO: focus password field
+
+    def on_open_database(self, _=None):
         """
         Tries to open database with password from password field,
         if there is an error decrypting the database – displays incorrect_password tip.
         Opens database window on success.
         """
-        # TODO: destroy form on success
+
+        self.database.open(self.password.text)
+        self.destroy()
+        DatabaseWindow(self.database, self.main_window).present()
 
     def on_password_changed(self, _):
         """
