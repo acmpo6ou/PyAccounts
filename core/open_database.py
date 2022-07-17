@@ -15,7 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import typing
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
 
 from core.database_utils import Database
 from core.database_window import DatabaseWindow
@@ -44,7 +44,8 @@ class OpenDatabase(GladeTemplate):
         self.main_window = main_window
 
         self.title.markup = OPEN_DB_TITLE.format(database.name)
-        # TODO: focus password field
+        # wait for password field to get mapped and make it focused
+        GLib.timeout_add(100, lambda: self.password.grab_focus())
 
     def on_open_database(self, _=None):
         """
