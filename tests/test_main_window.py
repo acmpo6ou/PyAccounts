@@ -203,7 +203,7 @@ def test_delete_database_no_selection(databases, main_window):
 
 def test_delete_database_success(databases, main_window):
     main_db = main_window.databases[2]
-    main_window.form_box.add(OpenDatabase(main_db))
+    main_window.form_box.add(OpenDatabase(main_db, main_window))
     main_window.delete_database(main_db)
 
     # a success message should be shown in statusbar

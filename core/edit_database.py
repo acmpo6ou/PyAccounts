@@ -19,14 +19,13 @@ from gi.repository import Gtk
 
 from core.create_database import CreateDatabase
 from core.database_utils import Database
-from core.widgets import ValidateDbNameMixin
 
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
 
 
-class EditDatabase(ValidateDbNameMixin, CreateDatabase):
+class EditDatabase(CreateDatabase):
     # <editor-fold>
     parent_widget: Gtk.Box
     title: Gtk.Label
@@ -40,6 +39,7 @@ class EditDatabase(ValidateDbNameMixin, CreateDatabase):
     # </editor-fold>
 
     APPLY_BUTTON_TEXT = "_Save"
+    # TODO: implement `items` property (see RenameDatabase.items)
 
     def __init__(self, database: Database, main_window: "MainWindow"):
         super().__init__(main_window)
@@ -51,7 +51,7 @@ class EditDatabase(ValidateDbNameMixin, CreateDatabase):
         # TODO: Create button should be changed to Save automatically, because we
         #  filled form fields with data
 
-    def on_apply(self, _):
+    def on_apply(self, _=None):
         """
         Applies changes to database using form data.
         """

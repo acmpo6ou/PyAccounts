@@ -325,7 +325,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         if selected_db.opened:
             form = EditDatabase(selected_db, self)
         else:
-            form = RenameDatabase(selected_db)
+            form = RenameDatabase(selected_db, self)
         self.show_form(form)
 
     def delete_database(self, database: Database):

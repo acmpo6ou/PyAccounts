@@ -242,17 +242,40 @@ class FilterDbNameMixin:
             self.main_window.statusbar.warning(UNALLOWED_CHARS_WARNING)
 
 
-class ValidateDbNameMixin:
+class ValidateNameMixin:
+    # <editor-fold>
+    name: Gtk.Entry
+    name_error: Gtk.Label
+    items: list[Database]
+    # </editor-fold>
+
     def validate_name(self) -> bool:
         """
         Validates name field, displaying error tip if database name is invalid.
 
         Possible problems with database name:
         * name field is empty
-        * name field contains name that is already taken; it's OK, however, if database name
-        hasn't changed throughout editing
+        * name field contains name that is already taken;
+
+        Note that for RenameDatabase, EditDatabase and EditAccount it's OK
+         if database name hasn't changed throughout editing, and they will
+         implement the `items` getter appropriately.
         :return: True if name is valid.
         """
+
+        if self.name.text == "":
+            self.name_error.show()
+            self.name_error.text = EMPTY_NAME_ERROR
+            return False
+        else:
+            self.name_error.hide()
+
+        if self.name.text in self.items:
+            self.name_error.show()
+            self.name_error.text = NAME_TAKEN_ERROR
+            return False
+
+        return True
 
 
 class AttachedFilesMixin:
@@ -270,7 +293,7 @@ class AttachedFilesMixin:
         """
 
 
-class CreateForm(GladeTemplate):
+class CreateForm(GladeTemplate, ValidateNameMixin):
     """
     Super class for CreateDatabase and CreateAccount.
     """
@@ -286,30 +309,6 @@ class CreateForm(GladeTemplate):
     # </editor-fold>
 
     APPLY_BUTTON_TEXT = "_Create"
-
-    def validate_name(self) -> bool:
-        """
-        Validates name field, displaying error tip if database/account name is invalid.
-
-        Possible problems with the name:
-        * name field is empty
-        * name field contains name that is already taken
-        :return: True if name is valid.
-        """
-
-        if self.name.text == "":
-            self.name_error.show()
-            self.name_error.text = EMPTY_NAME_ERROR
-            return False
-        else:
-            self.name_error.hide()
-
-        if self.name.text in self.items:
-            self.name_error.show()
-            self.name_error.text = NAME_TAKEN_ERROR
-            return False
-
-        return True
 
     def validate_passwords(self) -> bool:
         """

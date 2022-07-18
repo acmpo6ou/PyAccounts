@@ -13,26 +13,39 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import typing
 
 from gi.repository import Gtk
 
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
-from core.widgets import FilterDbNameMixin, ValidateDbNameMixin
+from core.widgets import FilterDbNameMixin, ValidateNameMixin
+
+if typing.TYPE_CHECKING:
+    from core.main_window import MainWindow
 
 
-class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateDbNameMixin):
+class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
     # <editor-fold>
     parent_widget: Gtk.Box
     title: Gtk.Label
     name: Gtk.Entry
     name_error: Gtk.Label
     apply: Gtk.Button
+
     # </editor-fold>
 
-    def __init__(self, database: Database):
+    @property
+    def items(self):
+        dbs = [database.name for database in self.main_window.databases]
+        # it's OK if database name hasn't changed throughout editing
+        dbs.remove(self.database.name)
+        return dbs
+
+    def __init__(self, database: Database, main_window: "MainWindow"):
         super().__init__("rename_database")
         self.database = database
+        self.main_window = main_window
         # TODO: change title text to `Rename [database name] database`
         # TODO: make database name cursive
         # TODO: populate name field with database name
@@ -42,7 +55,7 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateDbNameMixin):
         Enables or disables apply button depending on whether database name entered to the name
         field is valid.
         """
-        # TODO: use validate_name
+        self.validate_name()
 
     def on_apply(self, _):
         """
