@@ -74,4 +74,4 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
 
         # TODO: call database.rename() handling errors
         # TODO: update database list and destroy self on success
-        # TODO: use ListBox.delete(name)
+        # TODO: use delete_list_item()
