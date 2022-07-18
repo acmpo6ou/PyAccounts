@@ -15,10 +15,10 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import typing
 
-from gi.repository import Gtk, GLib
+from gi.repository import Gtk, GLib, GdkPixbuf
 
 from core.database_utils import Database
-from core.gtk_utils import GladeTemplate
+from core.gtk_utils import GladeTemplate, delete_list_item, add_list_item
 from core.widgets import FilterDbNameMixin, ValidateNameMixin
 
 if typing.TYPE_CHECKING:
@@ -67,11 +67,18 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
             self.apply.sensitive = False
             self.apply.label = "_Save"
 
-    def on_apply(self, _):
+    def on_apply(self, _=None):
         """
         Renames database using the name from name field.
         """
 
+        old_name = self.database.name
+        self.database.rename(self.name.text)
+        self.main_window.databases.sort(key=lambda db: db.name)
+
+        delete_list_item(self.main_window.db_list, old_name)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
+        add_list_item(self.main_window.db_list, pixbuf, self.database.name)
+
+        self.destroy()
         # TODO: call database.rename() handling errors
-        # TODO: update database list and destroy self on success
-        # TODO: use delete_list_item()

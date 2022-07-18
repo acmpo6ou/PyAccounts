@@ -15,7 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import pytest
 
-from core.gtk_utils import wait_until
+from core.gtk_utils import wait_until, item_name
 from core.rename_database import RenameDatabase
 
 
@@ -52,3 +52,19 @@ def test_apply_enabled(form):
     assert form.apply.sensitive
     assert form.apply.label == "✨ _Save"
 
+
+def test_rename_database_success(form, src_dir):
+    form.name.text = "main2"
+    form.on_apply()
+
+    # database file should be renamed
+    assert not (src_dir / "main.dba").exists()
+    assert (src_dir / "main2.dba").exists()
+
+    # database should be renamed in the db_list
+    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    assert "main" not in db_names
+    assert "main2" in db_names
+
+    # the rename database form should be hidden
+    assert len(form.main_window.form_box.children) == 0
