@@ -13,10 +13,13 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from unittest.mock import patch, PropertyMock, Mock
+
 import pytest
 
 from core.gtk_utils import wait_until, item_name
-from core.rename_database import RenameDatabase
+from core.rename_database import RenameDatabase, ERROR_RENAMING_DB
+from core.widgets import ErrorDialog
 
 
 @pytest.fixture
@@ -68,3 +71,22 @@ def test_rename_database_success(form, src_dir):
 
     # the rename database form should be hidden
     assert len(form.main_window.form_box.children) == 0
+
+
+@patch("core.rename_database.ErrorDialog", autospec=True)
+@patch("core.rename_database.Database.dba_file", new_callable=PropertyMock)
+def test_rename_database_error(mock, dialog: "Mock[ErrorDialog]", form, faker):
+    err = Exception(faker.sentence())
+    mock.side_effect = err
+
+    form.name.text = "main2"
+    form.on_apply()
+    dialog.assert_called_with(ERROR_RENAMING_DB, err)
+
+    # db_list should be unchanged
+    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    assert "main" in db_names
+    assert "main2" not in db_names
+
+    # the rename database form shouldn't be hidden
+    assert form.main_window.form_box.children[0].__class__ == RenameDatabase

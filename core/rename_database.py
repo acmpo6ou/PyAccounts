@@ -13,18 +13,21 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import logging
+import traceback
 import typing
 
 from gi.repository import Gtk, GLib, GdkPixbuf
 
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate, delete_list_item, add_list_item
-from core.widgets import FilterDbNameMixin, ValidateNameMixin
+from core.widgets import FilterDbNameMixin, ValidateNameMixin, ErrorDialog
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
 
 RENAME_DB_TITLE = "Rename <i>{}</i> database"
+ERROR_RENAMING_DB = "Error renaming the database!"
 
 
 class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
@@ -73,7 +76,12 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
         """
 
         old_name = self.database.name
-        self.database.rename(self.name.text)
+        try:
+            self.database.rename(self.name.text)
+        except Exception as err:
+            logging.error(traceback.format_exc())
+            ErrorDialog(ERROR_RENAMING_DB, err).run()
+            return
         self.main_window.databases.sort(key=lambda db: db.name)
 
         delete_list_item(self.main_window.db_list, old_name)
@@ -81,4 +89,3 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
         add_list_item(self.main_window.db_list, pixbuf, self.database.name)
 
         self.destroy()
-        # TODO: call database.rename() handling errors
