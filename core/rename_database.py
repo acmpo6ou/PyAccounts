@@ -59,7 +59,13 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
         Enables or disables apply button depending on whether database name entered to the name
         field is valid.
         """
-        self.validate_name()
+
+        if self.validate_name():
+            self.apply.sensitive = True
+            self.apply.label = "✨ _Save"
+        else:
+            self.apply.sensitive = False
+            self.apply.label = "_Save"
 
     def on_apply(self, _):
         """

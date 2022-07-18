@@ -39,3 +39,16 @@ def test_validate_name(form):
     # it's OK, however, to change name back to `main`
     form.name.text = "main"
     assert not form.name_error.mapped
+
+
+def test_apply_enabled(form):
+    # enter incorrect name
+    form.name.text = ""
+    assert not form.apply.sensitive
+    assert form.apply.label == "_Save"
+
+    # enter good name
+    form.name.text = "good name"
+    assert form.apply.sensitive
+    assert form.apply.label == "✨ _Save"
+

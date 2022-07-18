@@ -102,9 +102,8 @@ Author: Bohdan Kolvakh
         </child>
         <child>
           <object class="GtkButton" id="apply">
-            <property name="label" translatable="yes">_Save</property>
+            <property name="label" translatable="yes">✨ _Save</property>
             <property name="visible">True</property>
-            <property name="sensitive">False</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="use-underline">True</property>
