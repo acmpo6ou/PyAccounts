@@ -27,6 +27,11 @@ def form(databases, main_window):
     return form
 
 
+def test_form_startup(form):
+    assert form.title.text == "Rename main database"
+    assert form.name.text == "main"
+
+
 def test_validate_name(form):
     form.name.text = "data"  # `data` is already taken
     wait_until(lambda: form.name_error.mapped)

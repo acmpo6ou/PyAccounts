@@ -15,7 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import typing
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
 
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate
@@ -23,6 +23,8 @@ from core.widgets import FilterDbNameMixin, ValidateNameMixin
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
+
+RENAME_DB_TITLE = "Rename <i>{}</i> database"
 
 
 class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
@@ -46,9 +48,11 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
         super().__init__("rename_database")
         self.database = database
         self.main_window = main_window
-        # TODO: change title text to `Rename [database name] database`
-        # TODO: make database name cursive
-        # TODO: populate name field with database name
+
+        self.title.markup = RENAME_DB_TITLE.format(database.name)
+        self.name.text = database.name
+        # wait for name field to get mapped and make it focused
+        GLib.timeout_add(100, lambda: self.name.grab_focus())
 
     def on_apply_enabled(self, _):
         """
