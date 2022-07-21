@@ -19,7 +19,7 @@ from typing import TYPE_CHECKING
 from gi.repository import Gdk, Gtk, GdkPixbuf
 
 from core.database_utils import Database
-from core.gtk_utils import GladeTemplate, load_icon
+from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item
 from core.widgets import Window
 
 if TYPE_CHECKING:
@@ -74,10 +74,10 @@ class DatabaseWindow(Window):
         Populates accounts_list with items.
         """
 
-        # TODO: set sort_func for accounts_list to sort alphabetically
-        # TODO: for each account get icon using load_account_icon(), label is account name
-        # TODO: use add_list_item() to add accounts to accounts_list
-        # see MainWindow's load_databases for more details
+        self.accounts_list.sort_func = abc_list_sort
+        for account_name in self.database.accounts:
+            icon = self.load_account_icon(account_name)
+            add_list_item(self.accounts_list, icon.pixbuf, account_name)
 
     def load_account_icon(self, accountname: str):
         """

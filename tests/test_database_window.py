@@ -13,18 +13,19 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-import time
 
 import pytest
-
 from gi.repository import GdkPixbuf
+
 from core.database_window import DatabaseWindow
-from core.gtk_utils import load_icon, wait_until
+from core.gtk_utils import load_icon, item_name
 
 
 @pytest.fixture
 def window(databases, main_window):
-    return DatabaseWindow(main_window.databases[2], main_window)
+    db = main_window.databases[2]
+    db.open("123")
+    return DatabaseWindow(db, main_window)
 
 
 def test_window_title(window):
@@ -56,3 +57,9 @@ def test_load_account_icon(window):
     default = load_icon("cs-user-accounts", 50).pixbuf
     icon = window.load_account_icon("afjkdsjfjsjkfdjalsjfl")
     assert icon.pixbuf.get_pixels() == default.get_pixels()
+
+
+def test_load_accounts(window):
+    # load_accounts is called by DatabaseWindow constructor
+    account_names = [item_name(row) for row in window.accounts_list.children]
+    assert account_names == ["gmail", "mega"]
