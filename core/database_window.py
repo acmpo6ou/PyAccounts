@@ -63,7 +63,7 @@ class DatabaseWindow(Window):
         )
 
         self.load_accounts()
-        # TODO: set title to database name
+        self.title = database.name
 
     def load_accounts(self):
         """
