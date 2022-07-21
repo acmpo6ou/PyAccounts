@@ -18,7 +18,9 @@ import pytest
 from gi.repository import GdkPixbuf
 
 from core.create_account import CreateAccount
-from core.database_window import DatabaseWindow
+from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT
+from core.display_account import DisplayAccount
+from core.edit_account import EditAccount
 from core.gtk_utils import load_icon, item_name
 
 
@@ -70,3 +72,26 @@ def test_on_create_account(window):
     window.on_create_account()
     form = window.form_box.children[0]
     assert isinstance(form, CreateAccount)
+
+
+def test_edit_account(window):
+    """Edit account button should show edit account form."""
+
+    # select an account
+    row = window.accounts_list.children[1]
+    window.accounts_list.select_row(row)
+
+    window.on_edit_account()
+
+    form = window.form_box.children[0]
+    assert isinstance(form, EditAccount)
+    assert form.account == window.main_window.databases[2].accounts["mega"]
+
+
+def test_edit_account_no_selection(window):
+    """Edit account button should display a warning in statusbar
+    if there is no account selected."""
+
+    window.on_edit_account()
+    assert window.statusbar.label.text == f"✘ {SELECT_ACCOUNT_TO_EDIT}"
+    assert not window.form_box.children  # no form should be shown

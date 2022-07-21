@@ -20,6 +20,7 @@ from gi.repository import Gdk, Gtk, GdkPixbuf
 
 from core.create_account import CreateAccount
 from core.database_utils import Database
+from core.edit_account import EditAccount
 from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item
 from core.widgets import Window
 
@@ -27,6 +28,8 @@ if TYPE_CHECKING:
     from core.main_window import MainWindow
 
 ACCOUNT_ICONS_DIR = "img/account_icons/"
+
+SELECT_ACCOUNT_TO_EDIT = "Please select an account to edit."
 
 
 class DatabaseWindow(Window):
@@ -129,12 +132,21 @@ class DatabaseWindow(Window):
         """
         self.show_form(CreateAccount(self.database))
 
-    def on_edit_account(self, _):
+    def on_edit_account(self, _=None):
         """
         Displays edit account form for selected account.
         """
-        # TODO: show warning in statusbar if there is no account selected
-        # TODO: use show_form()
+
+        # show warning in statusbar if there is no account selected
+        row = self.accounts_list.selected_row
+        if not row:
+            self.statusbar.warning(SELECT_ACCOUNT_TO_EDIT)
+            return
+
+        index = self.accounts_list.children.index(row)
+        selected = list(self.database.accounts.keys())[index]
+        account = self.database.accounts[selected]
+        self.show_form(EditAccount(self.database, account))
 
     def on_delete_account(self, _):
         """
