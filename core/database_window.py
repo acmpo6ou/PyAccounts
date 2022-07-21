@@ -13,6 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import os
 from typing import TYPE_CHECKING
 
 from gi.repository import Gdk, Gtk
@@ -39,11 +40,12 @@ class DatabaseWindow(Window):
     status_bar: Gtk.Label
     # </editor-fold>
 
-    # TODO: use list comprehension, os.listdir(ACCOUNT_ICONS_DIR) and sorted(with custom function)
-    # TODO: remove .svg from icon names
     # it's important to sort icon names by length (longer names first), because this way
     # we will have better matches
-    account_icons = ...
+    account_icons = [
+        icon.removesuffix(".svg")
+        for icon in sorted(os.listdir(ACCOUNT_ICONS_DIR), key=lambda x: len(x))
+    ]
 
     def __init__(self, database: Database, main_window: "MainWindow"):
         GladeTemplate.__init__(self, "database_window")
