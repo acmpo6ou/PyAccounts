@@ -16,10 +16,10 @@
 import os
 from typing import TYPE_CHECKING
 
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk, Gtk, GdkPixbuf
 
 from core.database_utils import Database
-from core.gtk_utils import GladeTemplate
+from core.gtk_utils import GladeTemplate, load_icon
 from core.widgets import Window
 
 if TYPE_CHECKING:
@@ -40,11 +40,15 @@ class DatabaseWindow(Window):
     status_bar: Gtk.Label
     # </editor-fold>
 
-    # it's important to sort icon names by length (longer names first), because this way
-    # we will have better matches
+    # it's important to sort icon names by length (longer names first),
+    # because this way we will have better matches
     account_icons = [
         icon.removesuffix(".svg")
-        for icon in sorted(os.listdir(ACCOUNT_ICONS_DIR), key=lambda x: len(x))
+        for icon in sorted(
+            os.listdir(ACCOUNT_ICONS_DIR),
+            key=lambda x: len(x),
+            reverse=True
+        )
     ]
 
     def __init__(self, database: Database, main_window: "MainWindow"):
@@ -80,12 +84,14 @@ class DatabaseWindow(Window):
         Returns account icon associated with given [accountname].
         """
 
-        # TODO: icon = default icon (cs-user-accounts)
-        # TODO: see loadAccountIcon() of MyAccounts:
-        #  https://github.com/acmpo6ou/MyAccounts/blob/master/app/src/main/java/com/acmpo6ou/myaccounts/account/accounts_list/AccountsAdapter.kt
-        #  if icon found: icon = load_icon(name, size) (from gtk_utils)
-        # TODO: return icon
-        # TODO: see tests of loadAccountIcon()
+        icon = load_icon("cs-user-accounts", 50)
+        for icon_name in self.account_icons:
+            if icon_name in accountname.lower():
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                    f"{ACCOUNT_ICONS_DIR}/{icon_name}.svg", 50, 50, True
+                )
+                return Gtk.Image.new_from_pixbuf(pixbuf)
+        return icon
 
     def on_save(self, *args):
         """

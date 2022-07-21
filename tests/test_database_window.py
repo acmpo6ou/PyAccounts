@@ -13,9 +13,13 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import time
+
 import pytest
 
+from gi.repository import GdkPixbuf
 from core.database_window import DatabaseWindow
+from core.gtk_utils import load_icon, wait_until
 
 
 @pytest.fixture
@@ -25,3 +29,30 @@ def window(databases, main_window):
 
 def test_window_title(window):
     assert window.title == "main"
+
+
+def test_load_account_icon(window):
+    gmail_pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+        "img/account_icons/gmail.svg", 50, 50, True
+    )
+
+    icon = window.load_account_icon("gmail")
+    icon2 = window.load_account_icon("gmail2")
+    icon3 = window.load_account_icon("_gmail")
+
+    assert icon.pixbuf.get_pixels() == gmail_pixbuf.get_pixels()
+    assert icon2.pixbuf.get_pixels() == gmail_pixbuf.get_pixels()
+    assert icon3.pixbuf.get_pixels() == gmail_pixbuf.get_pixels()
+
+    # `git` goes before `github` in assets,
+    # but `github` should be a more exact match
+    github_pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+        "img/account_icons/github.svg", 50, 50, True
+    )
+    icon = window.load_account_icon("GitHub")
+    assert icon.pixbuf.get_pixels() == github_pixbuf.get_pixels()
+
+    # if the icon wasn't found the default one should be loaded
+    default = load_icon("cs-user-accounts", 50).pixbuf
+    icon = window.load_account_icon("afjkdsjfjsjkfdjalsjfl")
+    assert icon.pixbuf.get_pixels() == default.get_pixels()
