@@ -17,6 +17,7 @@
 import pytest
 from gi.repository import GdkPixbuf
 
+from core.create_account import CreateAccount
 from core.database_window import DatabaseWindow
 from core.gtk_utils import load_icon, item_name
 
@@ -63,3 +64,9 @@ def test_load_accounts(window):
     # load_accounts is called by DatabaseWindow constructor
     account_names = [item_name(row) for row in window.accounts_list.children]
     assert account_names == ["gmail", "mega"]
+
+
+def test_on_create_account(window):
+    window.on_create_account()
+    form = window.form_box.children[0]
+    assert isinstance(form, CreateAccount)

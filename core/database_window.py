@@ -18,6 +18,7 @@ from typing import TYPE_CHECKING
 
 from gi.repository import Gdk, Gtk, GdkPixbuf
 
+from core.create_account import CreateAccount
 from core.database_utils import Database
 from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item
 from core.widgets import Window
@@ -122,11 +123,11 @@ class DatabaseWindow(Window):
 
         # TODO: return True if user doesn't want to quit and False otherwise
 
-    def on_create_account(self, _):
+    def on_create_account(self, _=None):
         """
         Displays create account form.
         """
-        # TODO: use show_form()
+        self.show_form(CreateAccount(self.database))
 
     def on_edit_account(self, _):
         """
