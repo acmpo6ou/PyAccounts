@@ -185,8 +185,9 @@ class GladeTemplate(Gtk.Bin):
             attrs[item] = widget  # cache it
             return widget
 
-        # else, attribute we're trying to get is not a widget, so we return it the normal way
-        return object.__getattribute__(self, item)
+        # attribute we're trying to get is not a widget,
+        # maybe it's a gtk property
+        return _getattr(self, item)
 
 
 def load_icon(icon_name: str, size: int) -> Gtk.Image:

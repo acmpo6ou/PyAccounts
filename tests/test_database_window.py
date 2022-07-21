@@ -24,4 +24,4 @@ def window(databases, main_window):
 
 
 def test_window_title(window):
-    assert window.get_title() == "main"
+    assert window.title == "main"

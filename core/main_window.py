@@ -297,7 +297,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         return False
 
     def on_quit(self, _):
-        self.get_application().quit()
+        self.application.quit()
 
     def on_create_database(self, _):
         """
