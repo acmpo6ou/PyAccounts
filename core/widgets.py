@@ -122,6 +122,7 @@ class DateChooserDialog(GladeTemplate):
     """
     A dialog to choose date.
     """
+    calendar: Gtk.Calendar
 
     def __init__(self):
         super().__init__("date_chooser")

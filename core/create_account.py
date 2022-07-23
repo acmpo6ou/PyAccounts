@@ -18,7 +18,7 @@ from __future__ import annotations
 from gi.repository import Gdk, Gtk
 
 from core.database_utils import Account, Database
-from core.widgets import CreateForm
+from core.widgets import CreateForm, DateChooserDialog
 
 DROP_ID = 808
 
@@ -86,17 +86,17 @@ class CreateAccount(CreateForm):
         :param icon: the date icon.
         """
         icon.window.cursor = Gdk.Cursor(Gdk.CursorType.HAND1)
-        # TODO: possibly test this method
 
     def on_choose_date(self, *args):
         """
         Displays a dialog to choose the birthdate.
         """
 
-        # TODO: run DateChooserDialog dialog
-        # TODO: if response is OK – use date_chooser.date to get picked date
-        # TODO: convert the date to string of format "dd.mm.yyyy"
-        # TODO: set birth_date label to this date
+        dialog = DateChooserDialog()
+        if dialog.run() == Gtk.ResponseType.OK:
+            date = dialog.calendar.date
+            date_str = f"{date.day:02d}.{date.month:02d}.{date.year}"
+            self.birth_date.text = date_str
 
     def attach_file(self, path: str):
         """
