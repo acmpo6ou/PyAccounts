@@ -142,7 +142,6 @@ Author: Bohdan Kolvakh
           <object class="GtkEntry" id="email">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="tooltip-text" translatable="yes">Only latin symbols, numbers and .()-_ are allowed. All unallowed characters are automatically removed.</property>
             <property name="margin-bottom">8</property>
             <property name="input-purpose">email</property>
           </object>
