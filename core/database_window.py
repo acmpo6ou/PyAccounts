@@ -21,8 +21,9 @@ from gi.repository import Gdk, Gtk, GdkPixbuf
 from core.create_account import CreateAccount
 from core.database_utils import Database
 from core.edit_account import EditAccount
-from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item
-from core.widgets import Window
+from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item, item_name, \
+    delete_list_item
+from core.widgets import Window, WarningDialog
 
 if TYPE_CHECKING:
     from core.main_window import MainWindow
@@ -30,6 +31,8 @@ if TYPE_CHECKING:
 ACCOUNT_ICONS_DIR = "img/account_icons/"
 
 SELECT_ACCOUNT_TO_EDIT = "Please select an account to edit."
+SELECT_ACCOUNT_TO_DELETE = "Please select an account to delete."
+CONFIRM_ACCOUNT_DELETION = "Delete <b>{}</b> account?"
 
 
 class DatabaseWindow(Window):
@@ -148,11 +151,21 @@ class DatabaseWindow(Window):
         account = self.database.accounts[selected]
         self.show_form(EditAccount(self.database, account))
 
-    def on_delete_account(self, _):
+    def on_delete_account(self, _=None):
         """
         Displays confirmation dialog asking user if he really wants to delete selected account.
         """
 
-        # TODO: show warning in statusbar if there is no account selected
-        #  "Please, select account you want to delete."
-        # TODO: remove account from database.accounts, call accounts_list.delete(name)
+        # show warning in statusbar if there is no account selected
+        row = self.accounts_list.selected_row
+        if not row:
+            self.statusbar.warning(SELECT_ACCOUNT_TO_DELETE)
+            return
+
+        account_name = item_name(row)
+        message = CONFIRM_ACCOUNT_DELETION.format(account_name)
+        response = WarningDialog(message).run()
+
+        if response == Gtk.ResponseType.YES:
+            del self.database.accounts[account_name]
+            delete_list_item(self.accounts_list, account_name)

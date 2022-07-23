@@ -13,12 +13,15 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from unittest.mock import patch, Mock
 
 import pytest
-from gi.repository import GdkPixbuf
+from gi.repository import GdkPixbuf, Gtk
 
+import core
 from core.create_account import CreateAccount
-from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT
+from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
+    SELECT_ACCOUNT_TO_DELETE
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.gtk_utils import load_icon, item_name
@@ -95,3 +98,52 @@ def test_edit_account_no_selection(window):
     window.on_edit_account()
     assert window.statusbar.label.text == f"✘ {SELECT_ACCOUNT_TO_EDIT}"
     assert not window.form_box.children  # no form should be shown
+
+
+def test_confirm_account_deletion_dialog_message(window):
+    row = window.accounts_list.children[1]
+    window.accounts_list.select_row(row)
+
+    with patch.object(core.database_window, "WarningDialog", autospec=True) as mock:
+        window.on_delete_account()
+        mock.assert_called_with(CONFIRM_ACCOUNT_DELETION.format("mega"))
+
+
+def test_confirm_account_deletion_Yes(window):
+    row = window.accounts_list.children[1]
+    window.accounts_list.select_row(row)
+
+    with patch.object(core.database_window, "WarningDialog", autospec=True) as mock:
+        mock.return_value.run.return_value = Gtk.ResponseType.YES
+        window.on_delete_account()
+
+        # account is removed from accounts lists
+        assert "mega" not in window.database.accounts
+
+        for row in window.accounts_list.children:
+            assert item_name(row) != "mega"
+
+        # no form should be shown
+        assert not window.form_box.children
+
+
+def test_confirm_account_deletion_No(window):
+    row = window.accounts_list.children[1]
+    window.accounts_list.select_row(row)
+
+    with patch.object(core.database_window, "WarningDialog", autospec=True) as mock:
+        mock.return_value.run.return_value = Gtk.ResponseType.NO
+        window.on_delete_account()
+
+        # account shouldn't be removed from accounts lists
+        assert "mega" in window.database.accounts
+
+        account_names = [item_name(row) for row in window.accounts_list.children]
+        assert "mega" in account_names
+
+
+def test_delete_account_no_selection(window):
+    """Delete account button should display a warning in statusbar
+    if there is no account selected."""
+    window.on_delete_account()
+    assert window.statusbar.label.text == f"✘ {SELECT_ACCOUNT_TO_DELETE}"
