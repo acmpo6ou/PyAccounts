@@ -33,6 +33,8 @@ ACCOUNT_ICONS_DIR = "img/account_icons/"
 SELECT_ACCOUNT_TO_EDIT = "Please select an account to edit."
 SELECT_ACCOUNT_TO_DELETE = "Please select an account to delete."
 CONFIRM_ACCOUNT_DELETION = "Delete <b>{}</b> account?"
+CONFIRM_QUIT = "Are you sure you want to close the database?\n" \
+               "Any unsaved changes will be lost!"
 
 
 class DatabaseWindow(Window):
@@ -119,20 +121,17 @@ class DatabaseWindow(Window):
         :returns: True to prevent quiting and False to allow it.
         """
 
-        # TODO: show warning dialog "Are you sure you want to close the database?"
-        #  "Any unsaved changes will be lost!"
+        if self.database.saved:
+            response = Gtk.ResponseType.YES
+        else:
+            response = WarningDialog(CONFIRM_QUIT).run()
 
-        # TODO: offer 3 buttons: Cancel, Save and Ok
-        #   if Cancel is picked – return
-        #   if Save is picked, call database.save()
-        #   at the end of the method call database.close() and self.destroy()
-
-        # TODO: return True if user doesn't want to quit and False otherwise
+        if response == Gtk.ResponseType.YES:
+            self.database.close()
+            return False
+        return True
 
     def on_create_account(self, _=None):
-        """
-        Displays create account form.
-        """
         self.show_form(CreateAccount(self.database))
 
     def on_edit_account(self, _=None):

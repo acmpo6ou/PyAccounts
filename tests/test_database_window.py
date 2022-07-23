@@ -21,7 +21,7 @@ from gi.repository import GdkPixbuf, Gtk
 import core
 from core.create_account import CreateAccount
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
-    SELECT_ACCOUNT_TO_DELETE
+    SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.gtk_utils import load_icon, item_name
@@ -147,3 +147,39 @@ def test_delete_account_no_selection(window):
     if there is no account selected."""
     window.on_delete_account()
     assert window.statusbar.label.text == f"✘ {SELECT_ACCOUNT_TO_DELETE}"
+
+
+@patch("core.database_window.WarningDialog", autospec=True)
+def test_quit_database_is_saved(dialog, window):
+    # the database is saved, so there shouldn't be any confirmation dialog
+    assert not window.do_delete_event(None)
+
+
+@patch("core.database_window.WarningDialog", autospec=True)
+def test_quit_database_is_not_saved_message(dialog: Mock, window):
+    # the database is not saved
+    del window.database.accounts["mega"]
+
+    window.do_delete_event(None)
+    dialog.assert_called_with(CONFIRM_QUIT)
+
+
+@patch("core.database_window.WarningDialog", autospec=True)
+def test_confirm_quit_No(dialog: Mock, window):
+    # the database is not saved
+    del window.database.accounts["mega"]
+
+    # choose No in the confirmation dialog
+    dialog.return_value.run.return_value = Gtk.ResponseType.NO
+    assert window.do_delete_event(None)
+
+
+@patch("core.database_window.WarningDialog", autospec=True)
+def test_confirm_quit_Yes(dialog: Mock, window):
+    # the database is not saved
+    del window.database.accounts["mega"]
+
+    # choose Yes in the confirmation dialog
+    dialog.return_value.run.return_value = Gtk.ResponseType.YES
+    assert not window.do_delete_event(None)
+    assert not window.database.opened
