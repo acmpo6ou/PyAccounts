@@ -13,7 +13,9 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import logging
 import os
+import traceback
 from typing import TYPE_CHECKING
 
 from gi.repository import Gdk, Gtk, GdkPixbuf
@@ -23,7 +25,7 @@ from core.database_utils import Database
 from core.edit_account import EditAccount
 from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item, item_name, \
     delete_list_item
-from core.widgets import Window, WarningDialog
+from core.widgets import Window, WarningDialog, ErrorDialog
 
 if TYPE_CHECKING:
     from core.main_window import MainWindow
@@ -35,6 +37,8 @@ SELECT_ACCOUNT_TO_DELETE = "Please select an account to delete."
 CONFIRM_ACCOUNT_DELETION = "Delete <b>{}</b> account?"
 CONFIRM_QUIT = "Are you sure you want to close the database?\n" \
                "Any unsaved changes will be lost!"
+SUCCESS_DB_SAVED = "Database saved successfully!"
+ERROR_DB_SAVE = "Error saving the database!"
 
 
 class DatabaseWindow(Window):
@@ -107,6 +111,14 @@ class DatabaseWindow(Window):
         Saves database to disk.
         On success displays success message in statusbar, on error – error message.
         """
+
+        try:
+            self.database.dba_file.unlink()
+            self.database.create()
+            self.statusbar.success(SUCCESS_DB_SAVED)
+        except Exception as err:
+            logging.error(traceback.format_exc())
+            ErrorDialog(ERROR_DB_SAVE, err).run()
 
     def do_delete_event(self, event):
         """

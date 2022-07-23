@@ -113,7 +113,7 @@ class Database:
         disk_db = Database(self.name)
         try:
             disk_db.open(self.password)
-        except FileNotFoundError as err:
+        except FileNotFoundError:
             # if database on disk doesn't exist then it definitely
             # differs from the one in memory
             logging.error(traceback.format_exc())

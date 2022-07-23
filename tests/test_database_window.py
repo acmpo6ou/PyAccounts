@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, PropertyMock
 
 import pytest
 from gi.repository import GdkPixbuf, Gtk
@@ -21,10 +21,11 @@ from gi.repository import GdkPixbuf, Gtk
 import core
 from core.create_account import CreateAccount
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
-    SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT
+    SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.gtk_utils import load_icon, item_name
+from core.widgets import ErrorDialog
 
 
 @pytest.fixture
@@ -183,3 +184,19 @@ def test_confirm_quit_Yes(dialog: Mock, window):
     dialog.return_value.run.return_value = Gtk.ResponseType.YES
     assert not window.do_delete_event(None)
     assert not window.database.opened
+
+
+def test_save_database_success(window):
+    window.on_save()
+    assert window.statusbar.label.text == f"✔ {SUCCESS_DB_SAVED}"
+
+
+@patch("core.database_window.ErrorDialog", autospec=True)
+@patch("core.database_window.Database.dba_file", new_callable=PropertyMock)
+def test_save_database_error(mock, dialog: "Mock[ErrorDialog]", window, faker):
+    err = Exception(faker.sentence())
+    mock.side_effect = err
+
+    window.on_save()
+    dialog.assert_called_with(ERROR_DB_SAVE, err)
+    assert not window.statusbar.label.text
