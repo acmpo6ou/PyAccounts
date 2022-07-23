@@ -146,9 +146,8 @@ class DatabaseWindow(Window):
             self.statusbar.warning(SELECT_ACCOUNT_TO_EDIT)
             return
 
-        index = self.accounts_list.children.index(row)
-        selected = list(self.database.accounts.keys())[index]
-        account = self.database.accounts[selected]
+        account_name = item_name(row)
+        account = self.database.accounts[account_name]
         self.show_form(EditAccount(self.database, account))
 
     def on_delete_account(self, _=None):
