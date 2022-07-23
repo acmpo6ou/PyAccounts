@@ -59,25 +59,25 @@ class CreateAccount(CreateForm):
         )
 
         # load completion for email and username fields
-        # TODO: get emails and usernames from self.database (use list comprehensions)
-        usernames = ...
-        emails = ...
+        usernames = [account.username for account in self.database.accounts.values()]
+        emails = [account.email for account in self.database.accounts.values()]
         self.load_completion(self.username, usernames)
         self.load_completion(self.email, emails)
 
-    def load_completion(self, field: Gtk.Entry, items: list[str]):
+    @staticmethod
+    def load_completion(field: Gtk.Entry, items: list[str]):
         """
         Loads completion for [field] using completion strings from [items].
         """
 
-        # TODO: here's a sample code on how to use Gtk.EntryCompletion:
-        # model = Gtk.ListStore(str)
-        # for entry in mylist:
-        #     model.append((entry,))
-        # completion = Gtk.EntryCompletion()
-        # completion.model = model
-        # completion.set_text_column(0)  # it's important to use set_text_column!
-        # field.completion = completion
+        model = Gtk.ListStore(str)
+        for entry in items:
+            model.append([entry])
+
+        completion = Gtk.EntryCompletion()
+        completion.model = model
+        completion.set_text_column(0)  # it's important to use set_text_column!
+        field.completion = completion
 
     @staticmethod
     def on_hover_date_icon(icon: Gtk.Image):
