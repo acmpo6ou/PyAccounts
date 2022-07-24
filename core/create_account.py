@@ -20,7 +20,7 @@ from pathlib import Path
 from gi.repository import Gdk, Gtk
 
 from core.database_utils import Account, Database
-from core.gtk_utils import get_mime_icon, add_list_item
+from core.gtk_utils import get_mime_icon, add_list_item, abc_list_sort
 from core.widgets import CreateForm, DateChooserDialog, WarningDialog
 
 DROP_ID = 808
@@ -65,6 +65,7 @@ class CreateAccount(CreateForm):
             [Gtk.TargetEntry.new("text/uri-list", Gtk.TargetFlags.OTHER_APP, DROP_ID)],
             Gdk.DragAction.COPY,
         )
+        self.attached_files.sort_func = abc_list_sort
 
         # load completion for email and username fields
         usernames = [account.username for account in self.database.accounts.values()]
