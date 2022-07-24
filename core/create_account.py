@@ -139,16 +139,20 @@ class CreateAccount(CreateForm):
         Displays attach file dialog.
         """
 
-        # see FileChooserDialog and FileChooser docs for more details
-        # TODO: set dialog title to "Attach file"
-        # TODO: allow all files
-        # TODO: use Gtk.FileChooserAction.OPEN
-        # TODO: add 2 buttons: Cancel and Open (do we even need to add them?)
-        # TODO: attach the file only if response is Gtk.ResponseType.ACCEPT
-        # TODO: set select_multiple to True (to allow selection of multiple files)
+        dialog = Gtk.FileChooserDialog(
+            title="Attach file",
+            action=Gtk.FileChooserAction.OPEN,
+        )
+        dialog.select_multiple = True
 
-        # TODO: use dialog.filenames to get list of selected file paths
-        # TODO: iterate over selected paths and call attach_file() for each of them
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        dialog.add_button("Open", Gtk.ResponseType.ACCEPT)
+        response = dialog.run()
+        dialog.hide()
+
+        if response == Gtk.ResponseType.ACCEPT:
+            for path in dialog.filenames:
+                self.attach_file(path)
 
     def on_detach_file(self, _):
         """
