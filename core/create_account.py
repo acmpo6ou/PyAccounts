@@ -15,12 +15,16 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
 
+from pathlib import Path
+
 from gi.repository import Gdk, Gtk
 
 from core.database_utils import Account, Database
-from core.widgets import CreateForm, DateChooserDialog
+from core.gtk_utils import get_mime_icon, add_list_item
+from core.widgets import CreateForm, DateChooserDialog, WarningDialog
 
 DROP_ID = 808
+CONFIRM_ATTACH_EXISTING_FILE = "File <b>{}</b> is already attached, replace?"
 
 
 class CreateAccount(CreateForm):
@@ -111,18 +115,24 @@ class CreateAccount(CreateForm):
         :param path: path to file to attach.
         """
 
-        # TODO: get file name from path
-        # TODO: check if file name is in attached_paths, if it is – display confirmation dialog
-        #  "File [file name] is already attached, replace?"
-        #  proceed only if response is Gtk.ResponseType.ACCEPT
-        # HOWEVER: if file name is already in attached_paths but its path is same as [path] don't
-        # show any dialog. Because when dropping multiple files onto attached_files list,
-        # the dropping even is generated twice for some reason and attached_file() will also be
-        # called twice; comment this strange behavior
+        name = Path(path).name
+        if name in self.attached_paths:
+            # if file name is already in attached_paths but its path is same
+            # as [path] don't show a confirmation dialog.
+            # Because when dropping multiple files onto attached_files list,
+            # the dropping event is generated twice for some reason
+            # and attached_file() will also be called twice
+            if self.attached_paths[name] == path:
+                return
 
-        # TODO: add path to attached_paths dict, file name is the key and path is the value
-        # TODO: add item with file name to attached_files list box
-        # TODO: add file mime icon to item using get_mime_icon() from gtk_utils
+            msg = CONFIRM_ATTACH_EXISTING_FILE.format(name)
+            if WarningDialog(msg).run() == Gtk.ResponseType.YES:
+                self.attached_paths[name] = path
+            return
+
+        self.attached_paths[name] = path
+        icon = get_mime_icon(path)
+        add_list_item(self.attached_files, icon.pixbuf, name, path)
 
     def on_attach_file(self, _):
         """

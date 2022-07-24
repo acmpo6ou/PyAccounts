@@ -83,7 +83,12 @@ def item_name(row: Gtk.ListBoxRow):
     return row.children[0].children[-1].text
 
 
-def add_list_item(list_box: Gtk.ListBox, pixbuf: GdkPixbuf.Pixbuf, item_name: str):
+def add_list_item(
+    list_box: Gtk.ListBox,
+    pixbuf: GdkPixbuf.Pixbuf,
+    item_name: str,
+    tooltip: str = "",
+):
     """
     A helper function to add an item with icon and label to Gtk.ListBox.
     """
@@ -99,6 +104,7 @@ def add_list_item(list_box: Gtk.ListBox, pixbuf: GdkPixbuf.Pixbuf, item_name: st
 
     hbox = Gtk.Box()
     hbox.homogeneous = False
+    hbox.tooltip_text = tooltip
 
     hbox.add(icon)
     hbox.add(label)
