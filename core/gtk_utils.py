@@ -76,7 +76,7 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
-def item_name(row: Gtk.ListBoxRow):
+def item_name(row: Gtk.ListBoxRow) -> str:
     """
     A helper function to retrieve the database/account name from ListBoxRow.
     """
@@ -139,11 +139,7 @@ def abc_list_sort(row1: Gtk.ListBoxRow, row2: Gtk.ListBoxRow) -> ListOrder:
     https://lazka.github.io/pgi-docs/Gtk-3.0/callbacks.html#Gtk.ListBoxSortFunc
     """
 
-    names = []
-    for row in (row1, row2):
-        label: Gtk.Label = row.children[0].children[-1]
-        names.append(label.text)
-
+    names = [item_name(row).lower() for row in (row1, row2)]
     if names[0] == names[1]:
         return ListOrder.EQUAL
     elif names == sorted(names):
