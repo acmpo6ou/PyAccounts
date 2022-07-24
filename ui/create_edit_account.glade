@@ -358,6 +358,8 @@ Author: Bohdan Kolvakh
             <property name="can-focus">False</property>
             <property name="margin-top">8</property>
             <property name="margin-bottom">8</property>
+            <property name="selection-mode">multiple</property>
+            <property name="activate-on-single-click">False</property>
             <signal name="drag-data-received" handler="on_drop_files" swapped="no"/>
           </object>
           <packing>
