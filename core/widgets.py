@@ -19,6 +19,7 @@ Contains custom GTK widgets.
 """
 import re
 import typing
+from datetime import datetime
 
 from gi.repository import Gtk, Gdk, GLib
 
@@ -124,8 +125,11 @@ class DateChooserDialog(GladeTemplate):
     """
     calendar: Gtk.Calendar
 
-    def __init__(self):
+    def __init__(self, date_str: str):
         super().__init__("date_chooser")
+        date = datetime.strptime(date_str, "%d.%m.%Y").date()
+        self.calendar.select_month(date.month-1, date.year)
+        self.calendar.select_day(date.day)
 
     def run(self) -> Gtk.ResponseType:
         response = self.parent_widget.run()

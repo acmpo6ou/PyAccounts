@@ -92,10 +92,10 @@ class CreateAccount(CreateForm):
         Displays a dialog to choose the birthdate.
         """
 
-        dialog = DateChooserDialog()
+        dialog = DateChooserDialog(self.birth_date.text)
         if dialog.run() == Gtk.ResponseType.OK:
             date = dialog.calendar.date
-            date_str = f"{date.day:02d}.{date.month:02d}.{date.year}"
+            date_str = f"{date.day:02d}.{date.month+1:02d}.{date.year}"
             self.birth_date.text = date_str
 
     def attach_file(self, path: str):
