@@ -18,6 +18,7 @@ import shutil
 import pytest
 
 import core
+from core.database_window import DatabaseWindow
 from core.main_window import MainWindow
 
 
@@ -37,3 +38,10 @@ def databases(src_dir):
 @pytest.fixture
 def main_window():
     return MainWindow()
+
+
+@pytest.fixture
+def db_window(databases, main_window):
+    db = main_window.databases[2]
+    db.open("123")
+    return DatabaseWindow(db, main_window)
