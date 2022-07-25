@@ -113,7 +113,7 @@ class DatabaseWindow(Window):
         """
 
         try:
-            self.database.dba_file.unlink()
+            self.database.dba_file.unlink(missing_ok=True)
             self.database.create()
             self.statusbar.success(SUCCESS_DB_SAVED)
         except Exception as err:
