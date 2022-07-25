@@ -25,7 +25,7 @@ from core.database_utils import Database
 from core.edit_account import EditAccount
 from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item, item_name, \
     delete_list_item
-from core.widgets import Window, WarningDialog, ErrorDialog
+from core.widgets import Window, WarningDialog, ErrorDialog, IconDialog
 
 if TYPE_CHECKING:
     from core.main_window import MainWindow
@@ -134,11 +134,22 @@ class DatabaseWindow(Window):
         """
 
         if self.database.saved:
-            response = Gtk.ResponseType.YES
+            response = Gtk.ResponseType.OK
         else:
-            response = WarningDialog(CONFIRM_QUIT).run()
+            dialog = WarningDialog(
+                CONFIRM_QUIT, buttons=(
+                    "_Cancel", Gtk.ResponseType.CANCEL,
+                    "Save", Gtk.ResponseType.ACCEPT,
+                    "Ok", Gtk.ResponseType.OK,
+                )
+            )
+            response = dialog.run()
 
-        if response == Gtk.ResponseType.YES:
+        if response == Gtk.ResponseType.OK:
+            self.database.close()
+            return False
+        elif response == Gtk.ResponseType.ACCEPT:
+            self.on_save()
             self.database.close()
             return False
         return True

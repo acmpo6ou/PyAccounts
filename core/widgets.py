@@ -34,7 +34,7 @@ if typing.TYPE_CHECKING:
 
 NAME_TAKEN_ERROR = "This name is already taken!"
 EMPTY_NAME_ERROR = "Please, provide a name!"
-UNALLOWED_CHARS_WARNING =\
+UNALLOWED_CHARS_WARNING = \
     "Only latin symbols, numbers and .()-_ are allowed" \
     " to use in the database name."
 
@@ -74,12 +74,15 @@ class WarningDialog(IconDialog):
     Dialog with warning icon and 2 buttons: `Yes` and `No`.
     """
 
-    def __init__(self, message: str, *args, **kwargs):
+    def __init__(self, message: str, buttons: tuple = None, *args, **kwargs):
+        if not buttons:
+            buttons = ("_No", Gtk.ResponseType.NO, "Yes", Gtk.ResponseType.YES)
+
         super().__init__(
             title="Warning!",
             message=message,
             icon="dialog-warning",
-            buttons=("_No", Gtk.ResponseType.NO, "Yes", Gtk.ResponseType.YES),
+            buttons=buttons,
             *args,
             **kwargs,
         )
@@ -128,7 +131,7 @@ class DateChooserDialog(GladeTemplate):
     def __init__(self, date_str: str):
         super().__init__("date_chooser")
         date = datetime.strptime(date_str, "%d.%m.%Y").date()
-        self.calendar.select_month(date.month-1, date.year)
+        self.calendar.select_month(date.month - 1, date.year)
         self.calendar.select_day(date.day)
 
     def run(self) -> Gtk.ResponseType:
@@ -252,6 +255,7 @@ class ValidateNameMixin:
     name: Gtk.Entry
     name_error: Gtk.Label
     items: list[Database]
+
     # </editor-fold>
 
     def validate_name(self) -> bool:

@@ -13,7 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-from unittest.mock import patch, Mock, PropertyMock
+from unittest.mock import patch, Mock, PropertyMock, ANY
 
 from gi.repository import GdkPixbuf, Gtk
 
@@ -153,26 +153,26 @@ def test_quit_database_is_not_saved_message(dialog: Mock, db_window):
     del db_window.database.accounts["mega"]
 
     db_window.do_delete_event(None)
-    dialog.assert_called_with(CONFIRM_QUIT)
+    dialog.assert_called_with(CONFIRM_QUIT, buttons=ANY)
 
 
 @patch("core.database_window.WarningDialog", autospec=True)
-def test_confirm_quit_No(dialog: Mock, db_window):
+def test_confirm_quit_Cancel(dialog: Mock, db_window):
     # the database is not saved
     del db_window.database.accounts["mega"]
 
-    # choose No in the confirmation dialog
-    dialog.return_value.run.return_value = Gtk.ResponseType.NO
+    # choose Cancel in the confirmation dialog
+    dialog.return_value.run.return_value = Gtk.ResponseType.CANCEL
     assert db_window.do_delete_event(None)
 
 
 @patch("core.database_window.WarningDialog", autospec=True)
-def test_confirm_quit_Yes(dialog: Mock, db_window):
+def test_confirm_quit_Ok(dialog: Mock, db_window):
     # the database is not saved
     del db_window.database.accounts["mega"]
 
-    # choose Yes in the confirmation dialog
-    dialog.return_value.run.return_value = Gtk.ResponseType.YES
+    # choose Ok in the confirmation dialog
+    dialog.return_value.run.return_value = Gtk.ResponseType.OK
     assert not db_window.do_delete_event(None)
     assert not db_window.database.opened
 
