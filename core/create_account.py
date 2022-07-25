@@ -15,16 +15,22 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
 
+import typing
 from pathlib import Path
 
 from gi.repository import Gdk, Gtk
 
 from core.database_utils import Account, Database
-from core.gtk_utils import get_mime_icon, add_list_item, abc_list_sort
+from core.gtk_utils import get_mime_icon, add_list_item, abc_list_sort, item_name
 from core.widgets import CreateForm, DateChooserDialog, WarningDialog
+
+if typing.TYPE_CHECKING:
+    from core.database_window import DatabaseWindow
 
 DROP_ID = 808
 CONFIRM_ATTACH_EXISTING_FILE = "File <b>{}</b> is already attached, replace?"
+SELECT_FILES_TO_DETACH = "Please select some files to detach."
+CONFIRM_FILES_DETACH = "Detach selected files?"
 
 
 class CreateAccount(CreateForm):
@@ -54,9 +60,10 @@ class CreateAccount(CreateForm):
     def items(self):
         return list(self.database.accounts)
 
-    def __init__(self, database: Database):
+    def __init__(self, database: Database, database_window: "DatabaseWindow"):
         super().__init__("create_edit_account")
         self.database = database
+        self.database_window = database_window
         self.attached_paths = {}
 
         # allow dropping files onto attached_files list to attach them
@@ -155,19 +162,25 @@ class CreateAccount(CreateForm):
             for path in dialog.filenames:
                 self.attach_file(path)
 
-    def on_detach_file(self, _):
+    def on_detach_file(self, _=None):
         """
         Displays confirmation dialog to ask user if he really wants to detach selected file,
         detaches the file on user confirmation.
         """
 
-        # TODO: show warning if there is no file selected in attached_files list
-        # TODO: get selected item from attached_files and extract file name from it
-        # TODO: create WarningDialog asking "Detach [file name]?"
-        # TODO: if response is Gtk.ResponseType.ACCEPT:
-        #  remove the file from attached_paths
-        #  remove corresponding item from attached_files list (by iterating through children and
-        #  removing child with appropriate file name, break from the loop after removed child)
+        rows = self.attached_files.selected_rows
+        if not rows:
+            self.database_window.statusbar.warning(SELECT_FILES_TO_DETACH)
+
+        response = WarningDialog(CONFIRM_FILES_DETACH).run()
+        if response == Gtk.ResponseType.NO:
+            return
+
+        filenames = [item_name(row) for row in rows]
+        for name in filenames:
+            del self.attached_paths[name]
+        for row in rows:
+            row.destroy()
 
     def on_drop_files(self, _, context, x, y, data: Gtk.SelectionData, info, time):
         """

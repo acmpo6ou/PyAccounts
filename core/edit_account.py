@@ -13,12 +13,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import typing
 
 from gi.repository import Gtk
 
 from core.create_account import CreateAccount
 from core.database_utils import Account, Database
 from core.widgets import AttachedFilesMixin
+
+if typing.TYPE_CHECKING:
+    from core.database_window import DatabaseWindow
 
 
 class EditAccount(CreateAccount, AttachedFilesMixin):
@@ -45,10 +49,11 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
     # </editor-fold>
 
     APPLY_BUTTON_TEXT = "_Save"
+
     # TODO: implement `items` property (see RenameDatabase.items)
 
-    def __init__(self, database: Database, account: Account):
-        super().__init__(database)
+    def __init__(self, database: Database, account: Account, database_window: "DatabaseWindow"):
+        super().__init__(database, database_window)
         self.account = account
         # TODO: fill attached_paths with file names from account.attached_files;
         #  map file names to None (since they don't have any path)

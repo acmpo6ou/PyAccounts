@@ -144,7 +144,7 @@ class DatabaseWindow(Window):
         return True
 
     def on_create_account(self, _=None):
-        self.show_form(CreateAccount(self.database))
+        self.show_form(CreateAccount(self.database, self))
 
     def on_edit_account(self, _=None):
         """
@@ -159,7 +159,7 @@ class DatabaseWindow(Window):
 
         account_name = item_name(row)
         account = self.database.accounts[account_name]
-        self.show_form(EditAccount(self.database, account))
+        self.show_form(EditAccount(self.database, account, self))
 
     def on_delete_account(self, _=None):
         """
