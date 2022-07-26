@@ -199,7 +199,7 @@ def load_icon(icon_name: str, size: int) -> Gtk.Image:
     Returns icon from default theme.
     """
     icon_theme = Gtk.IconTheme.get_default()
-    icon = icon_theme.load_icon(icon_name, size, Gtk.IconLookupFlags.FORCE_SVG)
+    icon = icon_theme.load_icon(icon_name, size, Gtk.IconLookupFlags.FORCE_SIZE)
     return Gtk.Image.new_from_pixbuf(icon)
 
 
