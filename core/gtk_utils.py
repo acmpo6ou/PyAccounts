@@ -19,12 +19,14 @@ Contains various utilities to simplify development with GTK.
 """
 
 import contextlib
+import logging
 import time
+import traceback
 from enum import IntEnum
 from typing import Callable
 
 import pytest
-from gi.repository import GObject, Gtk, Gio, GdkPixbuf
+from gi.repository import GObject, Gtk, Gio, GdkPixbuf, GLib
 
 
 # noinspection PyUnresolvedReferences
@@ -206,10 +208,19 @@ def get_mime_icon(path: str) -> Gtk.Image:
     Returns mime icon associated with file given in `path`.
     :param path: path to file icon of which we want to get.
     """
-    # TODO: test this function; it returns Image, test image.pixbuf property
+
     file = Gio.File.new_for_path(path)
     info = file.query_info("standard::*", Gio.FileQueryInfoFlags.NONE, None)
-    return load_icon(info.icon.names[0], 64)
+
+    for icon_name in info.icon.names:
+        try:
+            icon = load_icon(icon_name, 64)
+            break
+        except GLib.GError:
+            # if this icon wasn't found in the theme,
+            # try another one in the next iteration of the loop
+            logging.error(traceback.format_exc())
+    return icon
 
 
 def wait_until(callback: Callable[[], bool], timeout=5):
