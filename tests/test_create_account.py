@@ -13,13 +13,13 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, ANY
 
 import pytest
 from gi.repository import Gtk
 
 from core.create_account import CreateAccount, CONFIRM_ATTACH_EXISTING_FILE, SELECT_FILES_TO_DETACH, \
-    CONFIRM_FILES_DETACH
+    CONFIRM_FILES_DETACH, ERROR_READING_FILE
 from core.gtk_utils import item_name
 from core.widgets import DateChooserDialog, WarningDialog
 
@@ -164,3 +164,27 @@ def test_drop_files(form):
     assert form.attached_paths["main.dba"] == "tests/data/main.dba"
     assert form.attached_paths["PyAccounts.py"] == "PyAccounts.py"
     assert len(form.attached_paths) == 2
+
+
+def test_get_attached_files_success(form):
+    form.attach_file("tests/data/file1.txt")
+    form.attach_file("tests/data/file2.txt")
+    form.attached_paths["file"] = None  # this file should be skipped
+
+    attached_files = form.get_attached_files()
+    assert attached_files["file1.txt"] == b"File 1 content.\n"
+    assert attached_files["file2.txt"] == b"Hello world!\n"
+
+
+@patch("core.create_account.ErrorDialog", autospec=True)
+def test_get_attached_files_error(dialog: Mock, src_dir, form):
+    form.attach_file("tests/data/file1.txt")
+    form.attach_file(f"{src_dir}/main.dba")
+    (src_dir / "main.dba").unlink()
+
+    attached_files = form.get_attached_files()
+    # file1 should have been read
+    assert attached_files["file1.txt"] == b"File 1 content.\n"
+
+    # and there should have been an error dialog about main.dba file
+    dialog.assert_called_with(ERROR_READING_FILE.format("main.dba"), ANY)

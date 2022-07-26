@@ -15,6 +15,8 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
 
+import logging
+import traceback
 import typing
 from pathlib import Path
 
@@ -22,7 +24,7 @@ from gi.repository import Gdk, Gtk
 
 from core.database_utils import Account, Database
 from core.gtk_utils import get_mime_icon, add_list_item, abc_list_sort, item_name
-from core.widgets import CreateForm, DateChooserDialog, WarningDialog
+from core.widgets import CreateForm, DateChooserDialog, WarningDialog, ErrorDialog
 
 if typing.TYPE_CHECKING:
     from core.database_window import DatabaseWindow
@@ -31,6 +33,7 @@ DROP_ID = 808
 CONFIRM_ATTACH_EXISTING_FILE = "File <b>{}</b> is already attached, replace?"
 SELECT_FILES_TO_DETACH = "Please select some files to detach."
 CONFIRM_FILES_DETACH = "Detach selected files?"
+ERROR_READING_FILE = "Error reading file <b>{}</b>."
 
 
 class CreateAccount(CreateForm):
@@ -54,6 +57,7 @@ class CreateAccount(CreateForm):
     password_error: Gtk.Label
     repeat_password: Gtk.Entry
     passwords_diff_error: Gtk.Label
+
     # </editor-fold>
 
     @property
@@ -111,7 +115,7 @@ class CreateAccount(CreateForm):
         dialog = DateChooserDialog(self.birth_date.text)
         if dialog.run() == Gtk.ResponseType.OK:
             date = dialog.calendar.date
-            date_str = f"{date.day:02d}.{date.month+1:02d}.{date.year}"
+            date_str = f"{date.day:02d}.{date.month + 1:02d}.{date.year}"
             self.birth_date.text = date_str
 
     def attach_file(self, path: str):
@@ -200,12 +204,19 @@ class CreateAccount(CreateForm):
         :return: dict mapping file names to file content.
         """
 
-        # TODO: create empty attached_files dict
-        # TODO: iterate through attached_paths:
-        #  if path is None – skip it, because EditAccount may add old attached files as items
-        #  with None path
-        #  for each path try to read file content; save the content to attached_files dict
-        #  on error display ErrorDialog "Failed to read file [file name]"
+        attached_files = {}
+        for filename, path in self.attached_paths.items():
+            if not path:  # skip files that are already attached
+                continue
+
+            try:
+                with open(path, "rb") as file:
+                    data = file.read()
+                    attached_files[filename] = data
+            except Exception as err:
+                logging.error(traceback.format_exc())
+                ErrorDialog(ERROR_READING_FILE.format(filename), err).run()
+        return attached_files
 
     def create_account(self) -> Account:
         """
