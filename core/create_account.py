@@ -188,10 +188,11 @@ class CreateAccount(CreateForm):
         :param data: contains paths to dropped files.
         """
 
-        # TODO: use data.get_uris() to get a list of file paths
-        # TODO: remove `file://` at the beginning of each path
-        # TODO: check if path is a directory, if it is – skip
-        # TODO: call attach_file for each path
+        paths = data.get_uris()
+        for path in paths:
+            path = path.removeprefix("file://")
+            if Path(path).is_file():
+                self.attach_file(path)
 
     def get_attached_files(self) -> dict[str, bytes]:
         """

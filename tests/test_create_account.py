@@ -149,3 +149,18 @@ def test_detach_file_No(dialog: Mock, form):
     assert "PyAccounts.py" in form.attached_paths
     attached_files = [item_name(row) for row in form.attached_files.children]
     assert attached_files == ["main.dba", "PyAccounts.py"]
+
+
+def test_drop_files(form):
+    data = Mock()
+    data.get_uris = lambda *args: (
+        "file://tests/data/main.dba",
+        "file:///home/",
+        "file://PyAccounts.py",
+    )
+
+    form.on_drop_files(None, None, 0, 0, data, None, None)
+    # file:// should be removed, and all folders should be skipped
+    assert form.attached_paths["main.dba"] == "tests/data/main.dba"
+    assert form.attached_paths["PyAccounts.py"] == "PyAccounts.py"
+    assert len(form.attached_paths) == 2
