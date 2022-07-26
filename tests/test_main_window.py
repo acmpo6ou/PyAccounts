@@ -87,7 +87,7 @@ def test_select_closed_database(databases, main_window):
 
     # select a database
     row = main_window.db_list.children[2]
-    main_window.db_list.select_row(row)
+    row.activate()
 
     form = main_window.form_box.children[0]
     assert isinstance(form, OpenDatabase)
