@@ -223,14 +223,29 @@ class CreateAccount(CreateForm):
         Creates account using form data.
         """
 
-        # TODO: get data from all fields
-        # TODO: call get_attached_files() to get proper dict (file name -> file content in bytes)
+        buffer = self.notes.buffer
+        start, end = buffer.bounds
+        notes = buffer.get_text(start, end, False)
+
+        return Account(
+            accountname=self.name.text,
+            username=self.username.text,
+            email=self.email.text,
+            password=self.password.text,
+            birthdate=self.birth_date.text,
+            notes=notes,
+            copy_email=False,
+            attached_files=self.get_attached_files(),
+        )
 
     def on_apply(self, _=None):
         """
         Creates account and adds it to accounts list.
         """
 
-        # TODO: create Account instance using create_account and add it to the database,
-        #  update accounts list
-        # TODO: destroy form on success
+        account = self.create_account()
+        self.database.accounts[account.accountname] = account
+
+        icon = self.database_window.load_account_icon(account.accountname)
+        add_list_item(self.database_window.accounts_list, icon.pixbuf, account.accountname)
+        self.destroy()

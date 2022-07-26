@@ -48,7 +48,7 @@ class Account:
     birthdate: str
     notes: str
     copy_email: bool = True
-    attached_files: dict[str, str] = field(default_factory=dict)
+    attached_files: dict[str, bytes] = field(default_factory=dict)
 
     field_mapping = {
         "accountname": "account",

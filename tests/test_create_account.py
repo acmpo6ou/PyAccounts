@@ -26,7 +26,9 @@ from core.widgets import DateChooserDialog, WarningDialog
 
 @pytest.fixture
 def form(db_window):
-    return CreateAccount(db_window.database, db_window)
+    f = CreateAccount(db_window.database, db_window)
+    db_window.show_form(f)
+    return f
 
 
 def test_date_chooser_dialog_default_date():
@@ -188,3 +190,33 @@ def test_get_attached_files_error(dialog: Mock, src_dir, form):
 
     # and there should have been an error dialog about main.dba file
     dialog.assert_called_with(ERROR_READING_FILE.format("main.dba"), ANY)
+
+
+def test_create_account(form, account):
+    form.database_window.database.accounts = {}
+    form.database_window.accounts_list.children[1].destroy()
+    form.database_window.accounts_list.children[0].destroy()
+    account.attached_files = {
+        "file1.txt": b"File 1 content.\n",
+        "file2.txt": b"Hello world!\n",
+    }
+
+    form.name.text = account.accountname
+    form.email.text = account.email
+    form.username.text = account.username
+    form.password.text = account.password
+    form.repeat_password.text = account.password
+    form.copy_email.active = account.copy_email
+    form.notes.buffer.text = account.notes
+    form.attach_file("tests/data/file1.txt")
+    form.attach_file("tests/data/file2.txt")
+
+    form.on_apply()
+    created_account = form.database_window.database.accounts[account.accountname]
+    assert created_account == account
+
+    accounts = [item_name(row) for row in form.database_window.accounts_list.children]
+    assert accounts == [account.accountname]
+
+    # the create account form should be hidden
+    assert len(form.database_window.form_box.children) == 0
