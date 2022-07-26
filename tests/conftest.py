@@ -18,6 +18,7 @@ import shutil
 import pytest
 
 import core
+from core.database_utils import Account
 from core.database_window import DatabaseWindow
 from core.main_window import MainWindow
 
@@ -45,3 +46,17 @@ def db_window(databases, main_window):
     db = main_window.databases[2]
     db.open("123")
     return DatabaseWindow(db, main_window)
+
+
+@pytest.fixture
+def account():
+    return Account(
+        accountname="gmail",
+        username="Gmail User",
+        email="example@gmail.com",
+        password="123",
+        birthdate="01.01.2000",
+        notes="My gmail account.",
+        copy_email=False,
+        attached_files={"file1": "ZmlsZTEgY29udGVudAo=", "file2": "ZmlsZTIgY29udGVudAo="},
+    )
