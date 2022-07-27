@@ -21,6 +21,7 @@ import core
 from core.create_account import CreateAccount
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
     SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE
+from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.gtk_utils import load_icon, item_name
 from core.widgets import ErrorDialog
@@ -61,6 +62,16 @@ def test_load_accounts(db_window):
     # load_accounts is called by DatabaseWindow constructor
     account_names = [item_name(row) for row in db_window.accounts_list.children]
     assert account_names == ["gmail", "mega"]
+
+
+def test_select_account(db_window):
+    # select an account
+    row = db_window.accounts_list.children[0]
+    row.activate()
+
+    form = db_window.form_box.children[0]
+    assert isinstance(form, DisplayAccount)
+    assert form.account == db_window.database.accounts["gmail"]
 
 
 def test_on_create_account(db_window):

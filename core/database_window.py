@@ -22,6 +22,7 @@ from gi.repository import Gdk, Gtk, GdkPixbuf
 
 from core.create_account import CreateAccount
 from core.database_utils import Database
+from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item, item_name, \
     delete_list_item
@@ -153,6 +154,10 @@ class DatabaseWindow(Window):
             self.database.close()
             return False
         return True
+
+    def on_account_selected(self, _, row: Gtk.ListBoxRow):
+        account = self.database.accounts[item_name(row)]
+        self.show_form(DisplayAccount(account, self))
 
     def on_create_account(self, _=None):
         self.show_form(CreateAccount(self.database, self))
