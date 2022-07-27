@@ -73,4 +73,7 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
         add_list_item(self.main_window.db_list, pixbuf, database.name)
 
         self.destroy()
-        DatabaseWindow(database, self.main_window).present()
+        win = DatabaseWindow(database, self.main_window)
+        self.main_window.windows[database.name] = win
+        win.present()
+

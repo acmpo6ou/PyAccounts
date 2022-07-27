@@ -56,6 +56,9 @@ def test_open_database_success(form: OpenDatabase):
     assert form.main_window.databases[2].password == "123"
     assert len(form.main_window.form_box.children) == 0
 
+    win = form.main_window.windows["main"]
+    assert win.database == form.main_window.databases[2]
+
 
 def test_open_database_incorrect_password(form):
     form.password.text = "pas"

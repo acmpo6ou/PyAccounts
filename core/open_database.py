@@ -72,7 +72,9 @@ class OpenDatabase(GladeTemplate):
             return
 
         self.destroy()
-        DatabaseWindow(self.database, self.main_window).present()
+        win = DatabaseWindow(self.database, self.main_window)
+        self.main_window.windows[self.database.name] = win
+        win.present()
 
     def on_password_changed(self, _):
         """

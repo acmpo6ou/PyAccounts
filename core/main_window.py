@@ -25,6 +25,7 @@ from gi.repository import Gtk, Gdk, GdkPixbuf
 import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
+from core.database_window import DatabaseWindow
 from core.edit_database import EditDatabase
 from core.gtk_utils import GladeTemplate, abc_list_sort, delete_list_item, add_list_item, item_name
 from core.open_database import OpenDatabase
@@ -77,6 +78,8 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self._safe_clipboard = ""
 
         self.main_window = self
+        self.windows: dict[str, DatabaseWindow] = {}
+
         self.config = Config()
         self.load_css()
 

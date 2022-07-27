@@ -149,6 +149,10 @@ def test_create_database_success(form, src_dir):
     # the create database form should be hidden
     assert len(form.main_window.form_box.children) == 0
 
+    # a DatabaseWindow should be shown
+    win = form.main_window.windows["db"]
+    assert win.database == expected_db
+
 
 @patch("core.create_database.ErrorDialog", autospec=True)
 @patch("core.create_database.Database.dba_file", new_callable=PropertyMock)
