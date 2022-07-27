@@ -148,10 +148,18 @@ class DatabaseWindow(Window):
 
         if response == Gtk.ResponseType.OK:
             self.database.close()
+            for db in self.main_window.databases:
+                if db.name == self.database.name:
+                    db.close()
             return False
         elif response == Gtk.ResponseType.ACCEPT:
             self.on_save()
             self.database.close()
+
+            for db in self.main_window.databases:
+                if db.name == self.database.name:
+                    db.close()
+
             return False
         return True
 
