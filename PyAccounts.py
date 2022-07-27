@@ -18,6 +18,7 @@
 from pathlib import Path
 
 import gi
+import setproctitle as setproctitle
 
 from core import SRC_DIR
 
@@ -56,11 +57,8 @@ class Application(Gtk.Application):
                 self.create_paste_shortcut()
 
             signal(SIGUSR1, self.on_paste)
-
-            # TODO: set process name to `PyAccounts` using setproctitle;
-            #  see StackOverflow: https://stackoverflow.com/a/18992161
+            setproctitle.setproctitle("PyAccounts")
         else:
-            # TODO: possibly test this dialog
             dialog = IconDialog(
                 "PyAccounts is already running",
                 "Only one application instance can run at a time.",
