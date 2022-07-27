@@ -86,10 +86,11 @@ class Application(Gtk.Application):
         if not src_dir.exists():
             src_dir.mkdir()
 
-    def fix_settings(self):
-        """
-        Creates empty settings.json if it's absent.
-        """
+    @staticmethod
+    def fix_settings():
+        """ Creates empty settings.json if it's absent. """
+        file = Path(SRC_DIR) / "settings.json"
+        file.touch()
 
     def check_paste_shortcut(self):
         """

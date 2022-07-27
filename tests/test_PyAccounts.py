@@ -25,3 +25,11 @@ def test_fix_src_dir(monkeypatch):
     app.fix_src_dir()
     assert Path("/tmp/.PyAccounts").exists()
     Path("/tmp/.PyAccounts").rmdir()
+
+
+def test_fix_settings(src_dir, monkeypatch):
+    monkeypatch.setattr("PyAccounts.SRC_DIR", src_dir)
+    app = Application()
+
+    app.fix_settings()
+    assert (src_dir / "settings.json").exists()
