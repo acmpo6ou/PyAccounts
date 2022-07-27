@@ -13,12 +13,15 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from unittest.mock import Mock, PropertyMock, patch
+
 import pytest
 
 from core.database_utils import Database
 from core.database_window import DatabaseWindow
-from core.edit_database import EditDatabase
+from core.edit_database import EditDatabase, ERROR_EDITING_DB
 from core.gtk_utils import item_name
+from core.widgets import ErrorDialog
 
 
 @pytest.fixture
@@ -49,7 +52,7 @@ def test_edit_database_success(src_dir, form):
 
     assert (src_dir / "database.dba").exists()
     assert not (src_dir / "main.dba").exists()
-    
+
     db_names = [database.name for database in form.main_window.databases]
     assert "database" in db_names
     assert "main" not in db_names
@@ -69,3 +72,18 @@ def test_edit_database_success(src_dir, form):
     assert win.database.name == "database"
     assert win.database.password == "321"
     assert win.title == "database"
+
+
+@patch("core.edit_database.ErrorDialog", autospec=True)
+@patch("core.edit_database.Database.dba_file", new_callable=PropertyMock)
+def test_edit_database_error(mock, dialog: "Mock[ErrorDialog]", form, faker):
+    err = Exception(faker.sentence())
+    mock.side_effect = err
+
+    form.name.text = "database"
+    form.password.text = "321"
+    form.repeat_password.text = "321"
+
+    form.on_apply()
+    dialog.assert_called_with(ERROR_EDITING_DB, err)
+

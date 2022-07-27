@@ -13,6 +13,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import logging
+import traceback
 import typing
 
 from gi.repository import Gtk, GdkPixbuf
@@ -20,11 +22,13 @@ from gi.repository import Gtk, GdkPixbuf
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.gtk_utils import delete_list_item, add_list_item
+from core.widgets import ErrorDialog
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
 
 EDIT_DB_TITLE = "Edit <i>{}</i> database"
+ERROR_EDITING_DB = "Error editing database!"
 
 
 class EditDatabase(CreateDatabase):
@@ -63,11 +67,16 @@ class EditDatabase(CreateDatabase):
         Applies changes to database using form data.
         """
 
-        db = self.database.save(
-            self.name.text,
-            self.password.text,
-            self.database.accounts,
-        )
+        try:
+            db = self.database.save(
+                self.name.text,
+                self.password.text,
+                self.database.accounts,
+            )
+        except Exception as err:
+            logging.error(traceback.format_exc())
+            ErrorDialog(ERROR_EDITING_DB, err).run()
+            return
 
         self.main_window.databases.remove(self.database)
         self.main_window.databases.append(db)
@@ -86,4 +95,3 @@ class EditDatabase(CreateDatabase):
         win.title = db.name
         win.database.name = db.name
         win.database.password = db.password
-        # TODO: show success/error message
