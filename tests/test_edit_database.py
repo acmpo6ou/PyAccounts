@@ -16,6 +16,7 @@
 import pytest
 
 from core.edit_database import EditDatabase
+from core.gtk_utils import item_name
 
 
 @pytest.fixture
@@ -33,3 +34,25 @@ def test_form_startup(form):
     assert form.name.text == "main"
     assert form.password.text == "123"
     assert form.repeat_password.text == "123"
+
+
+def test_edit_database_success(src_dir, form):
+    form.name.text = "database"
+    form.password.text = "321"
+    form.repeat_password.text = "321"
+    form.on_apply()
+
+    assert (src_dir / "database.dba").exists()
+    assert not (src_dir / "main.dba").exists()
+    
+    db_names = [database.name for database in form.main_window.databases]
+    assert "database" in db_names
+    assert "main" not in db_names
+
+    # db_list should also be updated
+    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    assert "database" in db_names
+    assert "main" not in db_names
+
+    # the edit database form should be hidden
+    assert len(form.main_window.form_box.children) == 0

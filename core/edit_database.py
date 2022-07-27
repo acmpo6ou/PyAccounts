@@ -15,10 +15,11 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import typing
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GdkPixbuf
 
 from core.create_database import CreateDatabase
 from core.database_utils import Database
+from core.gtk_utils import delete_list_item, add_list_item
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
@@ -61,6 +62,21 @@ class EditDatabase(CreateDatabase):
         """
         Applies changes to database using form data.
         """
-        # TODO: save database, update list of databases
+
+        self.database.save(
+            self.name.text,
+            self.password.text,
+            self.database.accounts,
+        )
+
+        self.main_window.databases.remove(self.database)
+        db = Database(self.name.text)
+        self.main_window.databases.append(db)
+        self.main_window.databases.sort(key=lambda db: db.name)
+
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
+        add_list_item(self.main_window.db_list, pixbuf, db.name)
+        delete_list_item(self.main_window.db_list, self.database.name)
+        self.destroy()
+
         # TODO: show success/error message
-        # TODO: destroy form on success
