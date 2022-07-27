@@ -15,8 +15,11 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from pathlib import Path
 
 import gi
+
+from core import SRC_DIR
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
@@ -76,10 +79,12 @@ class Application(Gtk.Application):
         # TODO: skip non .dba files
         # TODO: call self.window.import_database for each path
 
-    def fix_src_dir(self):
-        """
-        Creates the SRC_DIR folder if it's absent.
-        """
+    @staticmethod
+    def fix_src_dir():
+        """ Creates the SRC_DIR folder if it's absent. """
+        src_dir = Path(SRC_DIR)
+        if not src_dir.exists():
+            src_dir.mkdir()
 
     def fix_settings(self):
         """
