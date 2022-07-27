@@ -41,7 +41,12 @@ class EditDatabase(CreateDatabase):
 
     APPLY_BUTTON_TEXT = "_Save"
 
-    # TODO: implement `items` property (see RenameDatabase.items)
+    @property
+    def items(self):
+        dbs = [database.name for database in self.main_window.databases]
+        # it's OK if database name hasn't changed throughout editing
+        dbs.remove(self.database.name)
+        return dbs
 
     def __init__(self, database: Database, main_window: "MainWindow"):
         super().__init__(main_window)
