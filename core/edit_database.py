@@ -20,9 +20,10 @@ from gi.repository import Gtk
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 
-
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
+
+EDIT_DB_TITLE = "Edit <i>{}</i> database"
 
 
 class EditDatabase(CreateDatabase):
@@ -39,17 +40,17 @@ class EditDatabase(CreateDatabase):
     # </editor-fold>
 
     APPLY_BUTTON_TEXT = "_Save"
+
     # TODO: implement `items` property (see RenameDatabase.items)
 
     def __init__(self, database: Database, main_window: "MainWindow"):
         super().__init__(main_window)
         self.database = database
-        # TODO: change title text to `Edit [database name] database`
-        # TODO: make database name cursive
+        self.title.markup = EDIT_DB_TITLE.format(database.name)
 
-        # TODO: populate form fields with data from database.
-        # TODO: Create button should be changed to Save automatically, because we
-        #  filled form fields with data
+        self.name.text = database.name
+        self.password.text = database.password
+        self.repeat_password.text = database.password
 
     def on_apply(self, _=None):
         """
