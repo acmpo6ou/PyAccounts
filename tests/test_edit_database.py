@@ -15,6 +15,8 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import pytest
 
+from core.database_utils import Database
+from core.database_window import DatabaseWindow
 from core.edit_database import EditDatabase
 from core.gtk_utils import item_name
 
@@ -37,6 +39,9 @@ def test_form_startup(form):
 
 
 def test_edit_database_success(src_dir, form):
+    win = DatabaseWindow(form.main_window.databases[2], form.main_window)
+    form.main_window.windows["main"] = win
+
     form.name.text = "database"
     form.password.text = "321"
     form.repeat_password.text = "321"
@@ -56,3 +61,11 @@ def test_edit_database_success(src_dir, form):
 
     # the edit database form should be hidden
     assert len(form.main_window.form_box.children) == 0
+
+    # DatabaseWindow of current database should be updated
+    assert "main" not in form.main_window.windows
+
+    win = form.main_window.windows["database"]
+    assert win.database.name == "database"
+    assert win.database.password == "321"
+    assert win.title == "database"

@@ -215,7 +215,7 @@ class Database:
         self.dba_file.rename(core.SRC_DIR / f"{name}.dba")
         self.name = name
 
-    def save(self, name: str, password: str, accounts: Accounts):
+    def save(self, name: str, password: str, accounts: Accounts) -> "Database":
         """
         Deletes old database and creates new one, i.e. it replaces
         old database with a new one.
@@ -228,3 +228,4 @@ class Database:
         self.dba_file.unlink()
         db = Database(name, password, accounts)
         db.create()
+        return db

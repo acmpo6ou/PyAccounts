@@ -63,20 +63,27 @@ class EditDatabase(CreateDatabase):
         Applies changes to database using form data.
         """
 
-        self.database.save(
+        db = self.database.save(
             self.name.text,
             self.password.text,
             self.database.accounts,
         )
 
         self.main_window.databases.remove(self.database)
-        db = Database(self.name.text)
         self.main_window.databases.append(db)
         self.main_window.databases.sort(key=lambda db: db.name)
 
+        delete_list_item(self.main_window.db_list, self.database.name)
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale("img/icon.svg", 50, 50, True)
         add_list_item(self.main_window.db_list, pixbuf, db.name)
-        delete_list_item(self.main_window.db_list, self.database.name)
-        self.destroy()
 
+        self.destroy()
+        win = self.main_window.windows[self.database.name]
+        del self.main_window.windows[self.database.name]
+        self.main_window.windows[db.name] = win
+
+        # TODO: preserve the * in the title if it was there
+        win.title = db.name
+        win.database.name = db.name
+        win.database.password = db.password
         # TODO: show success/error message
