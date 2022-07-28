@@ -37,6 +37,8 @@ DOTS = '●' * 24
 
 ERROR_SAVING_FILE = "Error saving the file!"
 SUCCESS_SAVING_FILE = "File saved successfully!"
+SUCCESS_PASSWORD_COPY = "Password and email/username are successfully copied!"
+SUCCESS_NOTES_COPY = "Notes are successfully copied!"
 
 
 class DisplayAccount(GladeTemplate, AttachedFilesMixin):
@@ -53,6 +55,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
     birth_date: Gtk.Label
     notes: Gtk.TextView
     attached_files: Gtk.ListBox
+
     # </editor-fold>
 
     def __init__(self, account: Account, database_window: "DatabaseWindow"):
@@ -106,14 +109,17 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         account = self.account
         clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
         to_copy = account.email if account.copy_email else account.username
+
         clipboard.set_text(to_copy, -1)
         self.database_window.main_window.safe_clipboard = account.password
+        self.database_window.statusbar.success(SUCCESS_PASSWORD_COPY)
 
     def on_copy_notes(self, _=None):
         """
         Copies notes to safe clipboard.
         """
         self.database_window.main_window.safe_clipboard = self.account.notes
+        self.database_window.statusbar.success(SUCCESS_NOTES_COPY)
 
     def save_attached_file(self, path: str, content: bytes):
         """

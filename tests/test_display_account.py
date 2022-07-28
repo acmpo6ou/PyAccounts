@@ -18,7 +18,8 @@ from unittest.mock import patch, Mock
 import pytest
 from gi.repository import Gtk, Gdk
 
-from core.display_account import DisplayAccount, NOTES_PLACEHOLDER, DOTS, SUCCESS_SAVING_FILE
+from core.display_account import DisplayAccount, NOTES_PLACEHOLDER, DOTS, SUCCESS_SAVING_FILE, \
+    SUCCESS_PASSWORD_COPY, SUCCESS_NOTES_COPY
 from core.gtk_utils import notes_text, item_name
 
 
@@ -73,11 +74,13 @@ def test_on_copy(form: DisplayAccount, account):
     account.copy_email = True
     form.on_copy()
     assert clipboard.wait_for_text() == account.email
+    assert form.database_window.statusbar.label.text == f"✔ {SUCCESS_PASSWORD_COPY}"
 
 
 def test_copy_notes(form: DisplayAccount, account):
     form.on_copy_notes()
     assert form.database_window.main_window.safe_clipboard == account.notes
+    assert form.database_window.statusbar.label.text == f"✔ {SUCCESS_NOTES_COPY}"
 
 
 def test_save_attached_file_success(form: DisplayAccount, account, src_dir):
