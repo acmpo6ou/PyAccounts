@@ -50,7 +50,12 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
 
     APPLY_BUTTON_TEXT = "_Save"
 
-    # TODO: implement `items` property (see RenameDatabase.items)
+    @property
+    def items(self):
+        accounts = list(self.database.accounts.keys())
+        # it's OK if account name hasn't changed throughout editing
+        accounts.remove(self.account.accountname)
+        return accounts
 
     def __init__(self, database: Database, account: Account, database_window: "DatabaseWindow"):
         super().__init__(database, database_window)
@@ -68,7 +73,7 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
         Populates form fields with account data.
         """
 
-        self.load_attached_files()
+        self.load_attached_files(self.account.attached_files)
         # TODO: change title to `Edit [account name] account`
         # TODO: make account name cursive
 
