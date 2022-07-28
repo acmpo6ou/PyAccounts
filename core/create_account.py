@@ -23,7 +23,7 @@ from pathlib import Path
 from gi.repository import Gdk, Gtk
 
 from core.database_utils import Account, Database
-from core.gtk_utils import get_mime_icon, add_list_item, abc_list_sort, item_name
+from core.gtk_utils import get_mime_icon, add_list_item, abc_list_sort, item_name, notes_text
 from core.widgets import CreateForm, DateChooserDialog, WarningDialog, ErrorDialog
 
 if typing.TYPE_CHECKING:
@@ -223,17 +223,13 @@ class CreateAccount(CreateForm):
         Creates account using form data.
         """
 
-        buffer = self.notes.buffer
-        start, end = buffer.bounds
-        notes = buffer.get_text(start, end, False)
-
         return Account(
             accountname=self.name.text,
             username=self.username.text,
             email=self.email.text,
             password=self.password.text,
             birthdate=self.birth_date.text,
-            notes=notes,
+            notes=notes_text(self.notes),
             copy_email=False,
             attached_files=self.get_attached_files(),
         )

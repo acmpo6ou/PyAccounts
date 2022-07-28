@@ -151,6 +151,13 @@ def abc_list_sort(row1: Gtk.ListBoxRow, row2: Gtk.ListBoxRow) -> ListOrder:
         return ListOrder.ROW2_ROW1
 
 
+def notes_text(notes: Gtk.TextView) -> str:
+    """ A helper function to extract text from given TextView. """
+    buffer = notes.buffer
+    start, end = buffer.bounds
+    return buffer.get_text(start, end, False)
+
+
 class GladeTemplate(Gtk.Bin):
     """
     Simplifies loading of glade ui files.
