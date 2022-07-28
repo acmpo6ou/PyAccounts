@@ -23,6 +23,7 @@ from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM
     SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
+from core.edit_database import EditDatabase
 from core.gtk_utils import load_icon, item_name
 from core.widgets import ErrorDialog
 
@@ -186,6 +187,15 @@ def test_confirm_quit_Ok(dialog: Mock, db_window):
     dialog.return_value.run.return_value = Gtk.ResponseType.OK
     assert not db_window.do_delete_event(None)
     assert not db_window.database.opened
+
+
+def test_hide_edit_db_form_when_its_window_closes(db_window):
+    window = db_window.main_window
+    form = EditDatabase(db_window.database, window)
+    window.show_form(form)
+
+    db_window.do_delete_event(None)
+    assert not window.form_box.children
 
 
 def test_save_database_success(db_window):

@@ -24,8 +24,14 @@ from core.create_account import CreateAccount
 from core.database_utils import Database
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
-from core.gtk_utils import GladeTemplate, load_icon, abc_list_sort, add_list_item, item_name, \
-    delete_list_item
+from core.gtk_utils import (
+    GladeTemplate,
+    load_icon,
+    abc_list_sort,
+    add_list_item,
+    item_name,
+    delete_list_item,
+)
 from core.widgets import Window, WarningDialog, ErrorDialog, IconDialog
 
 if TYPE_CHECKING:
@@ -36,8 +42,9 @@ ACCOUNT_ICONS_DIR = "img/account_icons/"
 SELECT_ACCOUNT_TO_EDIT = "Please select an account to edit."
 SELECT_ACCOUNT_TO_DELETE = "Please select an account to delete."
 CONFIRM_ACCOUNT_DELETION = "Delete <b>{}</b> account?"
-CONFIRM_QUIT = "Are you sure you want to close the database?\n" \
-               "Any unsaved changes will be lost!"
+CONFIRM_QUIT = (
+    "Are you sure you want to close the database?\n" "Any unsaved changes will be lost!"
+)
 SUCCESS_DB_SAVED = "Database saved successfully!"
 ERROR_DB_SAVE = "Error saving the database!"
 
@@ -61,7 +68,7 @@ class DatabaseWindow(Window):
         for icon in sorted(
             os.listdir(ACCOUNT_ICONS_DIR),
             key=lambda x: len(x),
-            reverse=True
+            reverse=True,
         )
     ]
 
@@ -138,30 +145,37 @@ class DatabaseWindow(Window):
             response = Gtk.ResponseType.OK
         else:
             dialog = WarningDialog(
-                CONFIRM_QUIT, buttons=(
+                CONFIRM_QUIT,
+                buttons=(
                     "_Cancel", Gtk.ResponseType.CANCEL,
                     "Save", Gtk.ResponseType.ACCEPT,
                     "Ok", Gtk.ResponseType.OK,
-                )
+                ),
             )
             response = dialog.run()
 
-        if response == Gtk.ResponseType.OK:
-            self.database.close()
-            for db in self.main_window.databases:
-                if db.name == self.database.name:
-                    db.close()
-            return False
-        elif response == Gtk.ResponseType.ACCEPT:
+        if response == Gtk.ResponseType.CANCEL:
+            return True
+
+        if response == Gtk.ResponseType.ACCEPT:
             self.on_save()
-            self.database.close()
 
-            for db in self.main_window.databases:
-                if db.name == self.database.name:
-                    db.close()
+        self.database.close()
+        for db in self.main_window.databases:
+            if db.name == self.database.name:
+                db.close()
 
-            return False
-        return True
+        # hide EditDatabase form if the database we're closing
+        # is being edited
+        if self.main_window.form_box.children:
+            form = self.main_window.form_box.children[0]
+            if all((
+                "EditDatabase" in str(form.__class__),
+                form.database.name == self.database.name,
+            )):
+                form.destroy()
+
+        return False
 
     def on_account_selected(self, _, row: Gtk.ListBoxRow):
         account = self.database.accounts[item_name(row)]
