@@ -71,3 +71,8 @@ def test_on_copy(form: DisplayAccount, account):
     account.copy_email = True
     form.on_copy()
     assert clipboard.wait_for_text() == account.email
+
+
+def test_copy_notes(form: DisplayAccount, account):
+    form.on_copy_notes()
+    assert form.database_window.main_window.safe_clipboard == account.notes

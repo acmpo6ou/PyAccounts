@@ -104,11 +104,11 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         clipboard.set_text(to_copy, -1)
         self.database_window.main_window.safe_clipboard = account.password
 
-    def on_copy_notes(self, _):
+    def on_copy_notes(self, _=None):
         """
         Copies notes to safe clipboard.
         """
-        # TODO: copy notes to safe_clipboard property of MainWindow.
+        self.database_window.main_window.safe_clipboard = self.account.notes
 
     def save_attached_file(self, path: str, content: bytes):
         """
