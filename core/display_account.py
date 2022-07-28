@@ -13,13 +13,15 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import logging
+import traceback
 from typing import TYPE_CHECKING
 
 from gi.repository import Gtk, Gdk
 
 from core.database_utils import Account
 from core.gtk_utils import GladeTemplate, abc_list_sort
-from core.widgets import AttachedFilesMixin
+from core.widgets import AttachedFilesMixin, ErrorDialog
 
 if TYPE_CHECKING:
     from core.database_window import DatabaseWindow
@@ -32,6 +34,9 @@ PASSWORD = "🔒️ Password: {}"
 BIRTH_DATE = "📅 Date of birth: {}"
 NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 DOTS = '●' * 24
+
+ERROR_SAVING_FILE = "Error saving the file!"
+SUCCESS_SAVING_FILE = "File saved successfully!"
 
 
 class DisplayAccount(GladeTemplate, AttachedFilesMixin):
@@ -117,8 +122,14 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         :param path: where to save the file.
         :param content: file content to save.
         """
-        # TODO: open file for writing, write content to file
-        # TODO: Show error/success message.
+
+        try:
+            with open(path, "wb") as file:
+                file.write(content)
+            self.database_window.statusbar.success(SUCCESS_SAVING_FILE)
+        except Exception as err:
+            logging.error(traceback.format_exc())
+            ErrorDialog(ERROR_SAVING_FILE, err).run()
 
     def on_save_file(self, row: Gtk.ListBoxRow):
         """
