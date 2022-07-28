@@ -20,7 +20,7 @@ from typing import TYPE_CHECKING
 from gi.repository import Gtk, Gdk
 
 from core.database_utils import Account
-from core.gtk_utils import GladeTemplate, abc_list_sort
+from core.gtk_utils import GladeTemplate, abc_list_sort, item_name
 from core.widgets import AttachedFilesMixin, ErrorDialog
 
 if TYPE_CHECKING:
@@ -131,17 +131,27 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
             logging.error(traceback.format_exc())
             ErrorDialog(ERROR_SAVING_FILE, err).run()
 
-    def on_save_file(self, row: Gtk.ListBoxRow):
+    def on_save_file(self, _, row: Gtk.ListBoxRow):
         """
         Displays file dialog to save selected attached file.
         :param row: row containing name of attached file.
         """
 
-        # see FileChooserDialog docs for more details
-        # TODO: set dialog title to "Save attached file"
-        # TODO: set default name to attached file name (use current_name property)
-        # TODO: use Gtk.FileChooserAction.SAVE
-        # TODO: add 2 buttons: Cancel and Save
-        # TODO: save the file only if response is Gtk.ResponseType.ACCEPT
-        # TODO: use `filename` property of dialog to access selected file path
-        # TODO: call save_attached_file
+        dialog = Gtk.FileChooserDialog(
+            title="Save attached file",
+            action=Gtk.FileChooserAction.SAVE,
+        )
+        filename = item_name(row)
+        dialog.current_name = filename
+
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT)
+
+        response = dialog.run()
+        dialog.hide()
+
+        if response == Gtk.ResponseType.ACCEPT:
+            self.save_attached_file(
+                dialog.filename,
+                self.account.attached_files[filename],
+            )

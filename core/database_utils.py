@@ -76,6 +76,8 @@ class Account:
         """
 
         args = {Account.reversed_mapping.get(k, k): v for k, v in _dict.items()}
+        for file, content in args['attached_files'].items():
+            args['attached_files'][file] = bytes(content, encoding="utf8")
         return Account(**args)
 
 
