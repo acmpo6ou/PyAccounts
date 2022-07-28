@@ -89,8 +89,9 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         Toggles notes visibility.
         :param button: used to decide whether to show or hide the notes.
         """
-        # TODO: if button.active is True – set notes label to account notes
-        #  else – set notes label to NOTES_PLACEHOLDER
+
+        notes = self.account.notes if button.active else NOTES_PLACEHOLDER
+        self.notes.buffer.text = notes
 
     def on_copy(self, *args):
         """

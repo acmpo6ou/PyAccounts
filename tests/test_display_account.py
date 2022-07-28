@@ -40,11 +40,23 @@ def test_load_data(form: DisplayAccount, account):
 
 def test_toggle_password(form: DisplayAccount, account):
     button = Gtk.ToggleButton()
-    button.active = True
 
+    button.active = True
     form.on_toggle_pass(button)
     assert account.password in form.password.text
 
     button.active = False
     form.on_toggle_pass(button)
     assert DOTS in form.password.text
+
+
+def test_toggle_notes(form: DisplayAccount, account):
+    button = Gtk.ToggleButton()
+
+    button.active = True
+    form.on_toggle_notes(button)
+    assert notes_text(form.notes) == account.notes
+
+    button.active = False
+    form.on_toggle_notes(button)
+    assert notes_text(form.notes) == NOTES_PLACEHOLDER
