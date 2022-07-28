@@ -58,5 +58,5 @@ def account():
         birthdate="01.01.2000",
         notes="My gmail account.",
         copy_email=False,
-        attached_files={"file1": "ZmlsZTEgY29udGVudAo=", "file2": "ZmlsZTIgY29udGVudAo="},
+        attached_files={"file1": b"ZmlsZTEgY29udGVudAo=", "file2": b"ZmlsZTIgY29udGVudAo="},
     )

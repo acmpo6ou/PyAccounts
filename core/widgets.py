@@ -26,7 +26,7 @@ from gi.repository import Gtk, Gdk, GLib
 from core.about import AboutDialog
 from core.database_utils import Database
 from core.generate_password import GenPassDialog
-from core.gtk_utils import GladeTemplate, load_icon
+from core.gtk_utils import GladeTemplate, load_icon, add_list_item
 from core.settings import SettingsDialog
 
 if typing.TYPE_CHECKING:
@@ -288,18 +288,17 @@ class ValidateNameMixin:
 
 
 class AttachedFilesMixin:
-    def load_attached_files(self):
+    attached_files: Gtk.ListBox
+
+    def load_attached_files(self, attached_files: dict[str, typing.Any]):
         """
         Populates attached_files list with attached files.
         """
 
-        """
-        iterate attached_files dict keys:
-            create label with key text
-            get icon associated with mime type of attached file using get_mime_type() from gtk_utils
-            put icon and label into hbox
-            add it to attached_files list box
-        """
+        # TODO: load mime icon for each file
+        icon = load_icon("mail-attachment", 64)
+        for file in attached_files:
+            add_list_item(self.attached_files, icon.pixbuf, file)
 
 
 class CreateForm(GladeTemplate, ValidateNameMixin):

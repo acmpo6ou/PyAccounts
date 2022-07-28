@@ -18,12 +18,18 @@ from typing import TYPE_CHECKING
 from gi.repository import Gtk, Gdk
 
 from core.database_utils import Account
-from core.gtk_utils import GladeTemplate
+from core.gtk_utils import GladeTemplate, abc_list_sort
 from core.widgets import AttachedFilesMixin
 
 if TYPE_CHECKING:
     from core.database_window import DatabaseWindow
 
+ACCOUNT_NAME = "👤 Account name: {}"
+USERNAME = "✏️ Username: {}"
+EMAIL = "✉️ E-mail: {}"
+TO_COPY = "📋️ To copy: {}"
+PASSWORD = "🔒️ Password: {}"
+BIRTH_DATE = "📅 Date of birth: {}"
 NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 
 
@@ -46,15 +52,20 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
     def __init__(self, account: Account, database_window: "DatabaseWindow"):
         super().__init__("display_account")
         self.database_window = database_window
-        # TODO: set sort_func for attached_files list to sort it alphabetically
-
-        # TODO: Populate form fields with account data.
         self.account = account
-        # TODO: set password label's text to dots (use '●' * 24)
-        # TODO: set notes text to NOTES_PLACEHOLDER
-        self.load_attached_files()
 
-        # TODO: test this shortcut
+        self.accountname.text = ACCOUNT_NAME.format(account.accountname)
+        self.email.text = EMAIL.format(account.email)
+        self.username.text = USERNAME.format(account.username)
+        to_copy = "email" if account.copy_email else "username"
+        self.to_copy.text = TO_COPY.format(to_copy)
+        self.password.text = PASSWORD.format('●' * 24)
+        self.birth_date.text = BIRTH_DATE.format(account.birthdate)
+        self.notes.buffer.text = NOTES_PLACEHOLDER
+
+        self.attached_files.sort_func = abc_list_sort
+        self.load_attached_files(account.attached_files)
+
         # Ctrl+C to copy password
         database_window.shortcuts.connect(
             Gdk.keyval_from_name("c"),
