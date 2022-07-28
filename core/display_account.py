@@ -31,6 +31,7 @@ TO_COPY = "📋️ To copy: {}"
 PASSWORD = "🔒️ Password: {}"
 BIRTH_DATE = "📅 Date of birth: {}"
 NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
+DOTS = '●' * 24
 
 
 class DisplayAccount(GladeTemplate, AttachedFilesMixin):
@@ -59,7 +60,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         self.username.text = USERNAME.format(account.username)
         to_copy = "email" if account.copy_email else "username"
         self.to_copy.text = TO_COPY.format(to_copy)
-        self.password.text = PASSWORD.format('●' * 24)
+        self.password.text = PASSWORD.format(DOTS)
         self.birth_date.text = BIRTH_DATE.format(account.birthdate)
         self.notes.buffer.text = NOTES_PLACEHOLDER
 
@@ -79,8 +80,9 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         Toggles password visibility.
         :param button: used to decide whether to show or hide the password.
         """
-        # TODO: if button.active is True – set password label to account password
-        # TODO: else – set password label to dots
+
+        password = self.account.password if button.active else DOTS
+        self.password.text = PASSWORD.format(password)
 
     def on_toggle_notes(self, button: Gtk.ToggleButton):
         """
