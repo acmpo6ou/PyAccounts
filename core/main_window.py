@@ -111,6 +111,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         This is done for safety.
         """
 
+        # TODO: implement properly
+        return self._safe_clipboard
+
     @safe_clipboard.setter
     def safe_clipboard(self, value: str):
         """
@@ -118,6 +121,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         This is done for safety.
         """
 
+        self._safe_clipboard = value
         # TODO: use GObject.timeout_add() to add callback to clear safe clipboard
         # TODO: use it correctly! without overwriting the timer when copying again
 

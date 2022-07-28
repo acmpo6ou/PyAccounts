@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import pytest
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 from core.display_account import DisplayAccount, NOTES_PLACEHOLDER, DOTS
 from core.gtk_utils import notes_text, item_name
@@ -60,3 +60,14 @@ def test_toggle_notes(form: DisplayAccount, account):
     button.active = False
     form.on_toggle_notes(button)
     assert notes_text(form.notes) == NOTES_PLACEHOLDER
+
+
+def test_on_copy(form: DisplayAccount, account):
+    form.on_copy()
+    clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+    assert clipboard.wait_for_text() == account.username
+    assert form.database_window.main_window.safe_clipboard == account.password
+
+    account.copy_email = True
+    form.on_copy()
+    assert clipboard.wait_for_text() == account.email

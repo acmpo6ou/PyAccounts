@@ -95,9 +95,14 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
 
     def on_copy(self, *args):
         """
-        Copies e-mail to clipboard and password to safe clipboard.
+        Copies e-mail/username to clipboard and password to safe clipboard.
         """
-        # TODO: copy password to safe_clipboard property of MainWindow.
+
+        account = self.account
+        clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        to_copy = account.email if account.copy_email else account.username
+        clipboard.set_text(to_copy, -1)
+        self.database_window.main_window.safe_clipboard = account.password
 
     def on_copy_notes(self, _):
         """
