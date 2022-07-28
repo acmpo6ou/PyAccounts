@@ -79,13 +79,13 @@ class CreateAccount(CreateForm):
         self.attached_files.sort_func = abc_list_sort
 
         # load completion for email and username fields
-        usernames = [account.username for account in self.database.accounts.values()]
-        emails = [account.email for account in self.database.accounts.values()]
+        usernames = {account.username for account in self.database.accounts.values()}
+        emails = {account.email for account in self.database.accounts.values()}
         self.load_completion(self.username, usernames)
         self.load_completion(self.email, emails)
 
     @staticmethod
-    def load_completion(field: Gtk.Entry, items: list[str]):
+    def load_completion(field: Gtk.Entry, items: set[str]):
         """
         Loads completion for [field] using completion strings from [items].
         """
