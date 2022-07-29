@@ -190,7 +190,7 @@ Author: Bohdan Kolvakh
           </packing>
         </child>
         <child>
-          <object class="GtkRadioButton">
+          <object class="GtkRadioButton" id="copy_username">
             <property name="label" translatable="yes">Username</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>

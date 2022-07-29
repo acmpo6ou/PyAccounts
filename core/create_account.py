@@ -46,6 +46,7 @@ class CreateAccount(CreateForm):
     username: Gtk.Entry
     email: Gtk.Entry
     copy_email: Gtk.RadioButton
+    copy_username: Gtk.RadioButton
     birth_box: Gtk.EventBox
     birth_date: Gtk.Label
     notes: Gtk.TextView
@@ -57,7 +58,6 @@ class CreateAccount(CreateForm):
     password_error: Gtk.Label
     repeat_password: Gtk.Entry
     passwords_diff_error: Gtk.Label
-
     # </editor-fold>
 
     @property

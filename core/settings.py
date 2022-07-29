@@ -26,6 +26,7 @@ class SettingsDialog(GladeTemplate):
     parent_widget: Gtk.Dialog
     general_font: Gtk.FontButton
     mono_font: Gtk.FontButton
+    main_db: Gtk.Switch
     # </editor-fold>
 
     def __init__(self, main_window):

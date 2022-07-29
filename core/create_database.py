@@ -42,7 +42,6 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
     name_error: Gtk.Label
     password_error: Gtk.Label
     passwords_diff_error: Gtk.Label
-
     # </editor-fold>
 
     @property

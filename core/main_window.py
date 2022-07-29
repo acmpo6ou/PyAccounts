@@ -66,7 +66,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
     form_box: Gtk.Box
     db_list: Gtk.ListBox
     status_bar: Gtk.Label
-
     # </editor-fold>
 
     def __init__(self, *args, **kwargs):

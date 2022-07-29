@@ -24,6 +24,8 @@ from core.widgets import AttachedFilesMixin
 if typing.TYPE_CHECKING:
     from core.database_window import DatabaseWindow
 
+EDIT_ACCOUNT_TITLE = "Edit <i>{}</i> account"
+
 
 class EditAccount(CreateAccount, AttachedFilesMixin):
     # <editor-fold>
@@ -35,6 +37,7 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
     username: Gtk.Entry
     email: Gtk.Entry
     copy_email: Gtk.RadioButton
+    copy_username: Gtk.RadioButton
     birth_box: Gtk.EventBox
     birth_date: Gtk.Label
     notes: Gtk.TextView
@@ -60,22 +63,26 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
     def __init__(self, database: Database, account: Account, database_window: "DatabaseWindow"):
         super().__init__(database, database_window)
         self.account = account
-        # TODO: fill attached_paths with file names from account.attached_files;
-        #  map file names to None (since they don't have any path)
         # load already attached files mapping them to None since they don't have any path
-        self.attached_paths = ...
+        self.attached_paths = {file: None for file in account.attached_files}
         self.load_account()
-        # TODO: Create button should be changed to Save automatically, because load_account()
-        #  will fill form fields with data
 
     def load_account(self):
         """
         Populates form fields with account data.
         """
 
+        self.title.markup = EDIT_ACCOUNT_TITLE.format(self.account.accountname)
+        self.name.text = self.account.accountname
+        self.email.text = self.account.email
+        self.username.text = self.account.username
+        copy = self.copy_email if self.account.copy_email else self.copy_username
+        copy.active = True
+        self.password.text = self.account.password
+        self.repeat_password.text = self.account.password
+        self.birth_date.text = self.account.birthdate
+        self.notes.buffer.text = self.account.notes
         self.load_attached_files(self.account.attached_files)
-        # TODO: change title to `Edit [account name] account`
-        # TODO: make account name cursive
 
     def create_account(self) -> Account:
         """

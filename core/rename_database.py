@@ -37,7 +37,6 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
     name: Gtk.Entry
     name_error: Gtk.Label
     apply: Gtk.Button
-
     # </editor-fold>
 
     @property

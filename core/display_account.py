@@ -55,7 +55,6 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
     birth_date: Gtk.Label
     notes: Gtk.TextView
     attached_files: Gtk.ListBox
-
     # </editor-fold>
 
     def __init__(self, account: Account, database_window: "DatabaseWindow"):

@@ -39,7 +39,6 @@ class OpenDatabase(GladeTemplate):
     open_button: Gtk.Button
     incorrect_password: Gtk.Label
     password: Gtk.Entry
-
     # </editor-fold>
 
     def __init__(self, database: Database, main_window: "MainWindow"):
