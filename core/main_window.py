@@ -74,7 +74,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         Window.__init__(self)
 
         # we will copy password or notes here, because it's safer than using a regular clipboard
-        self._safe_clipboard = ""
+        self.safe_clipboard = ""
 
         self.main_window = self
         self.windows: dict[str, DatabaseWindow] = {}
@@ -102,27 +102,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             Gtk.AccelFlags.VISIBLE,
             self.on_export_database,
         )
-
-    @property
-    def safe_clipboard(self) -> str:
-        """
-        Returns content from safe clipboard, then automatically clears the clipboard.
-        This is done for safety.
-        """
-
-        # TODO: implement properly
-        return self._safe_clipboard
-
-    @safe_clipboard.setter
-    def safe_clipboard(self, value: str):
-        """
-        Puts `value` into safe clipboard and starts one minute timer to auto clear the clipboard.
-        This is done for safety.
-        """
-
-        self._safe_clipboard = value
-        # TODO: use GObject.timeout_add() to add callback to clear safe clipboard
-        # TODO: use it correctly! without overwriting the timer when copying again
 
     @staticmethod
     def load_css():
