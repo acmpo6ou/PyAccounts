@@ -18,11 +18,15 @@ import logging
 import traceback
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from gi.repository import Gtk
 
 from core import SRC_DIR
 from core.gtk_utils import GladeTemplate
+
+if TYPE_CHECKING:
+    from core.main_window import MainWindow
 
 
 class SettingsDialog(GladeTemplate):
@@ -34,10 +38,10 @@ class SettingsDialog(GladeTemplate):
 
     # </editor-fold>
 
-    def __init__(self, main_window):
+    def __init__(self, main_window: "MainWindow"):
         super().__init__("settings")
-        self.load_fonts()
         self.main_window = main_window
+        self.load_settings()
 
     def run(self):
         self.parent_widget.show()
@@ -45,11 +49,11 @@ class SettingsDialog(GladeTemplate):
     def on_cancel(self, _):
         self.destroy()
 
-    def load_fonts(self):
-        """
-        Loads font settings from settings.json
-        """
-        # TODO: use main_window.settings
+    def load_settings(self):
+        config = self.main_window.config
+        self.general_font.font_name = config.general_font
+        self.mono_font.font_name = config.monospace_font
+        self.main_db.active = config.main_db
 
     def on_save(self, _):
         """
@@ -97,4 +101,3 @@ class Config:
         except Exception:
             logging.error(traceback.format_exc())
             return
-

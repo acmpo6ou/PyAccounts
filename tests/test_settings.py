@@ -15,13 +15,18 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import shutil
 
-from _pytest import monkeypatch
+import pytest
 
-from core import settings
-from core.settings import Config
+from core.settings import Config, SettingsDialog
 
 
-def test_load_settings_empty_config():
+@pytest.fixture
+def dialog(main_window, src_dir, monkeypatch):
+    monkeypatch.setattr("core.settings.SRC_DIR", src_dir)
+    return SettingsDialog(main_window)
+
+
+def test_load_settings_empty_config(dialog):
     config = Config()
     assert config.separator_position == 1000
     assert not config.main_db
@@ -29,8 +34,7 @@ def test_load_settings_empty_config():
     assert config.monospace_font == "Ubuntu Mono 35"
 
 
-def test_load_settings(src_dir, monkeypatch):
-    monkeypatch.setattr("core.settings.SRC_DIR", src_dir)
+def test_load_settings(dialog, src_dir):
     shutil.copyfile("tests/data/settings.json", src_dir / "settings.json")
     config = Config()
 
@@ -40,8 +44,7 @@ def test_load_settings(src_dir, monkeypatch):
     assert config.monospace_font == "Ubuntu Mono 64"
 
 
-def test_save_settings(src_dir, monkeypatch):
-    monkeypatch.setattr("core.settings.SRC_DIR", src_dir)
+def test_save_settings(dialog, src_dir):
     settings = src_dir / "settings.json"
     settings.touch()
     config = Config()
@@ -55,3 +58,15 @@ def test_save_settings(src_dir, monkeypatch):
     expected_settings = open("tests/data/settings.json").read()
     settings = open(settings).read()
     assert settings == expected_settings
+
+
+def test_load_preferences(dialog, main_window):
+    main_window.config.general_font = "Arial 32"
+    main_window.config.monospace_font = "Inconsolata Medium 24"
+    main_window.config.main_db = True
+
+    dialog.load_settings()
+    assert dialog.general_font.font_name == "Arial 32"
+    assert dialog.mono_font.font_name == "Inconsolata Medium 24"
+    assert dialog.main_db.active
+
