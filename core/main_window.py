@@ -126,10 +126,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
     @staticmethod
     def load_css():
-        """
-        Loads styles from global.css
-        """
+        """ Loads styles from global.css """
         # TODO: substitute font from settings.json
+
         css_provider = Gtk.CssProvider()
         css_provider.load_from_path("ui/global.css")
         Gtk.StyleContext.add_provider_for_screen(
@@ -172,7 +171,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
         for row in self.db_list.children:
             if item_name(row) == "main":
-                self.db_list.select_row(row)
+                row.activate()
                 break
 
     def on_database_selected(self, _, row: Gtk.ListBoxRow):
