@@ -55,13 +55,16 @@ class SettingsDialog(GladeTemplate):
         self.mono_font.font_name = config.monospace_font
         self.main_db.active = config.main_db
 
-    def on_save(self, _):
-        """
-        Saves fonts to settings.json and applies changes.
-        """
-        # TODO: call main_window.load_css() to apply changes.
-        # TODO: use main_window.settings.save()
-        # TODO: handle any errors; call self.destroy() on success
+    def on_save(self, _=None):
+        """ Saves fonts to settings.json and applies changes. """
+        config = self.main_window.config
+        config.general_font = self.general_font.font_name
+        config.monospace_font = self.mono_font.font_name
+        config.main_db = self.main_db.active
+
+        config.save()
+        self.main_window.load_css()
+        self.destroy()
 
 
 @dataclass

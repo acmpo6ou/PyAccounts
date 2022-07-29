@@ -70,3 +70,13 @@ def test_load_preferences(dialog, main_window):
     assert dialog.mono_font.font_name == "Inconsolata Medium 24"
     assert dialog.main_db.active
 
+
+def test_save(dialog, main_window):
+    dialog.general_font.font_name = "Arial 32"
+    dialog.mono_font.font_name = "Inconsolata Medium 24"
+    dialog.main_db.active = True
+    dialog.on_save()
+
+    assert main_window.config.general_font == "Arial 32"
+    assert main_window.config.monospace_font == "Inconsolata Medium 24"
+    assert main_window.config.main_db
