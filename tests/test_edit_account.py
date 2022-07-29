@@ -53,3 +53,11 @@ def test_load_already_attached_files(form, account):
     assert result.attached_files["file1"] == "ZmlsZTEgY29udGVudAo="
     assert result.attached_files["file2"] == "ZmlsZTIgY29udGVudAo="
 
+
+def test_edit_account(form, account):
+    form.name.text = "my account"
+    form.on_apply()
+
+    accounts = [item_name(row) for row in form.database_window.accounts_list.children]
+    assert account.accountname not in accounts
+    assert "my account" in accounts

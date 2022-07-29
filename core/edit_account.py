@@ -19,6 +19,7 @@ from gi.repository import Gtk
 
 from core.create_account import CreateAccount
 from core.database_utils import Account, Database
+from core.gtk_utils import delete_list_item
 from core.widgets import AttachedFilesMixin
 
 if typing.TYPE_CHECKING:
@@ -96,11 +97,13 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
                 account.attached_files[filename] = content
         return account
 
-    def on_apply(self, _):
+    def on_apply(self, _=None):
         """
         Saves changes done to account.
         """
 
-        # TODO: remove old account from database and accounts list
-        #  (use delete_list_item())
+        delete_list_item(
+            self.database_window.accounts_list,
+            self.account.accountname,
+        )
         super().on_apply()
