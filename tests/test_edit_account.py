@@ -44,3 +44,12 @@ def test_load_account(form, account):
     files = [item_name(row) for row in form.attached_files.children]
     assert files == ["file1", "file2"]
 
+
+def test_load_already_attached_files(form, account):
+    form.attach_file("tests/data/file1.txt")
+    result = form.create_account()
+
+    assert result.attached_files["file1.txt"] == 'RmlsZSAxIGNvbnRlbnQuCg=='
+    assert result.attached_files["file1"] == "ZmlsZTEgY29udGVudAo="
+    assert result.attached_files["file2"] == "ZmlsZTIgY29udGVudAo="
+

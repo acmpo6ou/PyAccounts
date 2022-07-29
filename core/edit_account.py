@@ -88,14 +88,13 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
         """
         Creates account using form data.
         """
+
         account = super().create_account()
-        # TODO: add already loaded attached files:
-        """
-        iterate over attached_paths keys:
-            if key value is None:
-                add attached file from self.account.attached_files to account.attached_files
+        for filename, path in self.attached_paths.items():
+            if path is None:
+                content = self.account.attached_files[filename]
+                account.attached_files[filename] = content
         return account
-        """
 
     def on_apply(self, _):
         """
