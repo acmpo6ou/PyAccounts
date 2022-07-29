@@ -174,8 +174,8 @@ def test_get_attached_files_success(form):
     form.attached_paths["file"] = None  # this file should be skipped
 
     attached_files = form.get_attached_files()
-    assert attached_files["file1.txt"] == b"File 1 content.\n"
-    assert attached_files["file2.txt"] == b"Hello world!\n"
+    assert attached_files["file1.txt"] == 'RmlsZSAxIGNvbnRlbnQuCg=='
+    assert attached_files["file2.txt"] == 'SGVsbG8gd29ybGQhCg=='
 
 
 @patch("core.create_account.ErrorDialog", autospec=True)
@@ -186,7 +186,7 @@ def test_get_attached_files_error(dialog: Mock, src_dir, form):
 
     attached_files = form.get_attached_files()
     # file1 should have been read
-    assert attached_files["file1.txt"] == b"File 1 content.\n"
+    assert attached_files["file1.txt"] == 'RmlsZSAxIGNvbnRlbnQuCg=='
 
     # and there should have been an error dialog about main.dba file
     dialog.assert_called_with(ERROR_READING_FILE.format("main.dba"), ANY)
@@ -197,8 +197,8 @@ def test_create_account(form, account):
     form.database_window.accounts_list.children[1].destroy()
     form.database_window.accounts_list.children[0].destroy()
     account.attached_files = {
-        "file1.txt": b"File 1 content.\n",
-        "file2.txt": b"Hello world!\n",
+        "file1.txt": 'RmlsZSAxIGNvbnRlbnQuCg==',
+        "file2.txt": 'SGVsbG8gd29ybGQhCg==',
     }
 
     form.name.text = account.accountname

@@ -15,6 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
 
+import base64
 import logging
 import traceback
 import typing
@@ -198,7 +199,7 @@ class CreateAccount(CreateForm):
             if Path(path).is_file():
                 self.attach_file(path)
 
-    def get_attached_files(self) -> dict[str, bytes]:
+    def get_attached_files(self) -> dict[str, str]:
         """
         Loads content of selected attached files handling errors.
         :return: dict mapping file names to file content.
@@ -212,7 +213,8 @@ class CreateAccount(CreateForm):
             try:
                 with open(path, "rb") as file:
                     data = file.read()
-                    attached_files[filename] = data
+                    encoded = base64.b64encode(data)
+                    attached_files[filename] = encoded.decode("ascii")
             except Exception as err:
                 logging.error(traceback.format_exc())
                 ErrorDialog(ERROR_READING_FILE.format(filename), err).run()

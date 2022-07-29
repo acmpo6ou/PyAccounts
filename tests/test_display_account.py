@@ -85,17 +85,13 @@ def test_copy_notes(form: DisplayAccount, account):
 
 def test_save_attached_file_success(form: DisplayAccount, account, src_dir):
     path = src_dir / "file.txt"
-    content = b"Hello!"
-
-    form.save_attached_file(path, content)
-    assert open(path, "rb").read() == content
+    form.save_attached_file(path, "SGVsbG8h")
+    assert open(path, "rb").read() == b"Hello!"
     assert form.database_window.statusbar.label.text == f"✔ {SUCCESS_SAVING_FILE}"
 
 
 @patch("core.display_account.ErrorDialog", autospec=True)
 def test_save_attached_file_error(dialog: Mock, form: DisplayAccount, account):
     path = "/file.txt"
-    content = b"Hello!"
-
-    form.save_attached_file(path, content)
+    form.save_attached_file(path, "Hello!")
     dialog.assert_called()

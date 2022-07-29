@@ -13,6 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import base64
 import logging
 import traceback
 from typing import TYPE_CHECKING
@@ -120,7 +121,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         self.database_window.main_window.safe_clipboard = self.account.notes
         self.database_window.statusbar.success(SUCCESS_NOTES_COPY)
 
-    def save_attached_file(self, path: str, content: bytes):
+    def save_attached_file(self, path: str, content: str):
         """
         Saves given attached file handling all errors.
 
@@ -129,6 +130,8 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         """
 
         try:
+            data = content.encode()
+            content = base64.b64decode(data)
             with open(path, "wb") as file:
                 file.write(content)
             self.database_window.statusbar.success(SUCCESS_SAVING_FILE)

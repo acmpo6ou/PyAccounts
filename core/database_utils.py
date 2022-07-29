@@ -48,7 +48,7 @@ class Account:
     birthdate: str
     notes: str
     copy_email: bool = True
-    attached_files: dict[str, bytes] = field(default_factory=dict)
+    attached_files: dict[str, str] = field(default_factory=dict)
 
     field_mapping = {
         "accountname": "account",
@@ -76,8 +76,6 @@ class Account:
         """
 
         args = {Account.reversed_mapping.get(k, k): v for k, v in _dict.items()}
-        for file, content in args['attached_files'].items():
-            args['attached_files'][file] = bytes(content, encoding="utf8")
         return Account(**args)
 
 
