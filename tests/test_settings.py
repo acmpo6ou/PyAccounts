@@ -38,3 +38,20 @@ def test_load_settings(src_dir, monkeypatch):
     assert config.main_db
     assert config.general_font == "Ubuntu 32"
     assert config.monospace_font == "Ubuntu Mono 64"
+
+
+def test_save_settings(src_dir, monkeypatch):
+    monkeypatch.setattr("core.settings.SRC_DIR", src_dir)
+    settings = src_dir / "settings.json"
+    settings.touch()
+    config = Config()
+
+    config.separator_position = 2000
+    config.main_db = True
+    config.general_font = "Ubuntu 32"
+    config.monospace_font = "Ubuntu Mono 64"
+
+    config.save()
+    expected_settings = open("tests/data/settings.json").read()
+    settings = open(settings).read()
+    assert settings == expected_settings

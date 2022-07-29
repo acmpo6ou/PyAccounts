@@ -85,8 +85,16 @@ class Config:
             logging.error(traceback.format_exc())
             return
 
-        for key, value in settings.items():
-            self.__dict__[key] = value
+        self.__dict__ = settings
 
     def save(self):
         """ Saves settings to settings.json """
+        path = Path(SRC_DIR) / "settings.json"
+
+        try:
+            file = open(path, "w")
+            json.dump(self.__dict__, file)
+        except Exception:
+            logging.error(traceback.format_exc())
+            return
+
