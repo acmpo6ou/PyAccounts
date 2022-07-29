@@ -13,11 +13,15 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
-
+import json
+import logging
+import traceback
 from dataclasses import dataclass
+from pathlib import Path
 
 from gi.repository import Gtk
 
+from core import SRC_DIR
 from core.gtk_utils import GladeTemplate
 
 
@@ -27,6 +31,7 @@ class SettingsDialog(GladeTemplate):
     general_font: Gtk.FontButton
     mono_font: Gtk.FontButton
     main_db: Gtk.Switch
+
     # </editor-fold>
 
     def __init__(self, main_window):
@@ -70,12 +75,18 @@ class Config:
         self.load()
 
     def load(self):
-        """
-        Loads settings from settings.json
-        """
-        # TODO: set fields to loaded settings
+        """ Loads settings from settings.json """
+        path = Path(SRC_DIR) / "settings.json"
+
+        try:
+            file = open(path)
+            settings = json.load(file)
+        except Exception:
+            logging.error(traceback.format_exc())
+            return
+
+        for key, value in settings.items():
+            self.__dict__[key] = value
 
     def save(self):
-        """
-        Saves settings to settings.json
-        """
+        """ Saves settings to settings.json """
