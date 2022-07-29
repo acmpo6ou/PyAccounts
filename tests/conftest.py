@@ -37,7 +37,8 @@ def databases(src_dir):
 
 
 @pytest.fixture
-def main_window():
+def main_window(monkeypatch, src_dir):
+    monkeypatch.setattr("core.settings.SRC_DIR", src_dir)
     return MainWindow()
 
 

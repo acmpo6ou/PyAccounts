@@ -83,7 +83,6 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.load_css()
 
         self.get_databases()
-        # self.databases = [Database("main")]
         self.load_databases()
         self.select_main_database()
 
