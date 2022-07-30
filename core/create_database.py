@@ -75,4 +75,3 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
         win = DatabaseWindow(database, self.main_window)
         self.main_window.windows[database.name] = win
         win.present()
-

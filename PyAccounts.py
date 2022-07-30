@@ -73,15 +73,13 @@ class Application(Gtk.Application):
             dialog.show_all()
 
     def do_open(self, files: list[Gio.File], *args):
-        """
-        Imports .dba files given in [files] list.
-        """
+        """ Imports .dba files given in [files] list. """
         if not self.window:
             self.do_activate()
 
-        # TODO: iterate over files, use file.path to get absolute file path
-        # TODO: skip non .dba files
-        # TODO: call self.window.import_database for each path
+        for file in files:
+            if file.path.endswith(".dba"):
+                self.window.import_database(file.path)
 
     @staticmethod
     def fix_src_dir():
