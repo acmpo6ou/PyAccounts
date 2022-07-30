@@ -15,12 +15,13 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import time
 from pathlib import Path
 
 import gi
 import setproctitle as setproctitle
 
-from core import SRC_DIR
+from core import SRC_DIR, keyboard
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
@@ -130,7 +131,8 @@ class Application(Gtk.Application):
         Called when system shortcut (usually Super+V) to paste password from safe clipboard is
         pressed. Sends key press events to X server to simulate password typing.
         """
-        # TODO: use keyboard module to paste password from window.safe_clipboard
+        time.sleep(0.1)
+        keyboard.write(self.window.safe_clipboard)
 
 
 if __name__ == "__main__":
