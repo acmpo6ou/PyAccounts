@@ -91,7 +91,6 @@ class EditDatabase(CreateDatabase):
         del self.main_window.windows[self.database.name]
         self.main_window.windows[db.name] = win
 
-        # TODO: preserve the * in the title if it was there
         win.title = db.name
         win.database.name = db.name
         win.database.password = db.password

@@ -35,6 +35,11 @@ from core.main_window import MainWindow
 from core.widgets import IconDialog
 
 
+CUSTOM_KEYS_PARENT_SCHEMA = "org.cinnamon.desktop.keybindings"
+CUSTOM_KEYS_BASENAME = "/org/cinnamon/desktop/keybindings/custom-keybindings"
+CUSTOM_KEYS_SCHEMA = "org.cinnamon.desktop.keybindings.custom-keybinding"
+
+
 class Application(Gtk.Application):
     def __init__(self, *args, **kwargs):
         super().__init__(
@@ -90,15 +95,24 @@ class Application(Gtk.Application):
         file = Path(SRC_DIR) / "settings.json"
         file.touch()
 
-    def check_paste_shortcut(self):
-        """
-        Returns boolean value indicating whether there is a system shortcut to paste password.
-        """
+    @staticmethod
+    def check_paste_shortcut() -> bool:
+        """ Checks if there is a system shortcut to paste password. """
+        parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA)
+        custom_list = parent.get_strv("custom-list")
+
+        for entry in custom_list:
+            if entry == "__dummy__":
+                continue
+
+            path = f"{CUSTOM_KEYS_BASENAME}/{entry}/"
+            schema = Gio.Settings.new_with_path(CUSTOM_KEYS_SCHEMA, path)
+            if schema.get_string("name") == "PyAccounts":
+                return True
+        return False
 
     def create_paste_shortcut(self):
-        """
-        Creates system shortcut to paste password.
-        """
+        """ Creates system shortcut to paste password. """
 
     def on_paste(self, *args):
         """
