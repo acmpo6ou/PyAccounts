@@ -17,6 +17,7 @@ import glob
 import logging
 import os
 import shutil
+import tempfile
 import traceback
 from pathlib import Path
 
@@ -102,13 +103,25 @@ class MainWindow(Gtk.ApplicationWindow, Window):
             self.on_export_database,
         )
 
-    @staticmethod
-    def load_css():
+    def load_css(self):
         """ Loads styles from global.css """
-        # TODO: substitute font from settings.json
+        css_content = open("ui/global.css").read() \
+            .replace("{", "{{").replace("}", "}}")
+
+        css_content = css_content.replace(
+            '30px "Ubuntu Mono"', "{monospace}",
+        ).replace('30px "Ubuntu"', "{general}",)
+        css_content = css_content.format(
+            general=self.config.general_font,
+            monospace=self.config.monospace_font,
+        )
+
+        tmp = tempfile.NamedTemporaryFile("w")
+        tmp.write(css_content)
+        tmp.flush()
 
         css_provider = Gtk.CssProvider()
-        css_provider.load_from_path("ui/global.css")
+        css_provider.load_from_path(tmp.name)
         Gtk.StyleContext.add_provider_for_screen(
             Gdk.Screen.get_default(),
             css_provider,
