@@ -34,10 +34,10 @@ import core.gtk_utils
 from core.main_window import MainWindow
 from core.widgets import IconDialog
 
-
 CUSTOM_KEYS_PARENT_SCHEMA = "org.cinnamon.desktop.keybindings"
 CUSTOM_KEYS_BASENAME = "/org/cinnamon/desktop/keybindings/custom-keybindings"
 CUSTOM_KEYS_SCHEMA = "org.cinnamon.desktop.keybindings.custom-keybinding"
+PASTE_SCRIPT = "/usr/share/pyaccounts/PyAccounts/paste.sh"
 
 
 class Application(Gtk.Application):
@@ -111,8 +111,19 @@ class Application(Gtk.Application):
                 return True
         return False
 
-    def create_paste_shortcut(self):
+    @staticmethod
+    def create_paste_shortcut():
         """ Creates system shortcut to paste password. """
+        parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA)
+        array = parent.get_strv("custom-list")
+        array.append("custom100")
+        parent.set_strv("custom-list", array)
+
+        path = f"{CUSTOM_KEYS_BASENAME}/custom100/"
+        new_schema = Gio.Settings.new_with_path(CUSTOM_KEYS_SCHEMA, path)
+        new_schema.set_string("name", "PyAccounts")
+        new_schema.set_string("command", PASTE_SCRIPT)
+        new_schema.set_strv("binding", ('<Super>v',))
 
     def on_paste(self, *args):
         """
