@@ -17,7 +17,11 @@
 """
 Contains custom GTK widgets.
 """
+import base64
+import logging
 import re
+import tempfile
+import traceback
 import typing
 from datetime import datetime
 
@@ -26,7 +30,7 @@ from gi.repository import Gtk, Gdk, GLib
 from core.about import AboutDialog
 from core.database_utils import Database
 from core.generate_password import GenPassDialog
-from core.gtk_utils import GladeTemplate, load_icon, add_list_item
+from core.gtk_utils import GladeTemplate, load_icon, add_list_item, get_mime_icon
 from core.settings import SettingsDialog, Config
 
 if typing.TYPE_CHECKING:
@@ -290,9 +294,17 @@ class AttachedFilesMixin:
         Populates attached_files list with attached files.
         """
 
-        # TODO: load mime icon for each file
-        icon = load_icon("mail-attachment", 64)
         for file in attached_files:
+            tmp = tempfile.NamedTemporaryFile("wb")
+            try:
+                data = attached_files[file].encode()
+                content = base64.b64decode(data)
+                tmp.write(content)
+                tmp.flush()
+            except Exception:
+                logging.error(traceback.format_exc())
+
+            icon = get_mime_icon(tmp.name)
             add_list_item(self.attached_files, icon.pixbuf, file)
 
 
