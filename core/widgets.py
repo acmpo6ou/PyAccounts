@@ -27,7 +27,7 @@ from core.about import AboutDialog
 from core.database_utils import Database
 from core.generate_password import GenPassDialog
 from core.gtk_utils import GladeTemplate, load_icon, add_list_item
-from core.settings import SettingsDialog
+from core.settings import SettingsDialog, Config
 
 if typing.TYPE_CHECKING:
     from core.main_window import MainWindow
@@ -179,13 +179,13 @@ class Window(Gtk.Window, GladeTemplate):
     """
 
     form_box: Gtk.Box
+    separator: Gtk.Paned
+    config: Config
 
     def __init__(self):
         Gtk.Window.__init__(self)
         self.set_default_size(1280, 720)
         self.set_icon_from_file("img/icon.svg")
-
-        self.load_separator()
         self.statusbar = StatusBar(self.status_bar)
 
         self.shortcuts = Gtk.AccelGroup()
@@ -210,26 +210,21 @@ class Window(Gtk.Window, GladeTemplate):
         form.show()
 
     def load_separator(self):
-        """
-        Loads separator position from settings.json
-        """
+        """ Loads separator position from settings.json """
+        self.separator.position = self.config.separator_position
 
     def on_separator_moved(self, separator: Gtk.Paned, _):
-        """
-        Saves separator position to settings.json
-        """
+        """ Saves separator position to settings.json """
+        self.config.separator_position = separator.position
+        self.config.save()
 
     def on_preferences(self, _):
-        """
-        Displays preferences dialog.
-        """
+        """ Displays preferences dialog. """
         SettingsDialog(self.main_window).run()
 
     @staticmethod
     def on_about(*_):
-        """
-        Displays about dialog.
-        """
+        """ Displays about dialog. """
         AboutDialog().run()
 
 

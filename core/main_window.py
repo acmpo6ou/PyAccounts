@@ -82,6 +82,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
         self.config = Config()
         self.load_css()
+        self.load_separator()
 
         self.get_databases()
         self.load_databases()
