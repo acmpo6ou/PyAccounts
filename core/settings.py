@@ -15,6 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import json
 import logging
+import re
 import traceback
 from dataclasses import dataclass
 from pathlib import Path
@@ -49,17 +50,29 @@ class SettingsDialog(GladeTemplate):
     def on_cancel(self, _):
         self.destroy()
 
+    @staticmethod
+    def css_font(font_button: Gtk.FontButton):
+        font_name = re.sub(r" \d+$", "", font_button.font_name)
+        font_size = re.findall(r"\d+$", font_button.font_name)[0]
+        return f'{font_size}px "{font_name}"'
+
+    @staticmethod
+    def gtk_font(font: str):
+        size = re.search(r"(\d+)px", font)[1]
+        font_name = re.sub(r'\d+px "', "", font)[:-1]
+        return f"{font_name} {size}"
+
     def load_settings(self):
         config = self.main_window.config
-        self.general_font.font_name = config.general_font
-        self.mono_font.font_name = config.monospace_font
+        self.general_font.font_name = self.gtk_font(config.general_font)
+        self.mono_font.font_name = self.gtk_font(config.monospace_font)
         self.main_db.active = config.main_db
 
     def on_save(self, _=None):
         """ Saves fonts to settings.json and applies changes. """
         config = self.main_window.config
-        config.general_font = self.general_font.font_name
-        config.monospace_font = self.mono_font.font_name
+        config.general_font = self.css_font(self.general_font)
+        config.monospace_font = self.css_font(self.mono_font)
         config.main_db = self.main_db.active
 
         config.save()
@@ -75,8 +88,8 @@ class Config:
 
     separator_position = 1000
     main_db = False
-    general_font = "Ubuntu 30"
-    monospace_font = "Ubuntu Mono 35"
+    general_font = '30px "Ubuntu"'
+    monospace_font = '35px "Ubuntu Mono"'
 
     def __post_init__(self):
         self.load()

@@ -30,8 +30,8 @@ def test_load_settings_empty_config(dialog):
     config = Config()
     assert config.separator_position == 1000
     assert not config.main_db
-    assert config.general_font == "Ubuntu 30"
-    assert config.monospace_font == "Ubuntu Mono 35"
+    assert config.general_font == '30px "Ubuntu"'
+    assert config.monospace_font == '35px "Ubuntu Mono"'
 
 
 def test_load_settings(dialog, src_dir):
@@ -40,8 +40,8 @@ def test_load_settings(dialog, src_dir):
 
     assert config.separator_position == 2000
     assert config.main_db
-    assert config.general_font == "Ubuntu 32"
-    assert config.monospace_font == "Ubuntu Mono 64"
+    assert config.general_font == '32px "Ubuntu"'
+    assert config.monospace_font == '32px "Ubuntu Mono"'
 
 
 def test_save_settings(dialog, src_dir):
@@ -51,8 +51,8 @@ def test_save_settings(dialog, src_dir):
 
     config.separator_position = 2000
     config.main_db = True
-    config.general_font = "Ubuntu 32"
-    config.monospace_font = "Ubuntu Mono 64"
+    config.general_font = '32px "Ubuntu"'
+    config.monospace_font = '32px "Ubuntu Mono"'
 
     config.save()
     expected_settings = open("tests/data/settings.json").read()
@@ -61,8 +61,8 @@ def test_save_settings(dialog, src_dir):
 
 
 def test_load_preferences(dialog, main_window):
-    main_window.config.general_font = "Arial 32"
-    main_window.config.monospace_font = "Inconsolata Medium 24"
+    main_window.config.general_font = '32px "Arial"'
+    main_window.config.monospace_font = '24px "Inconsolata Medium"'
     main_window.config.main_db = True
 
     dialog.load_settings()
@@ -77,6 +77,6 @@ def test_save(dialog, main_window):
     dialog.main_db.active = True
     dialog.on_save()
 
-    assert main_window.config.general_font == "Arial 32"
-    assert main_window.config.monospace_font == "Inconsolata Medium 24"
+    assert main_window.config.general_font == '32px "Arial"'
+    assert main_window.config.monospace_font == '24px "Inconsolata Medium"'
     assert main_window.config.main_db
