@@ -212,3 +212,14 @@ def test_save_database_error(mock, dialog: "Mock[ErrorDialog]", db_window, faker
     db_window.on_save()
     dialog.assert_called_with(ERROR_DB_SAVE, err)
     assert not db_window.statusbar.label.text
+
+
+def test_check_db_saved(db_window):
+    assert db_window.title == "main"
+
+    del db_window.database.accounts["gmail"]
+    db_window.check_db_saved()
+    assert db_window.title == "*main"
+
+    db_window.on_save()
+    assert db_window.title == "main"

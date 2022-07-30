@@ -93,6 +93,11 @@ class DatabaseWindow(Window):
         self.load_accounts()
         self.title = database.name
 
+    def check_db_saved(self):
+        """ Adds * to database window title if the database isn't saved. """
+        prefix = '' if self.database.saved else '*'
+        self.title = f"{prefix}{self.database.name}"
+
     def load_accounts(self):
         """
         Populates accounts_list with items.
@@ -127,6 +132,7 @@ class DatabaseWindow(Window):
             self.database.dba_file.unlink(missing_ok=True)
             self.database.create()
             self.statusbar.success(SUCCESS_DB_SAVED)
+            self.check_db_saved()
         except Exception as err:
             logging.error(traceback.format_exc())
             ErrorDialog(ERROR_DB_SAVE, err).run()
@@ -173,8 +179,8 @@ class DatabaseWindow(Window):
         if self.main_window.form_box.children:
             form = self.main_window.form_box.children[0]
             if all((
-                "EditDatabase" in str(form.__class__),
-                form.database.name == self.database.name,
+                    "EditDatabase" in str(form.__class__),
+                    form.database.name == self.database.name,
             )):
                 form.destroy()
 
@@ -220,3 +226,4 @@ class DatabaseWindow(Window):
         if response == Gtk.ResponseType.YES:
             del self.database.accounts[account_name]
             delete_list_item(self.accounts_list, account_name)
+            self.check_db_saved()

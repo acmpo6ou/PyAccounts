@@ -246,4 +246,6 @@ class CreateAccount(CreateForm):
 
         icon = self.database_window.load_account_icon(account.accountname)
         add_list_item(self.database_window.accounts_list, icon.pixbuf, account.accountname)
+
         self.destroy()
+        self.database_window.check_db_saved()
