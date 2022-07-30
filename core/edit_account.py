@@ -102,6 +102,7 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
         Saves changes done to account.
         """
 
+        del self.database.accounts[self.account.accountname]
         delete_list_item(
             self.database_window.accounts_list,
             self.account.accountname,

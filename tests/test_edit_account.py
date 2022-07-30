@@ -58,6 +58,9 @@ def test_edit_account(form, account):
     form.name.text = "my account"
     form.on_apply()
 
+    assert account.accountname not in form.database.accounts
+    assert "my account" in form.database.accounts
+
     accounts = [item_name(row) for row in form.database_window.accounts_list.children]
     assert account.accountname not in accounts
     assert "my account" in accounts
