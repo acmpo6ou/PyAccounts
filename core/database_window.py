@@ -226,4 +226,6 @@ class DatabaseWindow(Window):
         if response == Gtk.ResponseType.YES:
             del self.database.accounts[account_name]
             delete_list_item(self.accounts_list, account_name)
+
             self.check_db_saved()
+            self.form_box.children[0].destroy()

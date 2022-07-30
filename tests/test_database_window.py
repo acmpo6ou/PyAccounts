@@ -115,7 +115,7 @@ def test_confirm_account_deletion_dialog_message(db_window):
 
 def test_confirm_account_deletion_Yes(db_window):
     row = db_window.accounts_list.children[1]
-    db_window.accounts_list.select_row(row)
+    row.activate()
 
     with patch.object(core.database_window, "WarningDialog", autospec=True) as mock:
         mock.return_value.run.return_value = Gtk.ResponseType.YES
