@@ -3,7 +3,7 @@ Maintainer: Bohdan Kolvakh <acmpo6ou@gmail.com>
 Section: utils
 Priority: optional
 Standards-Version: 4.6.0
-Build-depends: debhelper (>= 12)
+Build-depends: debhelper (>= 12), libcairo2, libgirepository-1.0-1, libcairo-gobject2
 Vcs-Git: https://github.com/acmpo6ou/PyAccounts
 Homepage: https://github.com/acmpo6ou/PyAccounts
 
