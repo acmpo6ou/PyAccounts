@@ -26,7 +26,6 @@ import traceback
 from enum import IntEnum
 from typing import Callable
 
-import pytest
 from gi.repository import GObject, Gtk, Gio, GdkPixbuf, GLib
 
 
@@ -152,7 +151,7 @@ def abc_list_sort(row1: Gtk.ListBoxRow, row2: Gtk.ListBoxRow) -> ListOrder:
 
 
 def notes_text(notes: Gtk.TextView) -> str:
-    """ A helper function to extract text from given TextView. """
+    """A helper function to extract text from given TextView."""
     buffer = notes.buffer
     start, end = buffer.bounds
     return buffer.get_text(start, end, False)
