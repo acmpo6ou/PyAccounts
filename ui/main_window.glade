@@ -271,14 +271,27 @@ Author: Bohdan Kolvakh
           </packing>
         </child>
         <child>
-          <object class="GtkListBox" id="db_list">
+          <object class="GtkScrolledWindow">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <signal name="row-activated" handler="on_database_selected" swapped="no"/>
+            <property name="can-focus">True</property>
+            <property name="shadow-type">in</property>
+            <child>
+              <object class="GtkViewport">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkListBox" id="db_list">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <signal name="row-activated" handler="on_database_selected" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
           <packing>
-            <property name="resize">False</property>
-            <property name="shrink">False</property>
+            <property name="resize">True</property>
+            <property name="shrink">True</property>
           </packing>
         </child>
       </object>
