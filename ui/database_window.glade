@@ -241,6 +241,7 @@ Author: Bohdan Kolvakh
       <object class="GtkPaned" id="separator">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
+        <signal name="button-release-event" handler="on_separator_moved" swapped="no"/>
         <child>
           <object class="GtkScrolledWindow">
             <property name="visible">True</property>
