@@ -1,3 +1,15 @@
+pyaccounts (1.0.0-3) focal; urgency=medium
+
+  * Initial release.
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Sun, 31 Jul 2022 16:59:27 +0200
+
+pyaccounts (1.0.0-2) focal; urgency=medium
+
+  * Initial release.
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Sun, 31 Jul 2022 15:11:27 +0200
+
 pyaccounts (1.0.0-1) focal; urgency=medium
 
   * Initial release.
