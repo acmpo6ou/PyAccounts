@@ -9,7 +9,7 @@ Homepage: https://github.com/acmpo6ou/PyAccounts
 
 Package: pyaccounts
 Architecture: any
-Depends: python3 (>= 3.9), ${shlibs:Depends}
+Depends: python3.9 (>= 3.9), ${shlibs:Depends}
 Homepage: https://github.com/acmpo6ou/PyAccounts
 Description: Simple accounts database manager.
  You can easily manage your accounts and store them safely in encrypted databases.
