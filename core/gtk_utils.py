@@ -219,6 +219,7 @@ def get_mime_icon(path: str) -> Gtk.Image:
     file = Gio.File.new_for_path(path)
     info = file.query_info("standard::*", Gio.FileQueryInfoFlags.NONE, None)
 
+    icon = None
     for icon_name in info.icon.names:
         try:
             icon = load_icon(icon_name, 64)
@@ -227,6 +228,10 @@ def get_mime_icon(path: str) -> Gtk.Image:
             # if this icon wasn't found in the theme,
             # try another one in the next iteration of the loop
             logging.error(traceback.format_exc())
+
+    # if icon wasn't found, use default text document icon
+    if not icon:
+        icon = load_icon("text-plain", 64)
     return icon
 
 
