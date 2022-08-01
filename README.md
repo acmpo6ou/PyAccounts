@@ -8,3 +8,10 @@
 You can easily manage your accounts and store them safely in encrypted databases.
 The interface of PyAccounts is common and easy to use.
 PyAccounts is completely free and open source project.
+
+## Installation
+```commandline
+sudo add-apt-repository ppa:acmpo6ou/pyaccounts
+sudo apt update
+sudo apt install pyaccounts
+```
