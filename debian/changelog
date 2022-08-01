@@ -1,3 +1,9 @@
+pyaccounts (1.0.2-1) focal; urgency=medium
+
+  * bug fixes
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Sun, 31 Jul 2022 20:03:35 +0200
+
 pyaccounts (1.0.0-3) focal; urgency=medium
 
   * Initial release.
