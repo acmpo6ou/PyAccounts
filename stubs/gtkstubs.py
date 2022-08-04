@@ -36,7 +36,7 @@ for module in ("Gtk", "Gdk", "Gio"):
         out.write(line)
 
         if line.startswith("    def get_"):
-            prop = re.search("get_([a-z_]*)", line)[1]
+            prop = re.search("get_([a-z0-9_]*)", line)[1]
             type_hint = "Any"
 
             if "->" in line:
