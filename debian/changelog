@@ -1,3 +1,9 @@
+pyaccounts (1.0.5) focal; urgency=medium
+
+  * fixed a copy email/username bug when creating account
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Fri, 05 Aug 2022 15:06:53 +0200
+
 pyaccounts (1.0.4-1) focal; urgency=medium
 
   * default window size is now 1600×900
