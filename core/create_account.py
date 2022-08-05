@@ -232,7 +232,7 @@ class CreateAccount(CreateForm):
             password=self.password.text,
             birthdate=self.birth_date.text,
             notes=notes_text(self.notes),
-            copy_email=False,
+            copy_email=self.copy_email.active,
             attached_files=self.get_attached_files(),
         )
 
