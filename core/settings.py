@@ -52,20 +52,20 @@ class SettingsDialog(GladeTemplate):
 
     @staticmethod
     def css_font(font_button: Gtk.FontButton):
-        font_name = re.sub(r" \d+$", "", font_button.font_name)
-        font_size = re.findall(r"\d+$", font_button.font_name)[0]
-        return f'{font_size}px "{font_name}"'
+        font = re.sub(r" \d+$", "", font_button.font)
+        font_size = re.findall(r"\d+$", font_button.font)[0]
+        return f'{font_size}px "{font}"'
 
     @staticmethod
     def gtk_font(font: str):
         size = re.search(r"(\d+)px", font)[1]
-        font_name = re.sub(r'\d+px "', "", font)[:-1]
-        return f"{font_name} {size}"
+        font = re.sub(r'\d+px "', "", font)[:-1]
+        return f"{font} {size}"
 
     def load_settings(self):
         config = self.main_window.config
-        self.general_font.font_name = self.gtk_font(config.general_font)
-        self.mono_font.font_name = self.gtk_font(config.monospace_font)
+        self.general_font.font = self.gtk_font(config.general_font)
+        self.mono_font.font = self.gtk_font(config.monospace_font)
         self.main_db.active = config.main_db
 
     def on_save(self, _=None):
