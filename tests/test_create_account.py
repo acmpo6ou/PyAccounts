@@ -192,7 +192,7 @@ def test_get_attached_files_error(dialog: Mock, src_dir, form):
     dialog.assert_called_with(ERROR_READING_FILE.format("main.dba"), ANY)
 
 
-def test_create_account(form, account):
+def test_create_account(form: CreateAccount, account):
     form.database_window.database.accounts = {}
     form.database_window.accounts_list.children[1].destroy()
     form.database_window.accounts_list.children[0].destroy()
@@ -206,7 +206,7 @@ def test_create_account(form, account):
     form.username.text = account.username
     form.password.text = account.password
     form.repeat_password.text = account.password
-    form.copy_email.active = account.copy_email
+    form.copy_username.active = True
     form.notes.buffer.text = account.notes
     form.attach_file("tests/data/file1.txt")
     form.attach_file("tests/data/file2.txt")
