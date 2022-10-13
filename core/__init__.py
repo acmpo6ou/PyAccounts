@@ -23,4 +23,4 @@ from pathlib import Path
 SRC_DIR = Path.home() / ".PyAccounts"
 
 # current app version
-APP_VERSION = "1.0.6"
+APP_VERSION = "1.0.7"
