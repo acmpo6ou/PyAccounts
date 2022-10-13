@@ -1,3 +1,9 @@
+pyaccounts (1.0.7-1) focal; urgency=medium
+
+  * improved icons
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Thu, 13 Oct 2022 19:49:28 +0200
+
 pyaccounts (1.0.6-1) focal; urgency=medium
 
   * improve Vodafone icon
