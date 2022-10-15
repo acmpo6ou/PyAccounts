@@ -82,6 +82,11 @@ class DatabaseWindow(Window):
         self.config = main_window.config
         self.load_separator()
 
+        self.ctrl_held = False
+        self.add_events(Gdk.EventMask.KEY_PRESS_MASK & Gdk.EventMask.KEY_RELEASE_MASK)
+        self.connect("key_press_event", self.keypress)
+        self.connect("key_release_event", self.keyrelease)
+
         # Ctrl+S to save database
         self.shortcuts.connect(
             Gdk.keyval_from_name("s"),
@@ -92,6 +97,20 @@ class DatabaseWindow(Window):
 
         self.load_accounts()
         self.title = database.name
+
+    def keypress(self, _, event: Gdk.EventKey):
+        """ Allow selecting multiple accounts when Ctrl is held. """
+        if event.keyval == 65507:  # TODO: replace with const for Ctrl
+            self.accounts_list.selection_mode = Gtk.SelectionMode.MULTIPLE
+            self.ctrl_held = True
+
+    def keyrelease(self, _, event: Gdk.EventKey):
+        """
+        When Ctrl is released, don't set accounts_list's selection mode
+        back to SINGLE just yet. This is because Gtk will deselect all the rows.
+        """
+        if event.keyval == 65507:  # TODO: replace with const for Ctrl
+            self.ctrl_held = False
 
     def check_db_saved(self):
         """ Adds * to database window title if the database isn't saved. """
@@ -179,14 +198,22 @@ class DatabaseWindow(Window):
         if self.main_window.form_box.children:
             form = self.main_window.form_box.children[0]
             if all((
-                    "EditDatabase" in str(form.__class__),
-                    form.database.name == self.database.name,
+                "EditDatabase" in str(form.__class__),
+                form.database.name == self.database.name,
             )):
                 form.destroy()
 
         return False
 
     def on_account_selected(self, _, row: Gtk.ListBoxRow):
+        # when an account is selected and Ctrl is not held,
+        # set accounts_list's selection mode to SINGLE
+        if not self.ctrl_held:
+            self.accounts_list.selection_mode = Gtk.SelectionMode.SINGLE
+            # after changing selection mode, all rows are deselected
+            # so here we select the row again
+            self.accounts_list.select_row(row)
+
         account = self.database.accounts[item_name(row)]
         self.show_form(DisplayAccount(account, self))
 
