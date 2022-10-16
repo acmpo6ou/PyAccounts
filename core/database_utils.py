@@ -229,3 +229,11 @@ class Database:
         db = Database(name, password, accounts)
         db.create()
         return db
+
+
+@dataclass
+class AccountClipboard:
+    # TODO: document this
+    database: Database
+    account_names: tuple[str]
+    is_cut: bool = False
