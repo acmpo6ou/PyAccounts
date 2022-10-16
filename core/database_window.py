@@ -32,7 +32,7 @@ from core.gtk_utils import (
     item_name,
     delete_list_item,
 )
-from core.widgets import Window, WarningDialog, ErrorDialog, IconDialog
+from core.widgets import Window, WarningDialog, ErrorDialog
 
 if TYPE_CHECKING:
     from core.main_window import MainWindow
@@ -111,6 +111,32 @@ class DatabaseWindow(Window):
         """
         if event.keyval == 65507:  # TODO: replace with const for Ctrl
             self.ctrl_held = False
+
+    def on_account_right_click(self, _, event: Gdk.EventButton):
+        if event.button == Gdk.BUTTON_SECONDARY and event.type == Gdk.EventType.BUTTON_PRESS:
+            menu = Gtk.Menu()
+
+            funcs = (self.cut_account, self.copy_account, self.paste_account)
+            names = ("Cut", "Copy", "Paste")
+            for name, func in zip(names, funcs):
+                icon = load_icon(f"gtk-{name.lower()}", 25)
+                menu_item = Gtk.ImageMenuItem.new_with_label(name)
+                menu_item.image = icon
+                menu_item.connect("activate", func)
+                menu.add(menu_item)
+
+            menu.attach_to_widget(self.accounts_list, None)
+            menu.show_all()
+            menu.popup(None, None, None, None, event.button, event.time)
+
+    def cut_account(self, _):
+        print("cut")
+
+    def copy_account(self, _):
+        print("copy")
+
+    def paste_account(self, _):
+        print("paste")
 
     def check_db_saved(self):
         """ Adds * to database window title if the database isn't saved. """
