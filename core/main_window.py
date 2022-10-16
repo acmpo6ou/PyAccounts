@@ -13,6 +13,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 import glob
 import logging
 import os
@@ -25,7 +27,7 @@ from gi.repository import Gtk, Gdk, GdkPixbuf
 
 import core
 from core.create_database import CreateDatabase
-from core.database_utils import Database
+from core.database_utils import Database, AccountClipboard
 from core.database_window import DatabaseWindow
 from core.edit_database import EditDatabase
 from core.gtk_utils import GladeTemplate, abc_list_sort, delete_list_item, add_list_item, item_name
@@ -74,8 +76,9 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         GladeTemplate.__init__(self, "main_window")
         Window.__init__(self)
 
-        # we will copy password or notes here, because it's safer than using a regular clipboard
+        # we will copy password or notes here because it's safer than using a regular clipboard
         self.safe_clipboard = ""
+        self.account_clipboard: AccountClipboard | None = None
 
         self.main_window = self
         self.windows: dict[str, DatabaseWindow] = {}

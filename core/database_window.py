@@ -129,13 +129,37 @@ class DatabaseWindow(Window):
             menu.show_all()
             menu.popup(None, None, None, None, event.button, event.time)
 
-    def cut_account(self, _):
+    @property
+    def selected_accounts(self):
+        # TODO: return selected accounts' names
+        ...
+
+    def cut_accounts(self, _):
+        # TODO: set main_window.accounts_clipboard with appropriate data (is_cut True)
+        #  show Statusbar message
         print("cut")
 
-    def copy_account(self, _):
+    def copy_accounts(self, _):
+        # TODO: set main_window.accounts_clipboard with appropriate data
+        #  show Statusbar message
         print("copy")
 
-    def paste_account(self, _):
+    def paste_accounts(self, _):
+        # TODO: if account clipboard db is equal to current db
+        #  set account clipboard to None
+        # TODO: if account clipboard is None, return
+        # TODO: for each copied account name:
+        #  check if it's in current db:
+        #    if yes -> show a confirmation dialog with Yes, No
+        #       Yes:
+        #          delete the account in current db (and from list also)
+        #          proceed to else
+        #    else:
+        #       create account in current db (use func to do everything:
+        #       create account and update account_list)
+        #       delete account in clipboard db (also updating the list)
+        #       HOW?!
+        #  clear account clipboard
         print("paste")
 
     def check_db_saved(self):
