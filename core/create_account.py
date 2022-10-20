@@ -24,7 +24,13 @@ from pathlib import Path
 from gi.repository import Gdk, Gtk
 
 from core.database_utils import Account, Database
-from core.gtk_utils import get_mime_icon, add_list_item, abc_list_sort, item_name, notes_text
+from core.gtk_utils import (
+    get_mime_icon,
+    add_list_item,
+    abc_list_sort,
+    item_name,
+    notes_text,
+)
 from core.widgets import CreateForm, DateChooserDialog, WarningDialog, ErrorDialog
 
 if typing.TYPE_CHECKING:
@@ -220,7 +226,7 @@ class CreateAccount(CreateForm):
                 ErrorDialog(ERROR_READING_FILE.format(filename), err).run()
         return attached_files
 
-    def create_account(self) -> Account:
+    def build_account(self) -> Account:
         """
         Creates account using form data.
         """
@@ -236,16 +242,19 @@ class CreateAccount(CreateForm):
             attached_files=self.get_attached_files(),
         )
 
+    @staticmethod
+    def create_account(
+        account: Account,
+        database: Database,
+        database_window: DatabaseWindow,
+    ):
+        """ Creates account and adds it to accounts list. """
+        database.accounts[account.accountname] = account
+        icon = database_window.load_account_icon(account.accountname)
+        add_list_item(database_window.accounts_list, icon.pixbuf, account.accountname)
+        database_window.check_db_saved()
+
     def on_apply(self, _=None):
-        """
-        Creates account and adds it to accounts list.
-        """
-
-        account = self.create_account()
-        self.database.accounts[account.accountname] = account
-
-        icon = self.database_window.load_account_icon(account.accountname)
-        add_list_item(self.database_window.accounts_list, icon.pixbuf, account.accountname)
-
+        account = self.build_account()
+        self.create_account(account, self.database, self.database_window)
         self.destroy()
-        self.database_window.check_db_saved()

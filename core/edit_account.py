@@ -85,12 +85,12 @@ class EditAccount(CreateAccount, AttachedFilesMixin):
         self.notes.buffer.text = self.account.notes
         self.load_attached_files(self.account.attached_files)
 
-    def create_account(self) -> Account:
+    def build_account(self) -> Account:
         """
         Creates account using form data.
         """
 
-        account = super().create_account()
+        account = super().build_account()
         for filename, path in self.attached_paths.items():
             if path is None:
                 content = self.account.attached_files[filename]

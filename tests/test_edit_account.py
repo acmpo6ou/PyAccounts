@@ -47,7 +47,7 @@ def test_load_account(form, account):
 
 def test_load_already_attached_files(form, account):
     form.attach_file("tests/data/file1.txt")
-    result = form.create_account()
+    result = form.build_account()
 
     assert result.attached_files["file1.txt"] == 'RmlsZSAxIGNvbnRlbnQuCg=='
     assert result.attached_files["file1"] == "ZmlsZTEgY29udGVudAo="
