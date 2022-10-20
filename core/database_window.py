@@ -155,10 +155,9 @@ class DatabaseWindow(Window):
         #          delete the account in current db (and from list also)
         #          proceed to else
         #    else:
-        #       create account in current db (use func to do everything:
-        #       create account and update account_list)
+        #       create account in current db (use CreateAccount.create_account)
         #       delete account in clipboard db (also updating the list)
-        #       HOW?!
+        #           call delete_account() on the db window
         #  clear account clipboard
         print("paste")
 
@@ -301,8 +300,11 @@ class DatabaseWindow(Window):
         response = WarningDialog(message).run()
 
         if response == Gtk.ResponseType.YES:
-            del self.database.accounts[account_name]
-            delete_list_item(self.accounts_list, account_name)
-
+            self.delete_account(account_name)
             self.check_db_saved()
             self.form_box.children[0].destroy()
+
+    def delete_account(self, account_name):
+        """ Deletes account from the database and accounts_list. """
+        del self.database.accounts[account_name]
+        delete_list_item(self.accounts_list, account_name)
