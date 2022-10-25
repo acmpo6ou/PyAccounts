@@ -34,10 +34,10 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 import core
-from core.database_window import DatabaseWindow
 
 if TYPE_CHECKING:
     from typing import TypeAlias
+    from core.database_window import DatabaseWindow
 
 
 @dataclass
@@ -235,6 +235,6 @@ class Database:
 @dataclass
 class AccountClipboard:
     # TODO: document this
-    db_window: DatabaseWindow
-    account_names: tuple[str]
+    db_window: "DatabaseWindow"
+    account_names: list[str]
     is_cut: bool = False

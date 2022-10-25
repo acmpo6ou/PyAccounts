@@ -20,7 +20,7 @@ from gi.repository import GdkPixbuf, Gtk
 import core
 from core.create_account import CreateAccount
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
-    SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE
+    SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE, SUCCESS_CUTTING_ACCOUNTS
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.edit_database import EditDatabase
@@ -223,3 +223,17 @@ def test_check_db_saved(db_window):
 
     db_window.on_save()
     assert db_window.title == "main"
+
+
+def test_cut_accounts(db_window):
+    # select an account
+    row = db_window.accounts_list.children[1]
+    db_window.accounts_list.select_row(row)
+
+    db_window.cut_accounts()
+
+    clipboard = db_window.main_window.account_clipboard
+    assert clipboard.db_window == db_window
+    assert clipboard.account_names == ["mega"]
+    assert clipboard.is_cut
+    assert db_window.statusbar.label.text == f"✔ {SUCCESS_CUTTING_ACCOUNTS}"

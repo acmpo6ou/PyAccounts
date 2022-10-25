@@ -21,7 +21,7 @@ from typing import TYPE_CHECKING
 from gi.repository import Gdk, Gtk, GdkPixbuf
 
 from core.create_account import CreateAccount
-from core.database_utils import Database
+from core.database_utils import Database, AccountClipboard
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.gtk_utils import (
@@ -47,6 +47,9 @@ CONFIRM_QUIT = (
 )
 SUCCESS_DB_SAVED = "Database saved successfully!"
 ERROR_DB_SAVE = "Error saving the database!"
+
+SUCCESS_CUTTING_ACCOUNTS = "Cut account(s)."
+SUCCESS_COPYING_ACCOUNTS = "Copied account(s)."
 
 
 class DatabaseWindow(Window):
@@ -131,20 +134,20 @@ class DatabaseWindow(Window):
 
     @property
     def selected_accounts(self):
-        # TODO: return selected accounts' names
-        ...
+        return [item_name(row) for row in self.accounts_list.selected_rows]
 
-    def cut_accounts(self, _):
-        # TODO: set main_window.accounts_clipboard with appropriate data (is_cut True)
-        #  show Statusbar message
-        print("cut")
+    def cut_accounts(self, _=None):
+        self.main_window.account_clipboard = AccountClipboard(
+            db_window=self, account_names=self.selected_accounts, is_cut=True
+        )
+        self.statusbar.success(SUCCESS_CUTTING_ACCOUNTS)
 
-    def copy_accounts(self, _):
+    def copy_accounts(self, _=None):
         # TODO: set main_window.accounts_clipboard with appropriate data
         #  show Statusbar message
         print("copy")
 
-    def paste_accounts(self, _):
+    def paste_accounts(self, _=None):
         # TODO: if account clipboard db is equal to current db
         #  set account clipboard to None
         # TODO: if account clipboard is None, return
