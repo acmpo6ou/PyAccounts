@@ -49,7 +49,9 @@ SUCCESS_DB_SAVED = "Database saved successfully!"
 ERROR_DB_SAVE = "Error saving the database!"
 
 SUCCESS_CUTTING_ACCOUNTS = "Cut account(s)."
+SELECT_ACCOUNTS_TO_CUT = "Select accounts to cut."
 SUCCESS_COPYING_ACCOUNTS = "Copied account(s)."
+SELECT_ACCOUNTS_TO_COPY = "Select accounts to copy."
 
 
 class DatabaseWindow(Window):
@@ -137,14 +139,20 @@ class DatabaseWindow(Window):
         return [item_name(row) for row in self.accounts_list.selected_rows]
 
     def cut_accounts(self, _=None):
+        if not self.selected_accounts:
+            self.statusbar.warning(SELECT_ACCOUNTS_TO_CUT)
+            return
+
         self.main_window.account_clipboard = AccountClipboard(
             db_window=self, account_names=self.selected_accounts, is_cut=True
         )
         self.statusbar.success(SUCCESS_CUTTING_ACCOUNTS)
 
     def copy_accounts(self, _=None):
-        # TODO: set main_window.accounts_clipboard with appropriate data
-        #  show Statusbar message
+        if not self.selected_accounts:
+            self.statusbar.warning(SELECT_ACCOUNTS_TO_COPY)
+            return
+
         self.main_window.account_clipboard = AccountClipboard(
             db_window=self, account_names=self.selected_accounts
         )

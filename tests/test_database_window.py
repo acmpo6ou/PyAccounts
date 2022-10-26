@@ -21,7 +21,8 @@ import core
 from core.create_account import CreateAccount
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
     SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE, \
-    SUCCESS_CUTTING_ACCOUNTS, SUCCESS_COPYING_ACCOUNTS
+    SUCCESS_CUTTING_ACCOUNTS, SUCCESS_COPYING_ACCOUNTS, SELECT_ACCOUNTS_TO_CUT, \
+    SELECT_ACCOUNTS_TO_COPY
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.edit_database import EditDatabase
@@ -240,6 +241,11 @@ def test_cut_accounts(db_window):
     assert db_window.statusbar.label.text == f"✔ {SUCCESS_CUTTING_ACCOUNTS}"
 
 
+def test_cut_no_accounts_selected(db_window):
+    db_window.cut_accounts()
+    assert db_window.statusbar.label.text == f"✘ {SELECT_ACCOUNTS_TO_CUT}"
+
+
 def test_copy_accounts(db_window):
     # select an account
     row = db_window.accounts_list.children[1]
@@ -252,3 +258,8 @@ def test_copy_accounts(db_window):
     assert clipboard.account_names == ["mega"]
     assert not clipboard.is_cut
     assert db_window.statusbar.label.text == f"✔ {SUCCESS_COPYING_ACCOUNTS}"
+
+
+def test_copy_no_accounts_selected(db_window):
+    db_window.copy_accounts()
+    assert db_window.statusbar.label.text == f"✘ {SELECT_ACCOUNTS_TO_COPY}"
