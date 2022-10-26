@@ -119,7 +119,7 @@ class DatabaseWindow(Window):
         if event.button == Gdk.BUTTON_SECONDARY and event.type == Gdk.EventType.BUTTON_PRESS:
             menu = Gtk.Menu()
 
-            funcs = (self.cut_account, self.copy_account, self.paste_account)
+            funcs = (self.cut_accounts, self.copy_accounts, self.paste_accounts)
             names = ("Cut", "Copy", "Paste")
             for name, func in zip(names, funcs):
                 icon = load_icon(f"gtk-{name.lower()}", 25)
@@ -145,7 +145,10 @@ class DatabaseWindow(Window):
     def copy_accounts(self, _=None):
         # TODO: set main_window.accounts_clipboard with appropriate data
         #  show Statusbar message
-        print("copy")
+        self.main_window.account_clipboard = AccountClipboard(
+            db_window=self, account_names=self.selected_accounts
+        )
+        self.statusbar.success(SUCCESS_COPYING_ACCOUNTS)
 
     def paste_accounts(self, _=None):
         # TODO: if account clipboard db is equal to current db
