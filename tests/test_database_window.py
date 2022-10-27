@@ -19,6 +19,7 @@ from gi.repository import GdkPixbuf, Gtk
 
 import core
 from core.create_account import CreateAccount
+from core.database_utils import Database
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
     SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE, \
     SUCCESS_CUTTING_ACCOUNTS, SUCCESS_COPYING_ACCOUNTS, SELECT_ACCOUNTS_TO_CUT, \
@@ -263,3 +264,28 @@ def test_copy_accounts(db_window):
 def test_copy_no_accounts_selected(db_window):
     db_window.copy_accounts()
     assert db_window.statusbar.label.text == f"✘ {SELECT_ACCOUNTS_TO_COPY}"
+
+
+def test_cut_and_paste_accounts(db_window):
+    db = Database("test", "123")
+    db_window2 = DatabaseWindow(db, db_window.main_window)
+
+    assert "mega" in db_window.database.accounts
+    assert not len(db_window2.database.accounts)
+
+    # select an account
+    row = db_window.accounts_list.children[1]
+    db_window.accounts_list.select_row(row)
+
+    db_window.cut_accounts()
+    db_window2.paste_accounts()
+
+    assert "mega" not in db_window.database.accounts
+    assert "mega" in db_window2.database.accounts
+
+    assert "mega" not in items_names(db_window.accounts_list)
+    assert "mega" in items_names(db_window2.accounts_list)
+
+    assert not db_window.main_window.account_clipboard
+    assert "*" in db_window.title
+    assert "*" in db_window2.title

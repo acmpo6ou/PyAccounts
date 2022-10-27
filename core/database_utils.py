@@ -232,7 +232,7 @@ class Database:
         return db
 
 
-@dataclass
+@dataclass(order=True)
 class AccountClipboard:
     # TODO: document this
     db_window: "DatabaseWindow"

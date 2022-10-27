@@ -243,18 +243,14 @@ class CreateAccount(CreateForm):
         )
 
     @staticmethod
-    def create_account(
-        account: Account,
-        database: Database,
-        database_window: DatabaseWindow,
-    ):
+    def create_account(account: Account, database_window: DatabaseWindow):
         """ Creates account and adds it to accounts list. """
-        database.accounts[account.accountname] = account
+        database_window.database.accounts[account.accountname] = account
         icon = database_window.load_account_icon(account.accountname)
         add_list_item(database_window.accounts_list, icon.pixbuf, account.accountname)
         database_window.check_db_saved()
 
     def on_apply(self, _=None):
         account = self.build_account()
-        self.create_account(account, self.database, self.database_window)
+        self.create_account(account, self.database_window)
         self.destroy()

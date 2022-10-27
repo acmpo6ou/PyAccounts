@@ -144,7 +144,7 @@ class DatabaseWindow(Window):
             return
 
         self.main_window.account_clipboard = AccountClipboard(
-            db_window=self, account_names=self.selected_accounts, is_cut=True
+            self, self.selected_accounts, True
         )
         self.statusbar.success(SUCCESS_CUTTING_ACCOUNTS)
 
@@ -153,14 +153,24 @@ class DatabaseWindow(Window):
             self.statusbar.warning(SELECT_ACCOUNTS_TO_COPY)
             return
 
-        self.main_window.account_clipboard = AccountClipboard(
-            db_window=self, account_names=self.selected_accounts
-        )
+        self.main_window.account_clipboard = \
+            AccountClipboard(self, self.selected_accounts)
         self.statusbar.success(SUCCESS_COPYING_ACCOUNTS)
 
     def paste_accounts(self, _=None):
-        # TODO: if account clipboard db is equal to current db
-        #  set account clipboard to None
+        clipboard = self.main_window.account_clipboard
+        if clipboard.db_window == self:
+            self.main_window.account_clipboard = None
+
+        for name in clipboard.account_names:
+            account = clipboard.db_window.database.accounts[name]
+            CreateAccount.create_account(account, self)
+            clipboard.db_window.delete_account(name)
+
+        self.check_db_saved()
+        clipboard.db_window.check_db_saved()
+        self.main_window.account_clipboard = None
+
         # TODO: if account clipboard is None, return
         # TODO: for each copied account name:
         #  check if it's in current db:
@@ -172,8 +182,6 @@ class DatabaseWindow(Window):
         #       create account in current db (use CreateAccount.create_account)
         #       delete account in clipboard db (also updating the list)
         #           call delete_account() on the db window
-        #  clear account clipboard
-        print("paste")
 
     def check_db_saved(self):
         """ Adds * to database window title if the database isn't saved. """
