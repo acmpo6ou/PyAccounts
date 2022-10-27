@@ -15,6 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 from unittest.mock import patch, Mock, PropertyMock, ANY
 
+import pytest
 from gi.repository import GdkPixbuf, Gtk
 
 import core
@@ -266,13 +267,17 @@ def test_copy_no_accounts_selected(db_window):
     assert db_window.statusbar.label.text == f"✘ {SELECT_ACCOUNTS_TO_COPY}"
 
 
-def test_cut_and_paste_accounts(db_window):
+@pytest.fixture
+def db_window2(db_window):
     db = Database("test", "123")
-    db_window2 = DatabaseWindow(db, db_window.main_window)
+    return DatabaseWindow(db, db_window.main_window)
 
-    assert "mega" in db_window.database.accounts
-    assert not len(db_window2.database.accounts)
 
+def test_paste_empty_clipboard(db_window):
+    ...
+
+
+def test_cut_and_paste_accounts(db_window, db_window2):
     # select an account
     row = db_window.accounts_list.children[1]
     db_window.accounts_list.select_row(row)
@@ -291,13 +296,7 @@ def test_cut_and_paste_accounts(db_window):
     assert "*" in db_window2.title
 
 
-def test_copy_and_paste_accounts(db_window):
-    db = Database("test", "123")
-    db_window2 = DatabaseWindow(db, db_window.main_window)
-
-    assert "mega" in db_window.database.accounts
-    assert not len(db_window2.database.accounts)
-
+def test_copy_and_paste_accounts(db_window, db_window2):
     # select an account
     row = db_window.accounts_list.children[1]
     db_window.accounts_list.select_row(row)
