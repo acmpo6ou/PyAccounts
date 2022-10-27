@@ -26,7 +26,7 @@ from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.edit_database import EditDatabase
-from core.gtk_utils import load_icon, item_name
+from core.gtk_utils import load_icon, item_name, items_names
 from core.widgets import ErrorDialog
 
 
@@ -63,7 +63,7 @@ def test_load_account_icon(db_window):
 
 def test_load_accounts(db_window):
     # load_accounts is called by DatabaseWindow constructor
-    account_names = [item_name(row) for row in db_window.accounts_list.children]
+    account_names = items_names(db_window.accounts_list)
     assert account_names == ["gmail", "mega"]
 
 
@@ -144,7 +144,7 @@ def test_confirm_account_deletion_No(db_window):
         # account shouldn't be removed from accounts lists
         assert "mega" in db_window.database.accounts
 
-        account_names = [item_name(row) for row in db_window.accounts_list.children]
+        account_names = items_names(db_window.accounts_list)
         assert "mega" in account_names
 
 

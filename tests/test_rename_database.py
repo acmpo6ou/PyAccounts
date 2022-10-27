@@ -17,7 +17,7 @@ from unittest.mock import patch, PropertyMock, Mock
 
 import pytest
 
-from core.gtk_utils import wait_until, item_name
+from core.gtk_utils import wait_until, items_names
 from core.rename_database import RenameDatabase, ERROR_RENAMING_DB
 from core.widgets import ErrorDialog
 
@@ -65,7 +65,7 @@ def test_rename_database_success(form, src_dir):
     assert (src_dir / "main2.dba").exists()
 
     # database should be renamed in the db_list
-    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    db_names = items_names(form.main_window.db_list)
     assert "main" not in db_names
     assert "main2" in db_names
 
@@ -84,7 +84,7 @@ def test_rename_database_error(mock, dialog: "Mock[ErrorDialog]", form, faker):
     dialog.assert_called_with(ERROR_RENAMING_DB, err)
 
     # db_list should be unchanged
-    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    db_names = items_names(form.main_window.db_list)
     assert "main" in db_names
     assert "main2" not in db_names
 

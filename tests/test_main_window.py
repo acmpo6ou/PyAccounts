@@ -23,7 +23,7 @@ import core
 from core.create_database import CreateDatabase
 from core.database_utils import Database
 from core.edit_database import EditDatabase
-from core.gtk_utils import item_name
+from core.gtk_utils import item_name, items_names
 from core.main_window import (
     MainWindow,
     SELECT_DB_TO_EDIT,
@@ -240,7 +240,7 @@ def test_delete_database_error(
     assert Database("main") in main_window.databases
 
     # and from db_list
-    db_list_names = [item_name(row) for row in main_window.db_list.children]
+    db_list_names = items_names(main_window.db_list)
     assert "main" in db_list_names
 
     # there shouldn't be any message shown in statusbar
@@ -325,7 +325,7 @@ def test_import_database_success(dialog: Mock, src_dir, main_window):
     assert Database("main") in main_window.databases
 
     # the database should appear in db_list
-    db_list_names = [item_name(row) for row in main_window.db_list.children]
+    db_list_names = items_names(main_window.db_list)
     assert "main" in db_list_names
 
     # a success message should be shown in statusbar

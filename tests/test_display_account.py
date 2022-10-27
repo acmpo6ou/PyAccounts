@@ -20,7 +20,7 @@ from gi.repository import Gtk, Gdk
 
 from core.display_account import DisplayAccount, NOTES_PLACEHOLDER, DOTS, SUCCESS_SAVING_FILE, \
     SUCCESS_PASSWORD_COPY, SUCCESS_NOTES_COPY
-from core.gtk_utils import notes_text, item_name
+from core.gtk_utils import notes_text, items_names
 
 
 @pytest.fixture
@@ -37,7 +37,7 @@ def test_load_data(form: DisplayAccount, account):
     assert account.birthdate in form.birth_date.text
     assert notes_text(form.notes) == NOTES_PLACEHOLDER
 
-    files = [item_name(row) for row in form.attached_files.children]
+    files = items_names(form.attached_files)
     assert files == ["file1", "file2"]
 
 

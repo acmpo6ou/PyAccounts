@@ -20,7 +20,7 @@ from gi.repository import Gtk
 
 from core.create_account import CreateAccount, CONFIRM_ATTACH_EXISTING_FILE, SELECT_FILES_TO_DETACH, \
     CONFIRM_FILES_DETACH, ERROR_READING_FILE
-from core.gtk_utils import item_name
+from core.gtk_utils import items_names
 from core.widgets import DateChooserDialog, WarningDialog
 
 
@@ -43,7 +43,7 @@ def test_attach_file(dialog: Mock, form):
     assert form.attached_paths["main.dba"] == "tests/data/main.dba"
     dialog.assert_not_called()
 
-    attached_files = [item_name(row) for row in form.attached_files.children]
+    attached_files = items_names(form.attached_files)
     assert attached_files == ["main.dba"]
 
 
@@ -69,7 +69,7 @@ def test_attach_same_file(dialog: Mock, src_dir, form):
     dialog.assert_not_called()
 
     # and there shouldn't be a duplicate file attached
-    attached_files = [item_name(row) for row in form.attached_files.children]
+    attached_files = items_names(form.attached_files)
     assert attached_files == ["main.dba"]
 
 
@@ -86,7 +86,7 @@ def test_attach_file_confirmation_dialog_No(dialog: Mock, src_dir, form):
     assert form.attached_paths["main.dba"] == "tests/data/main.dba"
 
     # and there shouldn't be a duplicate file attached
-    attached_files = [item_name(row) for row in form.attached_files.children]
+    attached_files = items_names(form.attached_files)
     assert attached_files == ["main.dba"]
 
 
@@ -103,7 +103,7 @@ def test_attach_file_confirmation_dialog_Yes(dialog: Mock, src_dir, form):
     assert form.attached_paths["main.dba"] == f"{src_dir}/main.dba"
 
     # but there shouldn't be a duplicate file attached
-    attached_files = [item_name(row) for row in form.attached_files.children]
+    attached_files = items_names(form.attached_files)
     assert attached_files == ["main.dba"]
 
 
@@ -134,7 +134,7 @@ def test_detach_file_Yes(dialog: Mock, form):
     form.on_detach_file()
 
     assert not form.attached_paths
-    attached_files = [item_name(row) for row in form.attached_files.children]
+    attached_files = items_names(form.attached_files)
     assert not attached_files
 
 
@@ -149,7 +149,7 @@ def test_detach_file_No(dialog: Mock, form):
 
     assert "main.dba" in form.attached_paths
     assert "PyAccounts.py" in form.attached_paths
-    attached_files = [item_name(row) for row in form.attached_files.children]
+    attached_files = items_names(form.attached_files)
     assert attached_files == ["main.dba", "PyAccounts.py"]
 
 
@@ -215,7 +215,7 @@ def test_create_account(form: CreateAccount, account):
     created_account = form.database_window.database.accounts[account.accountname]
     assert created_account == account
 
-    accounts = [item_name(row) for row in form.database_window.accounts_list.children]
+    accounts = items_names(form.database_window.accounts_list)
     assert accounts == [account.accountname]
 
     # the create account form should be hidden

@@ -19,7 +19,7 @@ import pytest
 
 from core.create_database import CreateDatabase, ERROR_DB_CREATION
 from core.database_utils import Database
-from core.gtk_utils import wait_until, item_name
+from core.gtk_utils import wait_until, items_names
 from core.widgets import NAME_TAKEN_ERROR, EMPTY_NAME_ERROR, UNALLOWED_CHARS_WARNING, ErrorDialog
 
 
@@ -143,7 +143,7 @@ def test_create_database_success(form, src_dir):
     assert [db.name for db in databases] == ["crypt", "data", "db", "main"]
 
     # db_list is also updated
-    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    db_names = items_names(form.main_window.db_list)
     assert db_names == ["crypt", "data", "db", "main"]
 
     # the create database form should be hidden
@@ -174,7 +174,7 @@ def test_create_database_error(mock, dialog: "Mock[ErrorDialog]", form, faker):
     assert [db.name for db in databases] == ["crypt", "data", "main"]
 
     # db_list shouldn't contain the database
-    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    db_names = items_names(form.main_window.db_list)
     assert db_names == ["crypt", "data", "main"]
 
     # the create database form shouldn't be hidden

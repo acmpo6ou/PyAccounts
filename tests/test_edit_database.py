@@ -20,7 +20,7 @@ import pytest
 from core.database_utils import Database
 from core.database_window import DatabaseWindow
 from core.edit_database import EditDatabase, ERROR_EDITING_DB
-from core.gtk_utils import item_name
+from core.gtk_utils import item_name, items_names
 from core.widgets import ErrorDialog
 
 
@@ -58,7 +58,7 @@ def test_edit_database_success(src_dir, form):
     assert "main" not in db_names
 
     # db_list should also be updated
-    db_names = [item_name(row) for row in form.main_window.db_list.children]
+    db_names = items_names(form.main_window.db_list)
     assert "database" in db_names
     assert "main" not in db_names
 

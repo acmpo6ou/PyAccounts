@@ -16,7 +16,7 @@
 import pytest
 
 from core.edit_account import EditAccount
-from core.gtk_utils import notes_text, item_name
+from core.gtk_utils import notes_text, items_names
 
 
 @pytest.fixture
@@ -41,7 +41,7 @@ def test_load_account(form, account):
     assert form.birth_date.text == account.birthdate
     assert account.notes == notes_text(form.notes)
 
-    files = [item_name(row) for row in form.attached_files.children]
+    files = items_names(form.attached_files)
     assert files == ["file1", "file2"]
 
 
@@ -61,6 +61,6 @@ def test_edit_account(form, account):
     assert account.accountname not in form.database.accounts
     assert "my account" in form.database.accounts
 
-    accounts = [item_name(row) for row in form.database_window.accounts_list.children]
+    accounts = items_names(form.database_window.accounts_list)
     assert account.accountname not in accounts
     assert "my account" in accounts
