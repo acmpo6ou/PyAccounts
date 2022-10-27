@@ -165,7 +165,8 @@ class DatabaseWindow(Window):
         for name in clipboard.account_names:
             account = clipboard.db_window.database.accounts[name]
             CreateAccount.create_account(account, self)
-            clipboard.db_window.delete_account(name)
+            if clipboard.is_cut:
+                clipboard.db_window.delete_account(name)
 
         self.check_db_saved()
         clipboard.db_window.check_db_saved()

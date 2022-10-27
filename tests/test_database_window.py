@@ -289,3 +289,28 @@ def test_cut_and_paste_accounts(db_window):
     assert not db_window.main_window.account_clipboard
     assert "*" in db_window.title
     assert "*" in db_window2.title
+
+
+def test_copy_and_paste_accounts(db_window):
+    db = Database("test", "123")
+    db_window2 = DatabaseWindow(db, db_window.main_window)
+
+    assert "mega" in db_window.database.accounts
+    assert not len(db_window2.database.accounts)
+
+    # select an account
+    row = db_window.accounts_list.children[1]
+    db_window.accounts_list.select_row(row)
+
+    db_window.copy_accounts()
+    db_window2.paste_accounts()
+
+    assert "mega" in db_window.database.accounts
+    assert "mega" in db_window2.database.accounts
+
+    assert "mega" in items_names(db_window.accounts_list)
+    assert "mega" in items_names(db_window2.accounts_list)
+
+    assert not db_window.main_window.account_clipboard
+    assert "*" not in db_window.title
+    assert "*" in db_window2.title
