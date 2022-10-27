@@ -24,7 +24,7 @@ from core.database_utils import Database
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
     SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE, \
     SUCCESS_CUTTING_ACCOUNTS, SUCCESS_COPYING_ACCOUNTS, SELECT_ACCOUNTS_TO_CUT, \
-    SELECT_ACCOUNTS_TO_COPY
+    SELECT_ACCOUNTS_TO_COPY, NOTHING_TO_PASTE
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.edit_database import EditDatabase
@@ -267,14 +267,15 @@ def test_copy_no_accounts_selected(db_window):
     assert db_window.statusbar.label.text == f"✘ {SELECT_ACCOUNTS_TO_COPY}"
 
 
+def test_paste_empty_clipboard(db_window):
+    db_window.paste_accounts()
+    assert db_window.statusbar.label.text == f"✘ {NOTHING_TO_PASTE}"
+
+
 @pytest.fixture
 def db_window2(db_window):
     db = Database("test", "123")
     return DatabaseWindow(db, db_window.main_window)
-
-
-def test_paste_empty_clipboard(db_window):
-    ...
 
 
 def test_cut_and_paste_accounts(db_window, db_window2):

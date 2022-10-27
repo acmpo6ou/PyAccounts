@@ -52,6 +52,7 @@ SUCCESS_CUTTING_ACCOUNTS = "Cut account(s)."
 SELECT_ACCOUNTS_TO_CUT = "Select accounts to cut."
 SUCCESS_COPYING_ACCOUNTS = "Copied account(s)."
 SELECT_ACCOUNTS_TO_COPY = "Select accounts to copy."
+NOTHING_TO_PASTE = "Nothing to paste."
 
 
 class DatabaseWindow(Window):
@@ -159,6 +160,11 @@ class DatabaseWindow(Window):
 
     def paste_accounts(self, _=None):
         clipboard = self.main_window.account_clipboard
+
+        if not clipboard:
+            self.statusbar.warning(NOTHING_TO_PASTE)
+            return
+
         if clipboard.db_window == self:
             self.main_window.account_clipboard = None
 
@@ -172,7 +178,6 @@ class DatabaseWindow(Window):
         clipboard.db_window.check_db_saved()
         self.main_window.account_clipboard = None
 
-        # TODO: if account clipboard is None, return
         # TODO: for each copied account name:
         #  check if it's in current db:
         #    if yes -> show a confirmation dialog with Yes, No
