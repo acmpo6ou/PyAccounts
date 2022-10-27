@@ -167,6 +167,7 @@ class DatabaseWindow(Window):
 
         if clipboard.db_window == self:
             self.main_window.account_clipboard = None
+            return
 
         for name in clipboard.account_names:
             account = clipboard.db_window.database.accounts[name]
