@@ -24,7 +24,7 @@ from core.database_utils import Database
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
     SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE, \
     SUCCESS_CUTTING_ACCOUNTS, SUCCESS_COPYING_ACCOUNTS, SELECT_ACCOUNTS_TO_CUT, \
-    SELECT_ACCOUNTS_TO_COPY, NOTHING_TO_PASTE
+    SELECT_ACCOUNTS_TO_COPY, NOTHING_TO_PASTE, CONFIRM_ACCOUNT_REPLACE
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.edit_database import EditDatabase
@@ -314,3 +314,51 @@ def test_copy_and_paste_accounts(db_window, db_window2):
     assert not db_window.main_window.account_clipboard
     assert "*" not in db_window.title
     assert "*" in db_window2.title
+
+
+@patch("core.database_window.WarningDialog", autospec=True)
+def test_paste_existing_account(dialog: Mock, db_window):
+    # `mega` doesn't exist, but `gmail` does
+    db = db_window.main_window.databases[1]
+    db.open("123")
+    db_window2 = DatabaseWindow(db, db_window.main_window)
+    db_window2.delete_account("mega")
+    db_window2.database.accounts["gmail"].email = "test@gmail.com"
+
+    # move accounts choosing No in the confirmation dialog
+    dialog.return_value.run.return_value = Gtk.ResponseType.NO
+    db_window.accounts_list.selection_mode = Gtk.SelectionMode.MULTIPLE
+    db_window.accounts_list.select_all()
+    db_window.cut_accounts()
+    db_window2.paste_accounts()
+
+    # there was a confirmation dialog shown about `gmail`
+    dialog.assert_called_with(CONFIRM_ACCOUNT_REPLACE.format("gmail"))
+
+    # `mega` is moved to db_window2
+    assert "mega" not in db_window.database.accounts
+    assert "mega" in db_window2.database.accounts
+    assert "mega" not in items_names(db_window.accounts_list)
+    assert "mega" in items_names(db_window2.accounts_list)
+
+    # but `gmail` isn't
+    assert "gmail" in db_window.database.accounts
+    assert "gmail" in db_window2.database.accounts
+    assert "gmail" in items_names(db_window.accounts_list)
+    assert "gmail" in items_names(db_window2.accounts_list)
+    assert db_window2.database.accounts["gmail"].email == "test@gmail.com"
+
+    # try to move gmail from db_window to db_window2 again,
+    # choosing Yes this time
+    dialog.return_value.run.return_value = Gtk.ResponseType.YES
+    db_window.accounts_list.select_all()
+    db_window.cut_accounts()
+    db_window2.paste_accounts()
+
+    assert not items_names(db_window.accounts_list)
+    assert not db_window.database.accounts
+
+    # gmail should have been replaced
+    assert items_names(db_window2.accounts_list) == ["gmail", "mega"]
+    assert sorted(db_window2.database.accounts.keys()) == ["gmail", "mega"]
+    assert db_window2.database.accounts["gmail"].email == "example@gmail.com"

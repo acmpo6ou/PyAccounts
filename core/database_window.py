@@ -52,7 +52,9 @@ SUCCESS_CUTTING_ACCOUNTS = "Cut account(s)."
 SELECT_ACCOUNTS_TO_CUT = "Select accounts to cut."
 SUCCESS_COPYING_ACCOUNTS = "Copied account(s)."
 SELECT_ACCOUNTS_TO_COPY = "Select accounts to copy."
+
 NOTHING_TO_PASTE = "Nothing to paste."
+CONFIRM_ACCOUNT_REPLACE = "Account <b>{}</b> already exists in this database, replace?"
 
 
 class DatabaseWindow(Window):
@@ -170,6 +172,13 @@ class DatabaseWindow(Window):
             return
 
         for name in clipboard.account_names:
+            if name in self.database.accounts:
+                response = WarningDialog(CONFIRM_ACCOUNT_REPLACE.format(name)).run()
+                if response == Gtk.ResponseType.YES:
+                    self.delete_account(name)
+                else:
+                    continue
+
             account = clipboard.db_window.database.accounts[name]
             CreateAccount.create_account(account, self)
             if clipboard.is_cut:
