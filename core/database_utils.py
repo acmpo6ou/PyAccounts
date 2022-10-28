@@ -234,7 +234,9 @@ class Database:
 
 @dataclass(order=True)
 class AccountClipboard:
-    # TODO: document this
+    """
+    Clipboard to store all information needed when copying/cutting accounts.
+    """
     db_window: "DatabaseWindow"
     account_names: list[str]
     is_cut: bool = False
