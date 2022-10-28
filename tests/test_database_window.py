@@ -278,6 +278,31 @@ def db_window2(db_window):
     return DatabaseWindow(db, db_window.main_window)
 
 
+def test_close_all_forms_when_pasting(account, db_window):
+    db = Database("test", "123", {"gmail": account})
+    db_window2 = DatabaseWindow(db, db_window.main_window)
+
+    # select an account in db_window2 to open a form
+    row = db_window.accounts_list.children[0]
+    row.activate()
+
+    # select an account for cutting in db_window
+    row = db_window.accounts_list.children[1]
+    row.activate()
+
+    db_window.cut_accounts()
+
+    # select another account in db_window to open a form
+    row = db_window.accounts_list.children[0]
+    row.activate()
+
+    db_window2.paste_accounts()
+
+    # no form should be shown in both windows
+    assert not db_window.form_box.children
+    assert not db_window2.form_box.children
+
+
 def test_cut_and_paste_accounts(db_window, db_window2):
     # select an account
     row = db_window.accounts_list.children[1]

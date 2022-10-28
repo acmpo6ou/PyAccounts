@@ -184,20 +184,14 @@ class DatabaseWindow(Window):
             if clipboard.is_cut:
                 clipboard.db_window.delete_account(name)
 
+        # close all forms since they can display outdated info
+        self.form_box.foreach(lambda form: self.form_box.remove(form))
+        other_box = clipboard.db_window.form_box
+        other_box.foreach(lambda form: other_box.remove(form))
+
         self.check_db_saved()
         clipboard.db_window.check_db_saved()
         self.main_window.account_clipboard = None
-
-        # TODO: for each copied account name:
-        #  check if it's in current db:
-        #    if yes -> show a confirmation dialog with Yes, No
-        #       Yes:
-        #          delete the account in current db (and from list also)
-        #          proceed to else
-        #    else:
-        #       create account in current db (use CreateAccount.create_account)
-        #       delete account in clipboard db (also updating the list)
-        #           call delete_account() on the db window
 
     def check_db_saved(self):
         """ Adds * to database window title if the database isn't saved. """
