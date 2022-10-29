@@ -210,7 +210,7 @@ class Window(Gtk.Window, GladeTemplate):
         :param form: form to display.
         """
 
-        self.form_box.foreach(lambda form: self.form_box.remove(form))
+        self.form_box.foreach(self.form_box.remove)
         self.form_box.add(form)
         form.show()
 

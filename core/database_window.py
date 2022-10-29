@@ -75,8 +75,7 @@ class DatabaseWindow(Window):
         icon.removesuffix(".svg")
         for icon in sorted(
             os.listdir(ACCOUNT_ICONS_DIR),
-            key=lambda x: len(x),
-            reverse=True,
+            key=len, reverse=True,
         )
     ]
 
@@ -185,9 +184,9 @@ class DatabaseWindow(Window):
                 clipboard.db_window.delete_account(name)
 
         # close all forms since they can display outdated info
-        self.form_box.foreach(lambda form: self.form_box.remove(form))
+        self.form_box.foreach(self.form_box.remove)
         other_box = clipboard.db_window.form_box
-        other_box.foreach(lambda form: other_box.remove(form))
+        other_box.foreach(other_box.remove)
 
         self.check_db_saved()
         clipboard.db_window.check_db_saved()

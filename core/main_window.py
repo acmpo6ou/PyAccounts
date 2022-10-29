@@ -344,7 +344,7 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         self.databases.remove(database)
         delete_list_item(self.db_list, database.name)
 
-        self.form_box.foreach(lambda form: self.form_box.remove(form))
+        self.form_box.foreach(self.form_box.remove)
         self.statusbar.success(SUCCESS_DB_DELETED)
 
     def on_delete_database(self, _):

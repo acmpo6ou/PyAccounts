@@ -49,7 +49,7 @@ class OpenDatabase(GladeTemplate):
 
         self.title.markup = OPEN_DB_TITLE.format(database.name)
         # wait for password field to get mapped and make it focused
-        GLib.timeout_add(100, lambda: self.password.grab_focus())
+        GLib.timeout_add(100, self.password.grab_focus)
 
     def on_open_database(self, _=None):
         """

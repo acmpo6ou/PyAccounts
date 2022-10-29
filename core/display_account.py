@@ -16,6 +16,7 @@
 import base64
 import logging
 import traceback
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from gi.repository import Gtk, Gdk
@@ -132,8 +133,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         try:
             data = content.encode()
             content = base64.b64decode(data)
-            with open(path, "wb") as file:
-                file.write(content)
+            Path(path).write_bytes(content)
             self.database_window.statusbar.success(SUCCESS_SAVING_FILE)
         except Exception as err:
             logging.error(traceback.format_exc())

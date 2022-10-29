@@ -54,7 +54,7 @@ class RenameDatabase(GladeTemplate, FilterDbNameMixin, ValidateNameMixin):
         self.title.markup = RENAME_DB_TITLE.format(database.name)
         self.name.text = database.name
         # wait for name field to get mapped and make it focused
-        GLib.timeout_add(100, lambda: self.name.grab_focus())
+        GLib.timeout_add(100, self.name.grab_focus)
 
     def on_apply_enabled(self, _):
         """
