@@ -94,6 +94,14 @@ class DatabaseWindow(Window):
         self.connect("key_press_event", self.keypress)
         self.connect("key_release_event", self.keyrelease)
 
+        # Ctrl+A to select all accounts
+        self.shortcuts.connect(
+            Gdk.keyval_from_name("a"),
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE,
+            self.on_select_all,
+        )
+
         # Ctrl+S to save database
         self.shortcuts.connect(
             Gdk.keyval_from_name("s"),
@@ -191,6 +199,9 @@ class DatabaseWindow(Window):
         self.check_db_saved()
         clipboard.db_window.check_db_saved()
         self.main_window.account_clipboard = None
+
+    def on_select_all(self, *args):
+        self.accounts_list.select_all()
 
     def check_db_saved(self):
         """ Adds * to database window title if the database isn't saved. """
