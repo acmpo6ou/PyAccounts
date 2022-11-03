@@ -49,11 +49,7 @@ SUCCESS_DB_SAVED = "Database saved successfully!"
 ERROR_DB_SAVE = "Error saving the database!"
 
 SUCCESS_CUTTING_ACCOUNTS = "Cut account(s)."
-SELECT_ACCOUNTS_TO_CUT = "Select accounts to cut."
 SUCCESS_COPYING_ACCOUNTS = "Copied account(s)."
-SELECT_ACCOUNTS_TO_COPY = "Select accounts to copy."
-
-NOTHING_TO_PASTE = "Nothing to paste."
 CONFIRM_ACCOUNT_REPLACE = "Account <b>{}</b> already exists in this database, replace?"
 
 
@@ -140,6 +136,10 @@ class DatabaseWindow(Window):
                 menu_item.connect("activate", func)
                 menu.add(menu_item)
 
+                if (name in ("Cut", "Copy") and not self.selected_accounts) or \
+                   (name == "Paste" and not self.main_window.account_clipboard):
+                    menu_item.sensitive = False
+
             menu.attach_to_widget(self.accounts_list, None)
             menu.show_all()
             menu.popup(None, None, None, None, event.button, event.time)
@@ -149,31 +149,18 @@ class DatabaseWindow(Window):
         return [item_name(row) for row in self.accounts_list.selected_rows]
 
     def cut_accounts(self, _=None):
-        if not self.selected_accounts:
-            self.statusbar.warning(SELECT_ACCOUNTS_TO_CUT)
-            return
-
         self.main_window.account_clipboard = AccountClipboard(
             self, self.selected_accounts, True
         )
         self.statusbar.success(SUCCESS_CUTTING_ACCOUNTS)
 
     def copy_accounts(self, _=None):
-        if not self.selected_accounts:
-            self.statusbar.warning(SELECT_ACCOUNTS_TO_COPY)
-            return
-
         self.main_window.account_clipboard = \
             AccountClipboard(self, self.selected_accounts)
         self.statusbar.success(SUCCESS_COPYING_ACCOUNTS)
 
     def paste_accounts(self, _=None):
         clipboard = self.main_window.account_clipboard
-
-        if not clipboard:
-            self.statusbar.warning(NOTHING_TO_PASTE)
-            return
-
         if clipboard.db_window == self:
             self.main_window.account_clipboard = None
             return
