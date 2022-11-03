@@ -40,10 +40,11 @@ if TYPE_CHECKING:
 ACCOUNT_ICONS_DIR = "img/account_icons/"
 
 SELECT_ACCOUNT_TO_EDIT = "Please select an account to edit."
-SELECT_ACCOUNT_TO_DELETE = "Please select an account to delete."
-CONFIRM_ACCOUNT_DELETION = "Delete <b>{}</b> account?"
+SELECT_ACCOUNTS_TO_DELETE = "Please select account(s) to delete."
+CONFIRM_ACCOUNT_DELETION = "Delete selected accounts?"
 CONFIRM_QUIT = (
-    "Are you sure you want to close the database?\n" "Any unsaved changes will be lost!"
+    "Are you sure you want to close the database?\n"
+    "Any unsaved changes will be lost!"
 )
 SUCCESS_DB_SAVED = "Database saved successfully!"
 ERROR_DB_SAVE = "Error saving the database!"
@@ -313,23 +314,20 @@ class DatabaseWindow(Window):
         account = self.database.accounts[account_name]
         self.show_form(EditAccount(self.database, account, self))
 
-    def on_delete_account(self, _=None):
+    def on_delete_accounts(self, _=None):
         """
-        Displays confirmation dialog asking user if he really wants to delete selected account.
+        Displays confirmation dialog asking user
+        if he really wants to delete selected accounts.
         """
 
-        # show warning in statusbar if there is no account selected
-        row = self.accounts_list.selected_row
-        if not row:
-            self.statusbar.warning(SELECT_ACCOUNT_TO_DELETE)
+        # show warning in statusbar if there are no accounts selected
+        if not self.selected_accounts:
+            self.statusbar.warning(SELECT_ACCOUNTS_TO_DELETE)
             return
 
-        account_name = item_name(row)
-        message = CONFIRM_ACCOUNT_DELETION.format(account_name)
-        response = WarningDialog(message).run()
-
-        if response == Gtk.ResponseType.YES:
-            self.delete_account(account_name)
+        if WarningDialog(CONFIRM_ACCOUNT_DELETION).run() == Gtk.ResponseType.YES:
+            for account_name in self.selected_accounts:
+                self.delete_account(account_name)
             self.check_db_saved()
             self.form_box.children[0].destroy()
 

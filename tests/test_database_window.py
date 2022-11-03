@@ -22,9 +22,8 @@ import core
 from core.create_account import CreateAccount
 from core.database_utils import Database
 from core.database_window import DatabaseWindow, SELECT_ACCOUNT_TO_EDIT, CONFIRM_ACCOUNT_DELETION, \
-    SELECT_ACCOUNT_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE, \
-    SUCCESS_CUTTING_ACCOUNTS, SUCCESS_COPYING_ACCOUNTS, SELECT_ACCOUNTS_TO_CUT, \
-    SELECT_ACCOUNTS_TO_COPY, NOTHING_TO_PASTE, CONFIRM_ACCOUNT_REPLACE
+    SELECT_ACCOUNTS_TO_DELETE, CONFIRM_QUIT, SUCCESS_DB_SAVED, ERROR_DB_SAVE, \
+    SUCCESS_CUTTING_ACCOUNTS, SUCCESS_COPYING_ACCOUNTS, CONFIRM_ACCOUNT_REPLACE
 from core.display_account import DisplayAccount
 from core.edit_account import EditAccount
 from core.edit_database import EditDatabase
@@ -113,48 +112,54 @@ def test_confirm_account_deletion_dialog_message(db_window):
     db_window.accounts_list.select_row(row)
 
     with patch.object(core.database_window, "WarningDialog", autospec=True) as mock:
-        db_window.on_delete_account()
+        db_window.on_delete_accounts()
         mock.assert_called_with(CONFIRM_ACCOUNT_DELETION.format("mega"))
 
 
 def test_confirm_account_deletion_Yes(db_window):
-    row = db_window.accounts_list.children[1]
+    row = db_window.accounts_list.children[0]
     row.activate()
+
+    db_window.accounts_list.selection_mode = Gtk.SelectionMode.MULTIPLE
+    db_window.accounts_list.select_all()
 
     with patch.object(core.database_window, "WarningDialog", autospec=True) as mock:
         mock.return_value.run.return_value = Gtk.ResponseType.YES
-        db_window.on_delete_account()
+        db_window.on_delete_accounts()
 
-        # account is removed from accounts lists
-        assert "mega" not in db_window.database.accounts
-
-        for row in db_window.accounts_list.children:
-            assert item_name(row) != "mega"
+        # accounts are removed from accounts lists
+        assert not db_window.database.accounts
+        assert not items_names(db_window.accounts_list)
 
         # no form should be shown
         assert not db_window.form_box.children
 
 
 def test_confirm_account_deletion_No(db_window):
+    row = db_window.accounts_list.children[0]
+    db_window.accounts_list.select_row(row)
+
     row = db_window.accounts_list.children[1]
     db_window.accounts_list.select_row(row)
 
     with patch.object(core.database_window, "WarningDialog", autospec=True) as mock:
         mock.return_value.run.return_value = Gtk.ResponseType.NO
-        db_window.on_delete_account()
+        db_window.on_delete_accounts()
 
         # account shouldn't be removed from accounts lists
         assert "mega" in db_window.database.accounts
+        assert "gmail" in db_window.database.accounts
 
         account_names = items_names(db_window.accounts_list)
         assert "mega" in account_names
+        assert "gmail" in account_names
 
 
 def test_delete_account_no_selection(db_window):
     """Delete account button should display a warning in statusbar
     if there is no account selected."""
-    db_window.on_delete_account()
-    assert db_window.statusbar.label.text == f"✘ {SELECT_ACCOUNT_TO_DELETE}"
+    db_window.on_delete_accounts()
+    assert db_window.statusbar.label.text == f"✘ {SELECT_ACCOUNTS_TO_DELETE}"
 
 
 @patch("core.database_window.WarningDialog", autospec=True)

@@ -215,7 +215,7 @@ Author: Bohdan Kolvakh
                 <property name="label" translatable="yes">_Delete</property>
                 <property name="use-underline">True</property>
                 <property name="icon-name">edit-delete</property>
-                <signal name="clicked" handler="on_delete_account" swapped="no"/>
+                <signal name="clicked" handler="on_delete_accounts" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
