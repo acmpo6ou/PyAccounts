@@ -114,19 +114,19 @@ class DatabaseWindow(Window):
 
     def keypress(self, _, event: Gdk.EventKey):
         """ Allow selecting multiple accounts when Ctrl or Shift is held. """
-        if event.keyval == 65507:  # TODO: replace with const for Ctrl
+        if event.keyval == Gdk.KEY_Control_L:
             self.ctrl_held = True
             self.accounts_list.selection_mode = Gtk.SelectionMode.MULTIPLE
-        elif event.keyval == 65505:  # TODO: replace with const for Shift
+        elif event.keyval == Gdk.KEY_Shift_L:
             self.shift_held = True
             self.accounts_list.selection_mode = Gtk.SelectionMode.MULTIPLE
 
     def keyrelease(self, _, event: Gdk.EventKey):
         # When Ctrl or Shift is released, don't set accounts_list's selection mode
         # back to SINGLE just yet. This is because Gtk will deselect all the rows.
-        if event.keyval == 65507:  # TODO: replace with const for Ctrl
+        if event.keyval == Gdk.KEY_Control_L:
             self.ctrl_held = False
-        elif event.keyval == 65505:  # TODO: replace with const for Shift
+        elif event.keyval == Gdk.KEY_Shift_L:
             self.shift_held = False
 
     def on_account_right_click(self, _, event: Gdk.EventButton):
