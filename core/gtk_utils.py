@@ -82,7 +82,7 @@ def item_name(row: Gtk.ListBoxRow) -> str:
     """
     A helper function to retrieve the database/account name from ListBoxRow.
     """
-    return row.children[0].children[-1].text
+    return row.children[0].children[0].children[-1].text
 
 
 def items_names(listbox: Gtk.ListBox) -> list[str]:
@@ -111,11 +111,14 @@ def add_list_item(
     hbox = Gtk.Box()
     hbox.homogeneous = False
     hbox.tooltip_text = tooltip
-
     hbox.add(icon)
     hbox.add(label)
-    list_box.add(hbox)
-    hbox.show_all()
+
+    event_box = Gtk.EventBox()
+    event_box.add(hbox)
+    list_box.add(event_box)
+    event_box.show_all()
+    return event_box
 
 
 def delete_list_item(list_box: Gtk.ListBox, itemname: str):

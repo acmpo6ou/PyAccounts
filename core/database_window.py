@@ -19,6 +19,7 @@ import traceback
 from typing import TYPE_CHECKING
 
 from gi.repository import Gdk, Gtk, GdkPixbuf
+from rich.pretty import pprint
 
 from core.create_account import CreateAccount
 from core.database_utils import Database, AccountClipboard
@@ -87,6 +88,7 @@ class DatabaseWindow(Window):
         self.load_separator()
 
         self.ctrl_held = False
+        self.shift_held = False
         self.add_events(Gdk.EventMask.KEY_PRESS_MASK & Gdk.EventMask.KEY_RELEASE_MASK)
         self.connect("key_press_event", self.keypress)
         self.connect("key_release_event", self.keyrelease)
@@ -111,18 +113,21 @@ class DatabaseWindow(Window):
         self.title = database.name
 
     def keypress(self, _, event: Gdk.EventKey):
-        """ Allow selecting multiple accounts when Ctrl is held. """
+        """ Allow selecting multiple accounts when Ctrl or Shift is held. """
         if event.keyval == 65507:  # TODO: replace with const for Ctrl
-            self.accounts_list.selection_mode = Gtk.SelectionMode.MULTIPLE
             self.ctrl_held = True
+            self.accounts_list.selection_mode = Gtk.SelectionMode.MULTIPLE
+        elif event.keyval == 65505:  # TODO: replace with const for Shift
+            self.shift_held = True
+            self.accounts_list.selection_mode = Gtk.SelectionMode.MULTIPLE
 
     def keyrelease(self, _, event: Gdk.EventKey):
-        """
-        When Ctrl is released, don't set accounts_list's selection mode
-        back to SINGLE just yet. This is because Gtk will deselect all the rows.
-        """
+        # When Ctrl or Shift is released, don't set accounts_list's selection mode
+        # back to SINGLE just yet. This is because Gtk will deselect all the rows.
         if event.keyval == 65507:  # TODO: replace with const for Ctrl
             self.ctrl_held = False
+        elif event.keyval == 65505:  # TODO: replace with const for Shift
+            self.shift_held = False
 
     def on_account_right_click(self, _, event: Gdk.EventButton):
         if event.button == Gdk.BUTTON_SECONDARY and event.type == Gdk.EventType.BUTTON_PRESS:
@@ -188,6 +193,11 @@ class DatabaseWindow(Window):
         clipboard.db_window.check_db_saved()
         self.main_window.account_clipboard = None
 
+    def on_account_motion(self, event_box: Gtk.EventBox, _):
+        """ When Shift is held, select accounts hovered over by mouse. """
+        if self.shift_held:
+            self.accounts_list.select_row(event_box.parent)
+
     def on_select_all(self, *args):
         self.accounts_list.select_all()
 
@@ -204,7 +214,9 @@ class DatabaseWindow(Window):
         self.accounts_list.sort_func = abc_list_sort
         for account_name in self.database.accounts:
             icon = self.load_account_icon(account_name)
-            add_list_item(self.accounts_list, icon.pixbuf, account_name)
+            item = add_list_item(self.accounts_list, icon.pixbuf, account_name)
+            item.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
+            item.connect("motion-notify-event", self.on_account_motion)
 
     def load_account_icon(self, accountname: str):
         """
