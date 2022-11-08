@@ -60,7 +60,7 @@ def test_load_databases(databases, main_window):
     labels = []
 
     for row in main_window.db_list.children:
-        hbox: Gtk.HBox = row.children[0]
+        hbox: Gtk.HBox = row.children[0].children[0]
         icons.append(hbox.children[0])
         labels.append(hbox.children[1])
 

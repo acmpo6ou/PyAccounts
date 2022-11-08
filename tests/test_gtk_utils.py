@@ -16,7 +16,7 @@
 import pytest
 from gi.repository import Gtk
 
-from core.gtk_utils import ListOrder, abc_list_sort, delete_list_item
+from core.gtk_utils import ListOrder, abc_list_sort, delete_list_item, item_name
 
 
 @pytest.mark.parametrize(
@@ -31,11 +31,13 @@ def test_abc_list_sort(name1, name2, expected_order):
     rows = []
     for name in (name1, name2):
         row = Gtk.ListBoxRow()
+        event_box = Gtk.EventBox()
         label = Gtk.Label(name)
         box = Gtk.Box()
 
         box.add(label)
-        row.add(box)
+        event_box.add(box)
+        row.add(event_box)
         rows.append(row)
 
     order = abc_list_sort(*rows)
@@ -47,12 +49,14 @@ def test_delete_item():
     for name in ("crypt", "data", "main"):
         label = Gtk.Label(name)
         box = Gtk.Box()
+        event_box = Gtk.EventBox()
+
         box.add(label)
-        list_box.add(box)
+        event_box.add(box)
+        list_box.add(event_box)
 
     delete_list_item(list_box, "data")
     assert len(list_box.children) == 2
 
     for row in list_box.children:
-        label = row.children[0].children[0]
-        assert label.text != "data"
+        assert item_name(row) != "data"

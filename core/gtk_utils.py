@@ -78,7 +78,7 @@ GObject.Object.__getattr__ = _getattr
 GObject.Object.__setattr__ = _setattr
 
 
-def item_name(row: Gtk.ListBoxRow) -> str:
+def item_name(row: Gtk.ListBoxRow | Gtk.Widget) -> str:
     """
     A helper function to retrieve the database/account name from ListBoxRow.
     """
