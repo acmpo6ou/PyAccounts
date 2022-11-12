@@ -19,7 +19,6 @@ import traceback
 from typing import TYPE_CHECKING
 
 from gi.repository import Gdk, Gtk, GdkPixbuf
-from rich.pretty import pprint
 
 from core.create_account import CreateAccount
 from core.database_utils import Database, AccountClipboard
