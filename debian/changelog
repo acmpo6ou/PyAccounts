@@ -1,3 +1,10 @@
+pyaccounts (1.2.0-2) focal; urgency=medium
+
+  * added ability to Cut, Copy, and Paste accounts
+  * added ability to delete multiple accounts by selecting them
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Sat, 12 Nov 2022 09:46:33 +0100
+
 pyaccounts (1.2.0-1) focal; urgency=medium
 
   * added ability to Cut, Copy, and Paste accounts
