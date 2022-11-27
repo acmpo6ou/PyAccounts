@@ -1,3 +1,11 @@
+pyaccounts (1.2.2-1) jammy; urgency=medium
+
+  * updated cryptography
+  * improved Linux Mint icon
+  * added support for Ubuntu 22.04
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Sun, 27 Nov 2022 20:17:28 +0100
+
 pyaccounts (1.2.0-3) focal; urgency=medium
 
   * added ability to Cut, Copy, and Paste accounts
