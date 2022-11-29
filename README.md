@@ -18,5 +18,5 @@ sudo apt install pyaccounts
 
 ## Development
 ```commandline
-sudo apt install libcairo2 libcairo2-dev libgirepository1.0-dev python3-tk
+sudo apt install libcairo2 libcairo2-dev libgirepository1.0-dev python3-tk devscripts debhelper python3-paramiko
 ```
