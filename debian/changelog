@@ -1,3 +1,11 @@
+pyaccounts (1.2.2-2) jammy; urgency=medium
+
+  * updated cryptography
+  * improved Linux Mint icon
+  * added support for Ubuntu 22.04
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Thu, 01 Dec 2022 20:40:47 +0100
+
 pyaccounts (1.2.2-1) jammy; urgency=medium
 
   * updated cryptography
