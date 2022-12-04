@@ -20,3 +20,16 @@ sudo apt install pyaccounts
 ```commandline
 sudo apt install libcairo2 libcairo2-dev libgirepository1.0-dev python3-tk devscripts debhelper python3-paramiko
 ```
+
+## Updating
+- run tests
+- Change version by search and replace in PyAccounts folder!
+    - usually `PyAccounts.desktop` and `__init__.py`
+- Generate changelog with `dch -i`
+- Update install file if necessary
+- Remove existing venv if requirements were changed
+- `deactivate`!!!
+- `deb/prevenv.sh`
+- `debuild --no-tgz-check -S --lintian-opts --no-lintian`
+- `lintian --info`
+- `dput pyaccounts pyaccounts_1.x.x-1_source.changes`
