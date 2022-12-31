@@ -34,7 +34,7 @@ SKIP = ("__init__.py", "gtk_utils.py", "database_utils.py", "widgets.py", "__pyc
 
 def gen_glade_stubs():
     out.write("    # <editor-fold>\n")
-    ids = re.findall('id="([a-z_]*)"', glade_file)
+    ids = re.findall('id="([a-z0-9_]*)"', glade_file)
 
     for _id in ids:
         widget = root.findall(f".//*[@id='{_id}']")[0]

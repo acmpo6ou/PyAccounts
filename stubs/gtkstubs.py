@@ -26,7 +26,7 @@ import re
 import shutil
 from pathlib import Path
 
-GTK_STUBS_PATH = "venv/lib/python3.9/site-packages/gi-stubs/repository/"
+GTK_STUBS_PATH = "venv/lib/python3.10/site-packages/gi-stubs/repository/"
 
 for module in ("Gtk", "Gdk", "Gio"):
     venv_path = f"{GTK_STUBS_PATH}/{module}.pyi"
