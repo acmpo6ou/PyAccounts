@@ -27,7 +27,7 @@ sudo apt install libcairo2 libcairo2-dev libgirepository1.0-dev python3-tk devsc
     - usually `PyAccounts.desktop` and `__init__.py`
 - Generate changelog with `dch -i`
 - Update install file if necessary
-- Remove existing venv if requirements were changed
+- Remove existing venv if requirements were changed `rm deb/pyaccounts`
 - `deactivate`!!!
 - `deb/prevenv.sh`
 - `debuild --no-tgz-check -S --lintian-opts --no-lintian`
