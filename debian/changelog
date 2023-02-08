@@ -1,3 +1,9 @@
+pyaccounts (1.2.3-1) jammy; urgency=medium
+
+  * updated cryptography
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Wed, 08 Feb 2023 19:20:20 +0100
+
 pyaccounts (1.2.2-2) jammy; urgency=medium
 
   * updated cryptography
