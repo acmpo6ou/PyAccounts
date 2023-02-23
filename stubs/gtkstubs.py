@@ -33,13 +33,25 @@ for module in ("Gtk", "Gdk", "Gio"):
     home_path = f"{Path.home()}/{module}.pyi"
     _in = open(venv_path)
     out = open(home_path, "w")
+    fields = set()
 
     for line in _in:
         out.write(line)
 
         if line.startswith("    def get_"):
             prop = re.search("get_([a-z0-9_]*)", line)[1]
+            fields.add(prop)
             type_hint = "Any"
+
+            if "->" in line:
+                type_hint = re.search(r"->(.*?):", line)[1]
+            out.write(f"    {prop}:{type_hint}\n")
+
+        if line.startswith("    def set_"):
+            prop = re.search("set_([a-z0-9_]*)", line)[1]
+            type_hint = "Any"
+            if prop in fields:
+                continue
 
             if "->" in line:
                 type_hint = re.search(r"->(.*?):", line)[1]
