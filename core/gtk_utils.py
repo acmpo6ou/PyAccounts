@@ -30,7 +30,7 @@ from gi.repository import GObject, Gtk, Gio, GdkPixbuf, GLib
 
 
 # noinspection PyUnresolvedReferences
-def _getattr(self, item: str):
+def _getattr(self, attr_name):
     """
     A fluent API to get GTK object's attributes.
 
@@ -42,14 +42,13 @@ def _getattr(self, item: str):
     >>> label.angle
     Which is a more pythonic API.
     """
-    try:
-        return object.__getattribute__(self.props, item)
-    except AttributeError:
-        return object.__getattribute__(self, f"get_{item}")()
+    getter_name = f"get_{attr_name}"
+    getter = object.__getattribute__(self, getter_name)
+    return getter()
 
 
 # noinspection PyUnresolvedReferences
-def _setattr(self, item: str, value):
+def _setattr(self, attr_name, value):
     """
     A fluent API to set GTK object's attributes.
 
@@ -62,12 +61,12 @@ def _setattr(self, item: str, value):
     Which is a more pythonic API.
     """
 
-    with contextlib.suppress(AttributeError):
-        return setattr(self.props, item, value)
     try:
-        getattr(self, f"set_{item}")(value)
+        setter_name = f"set_{attr_name}"
+        setter = getattr(self, setter_name)
+        setter(value)
     except AttributeError:
-        original_setattr(self, item, value)
+        original_setattr(self, attr_name, value)
 
 
 # save original __setattr__
