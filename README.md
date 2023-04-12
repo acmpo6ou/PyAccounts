@@ -17,8 +17,15 @@ sudo apt install pyaccounts
 ```
 
 ## Development
+
+#### Linux Mint
 ```commandline
 sudo apt install libcairo2 libcairo2-dev libgirepository1.0-dev python3-tk devscripts debhelper python3-paramiko
+```
+
+#### MacOS
+```commandline
+brew install gtk+3 py3cairo pygobject3 librsvg adwaita-icon-theme
 ```
 
 ## Updating
