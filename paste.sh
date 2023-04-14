@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kill -USR1 `pidof PyAccounts`
+kill -USR1 `pgrep PyAccounts`
