@@ -222,7 +222,7 @@ class DatabaseWindow(Window):
         Returns account icon associated with given [accountname].
         """
 
-        icon = load_icon("cs-user-accounts", 50)
+        icon = load_icon("edit-clear", 50)
         for icon_name in self.account_icons:
             if icon_name in accountname.lower():
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
