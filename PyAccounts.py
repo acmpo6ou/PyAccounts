@@ -15,13 +15,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+
 import time
+import platform
 from pathlib import Path
 
 import gi
+import keyboard
 import setproctitle as setproctitle
 
-from core import SRC_DIR, keyboard
+from core import SRC_DIR
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
@@ -97,6 +100,11 @@ class Application(Gtk.Application):
     @staticmethod
     def check_paste_shortcut() -> bool:
         """ Checks if there is a system shortcut to paste password. """
+
+        # paste shortcut is a linux-only feature
+        if platform.system() != "Linux":
+            return True
+
         parent = Gio.Settings.new(CUSTOM_KEYS_PARENT_SCHEMA)
         custom_list = parent.get_strv("custom-list")
 

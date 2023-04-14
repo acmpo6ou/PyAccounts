@@ -18,6 +18,7 @@ import logging
 import re
 import traceback
 from dataclasses import dataclass
+from json import JSONDecodeError
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -99,8 +100,10 @@ class Config:
         path = Path(SRC_DIR) / "settings.json"
 
         try:
-            file = open(path)
-            settings = json.load(file)
+            content = path.open().read()
+            settings = json.loads(content)
+        except JSONDecodeError:
+            settings = json.loads("{}")
         except Exception:
             logging.error(traceback.format_exc())
             return
