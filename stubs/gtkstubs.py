@@ -28,12 +28,6 @@ from pathlib import Path
 
 GTK_STUBS_PATH = "venv/lib/python3.10/site-packages/gi-stubs/repository/"
 
-# fix modules that support GTK 4 by specifying the version to be 3
-for module in ("Gtk", "Gdk"):
-    file = Path(f"{GTK_STUBS_PATH}/{module}.pyi")
-    file_with_version = Path(f"{GTK_STUBS_PATH}/_{module}3.pyi")
-    file_with_version.replace(file)
-
 for module in ("Gtk", "Gdk", "Gio"):
     venv_path = f"{GTK_STUBS_PATH}/{module}.pyi"
     home_path = f"{Path.home()}/{module}.pyi"

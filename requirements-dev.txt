@@ -1,4 +1,4 @@
-PyGobject-stubs
+# PyGObject-stubs --config-settings=config=Gtk3,Gdk3
 pretty-errors
 
 pytest
