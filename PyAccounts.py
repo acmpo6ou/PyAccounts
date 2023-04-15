@@ -21,7 +21,6 @@ import platform
 from pathlib import Path
 
 import gi
-import keyboard
 import setproctitle as setproctitle
 
 from core import SRC_DIR
@@ -37,6 +36,11 @@ from signal import signal, SIGUSR1
 import core.gtk_utils
 from core.main_window import MainWindow
 from core.widgets import IconDialog
+
+if platform.system() == "Linux":
+    from core.linux_keyboard import write
+else:
+    from keyboard import write
 
 CUSTOM_KEYS_PARENT_SCHEMA = "org.cinnamon.desktop.keybindings"
 CUSTOM_KEYS_BASENAME = "/org/cinnamon/desktop/keybindings/custom-keybindings"
@@ -138,7 +142,7 @@ class Application(Gtk.Application):
         pressed. Sends key press events to X server to simulate password typing.
         """
         time.sleep(0.1)
-        keyboard.write(self.window.safe_clipboard)
+        write(self.window.safe_clipboard)
 
 
 if __name__ == "__main__":
