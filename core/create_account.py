@@ -103,7 +103,7 @@ class CreateAccount(CreateForm):
 
         completion = Gtk.EntryCompletion()
         completion.model = model
-        completion.set_text_column(0)  # it's important to use set_text_column!
+        completion.text_column = 0
         field.completion = completion
 
     @staticmethod
@@ -244,10 +244,12 @@ class CreateAccount(CreateForm):
 
     @staticmethod
     def create_account(account: Account, database_window: DatabaseWindow):
-        """ Creates account and adds it to accounts list. """
+        """Creates account and adds it to accounts list."""
         database_window.database.accounts[account.accountname] = account
         icon = database_window.load_account_icon(account.accountname)
-        item = add_list_item(database_window.accounts_list, icon.pixbuf, account.accountname)
+        item = add_list_item(
+            database_window.accounts_list, icon.pixbuf, account.accountname
+        )
         item.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
         item.connect("motion-notify-event", database_window.on_account_motion)
         database_window.check_db_saved()
