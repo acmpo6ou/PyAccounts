@@ -87,7 +87,7 @@ class Config:
     Represents app settings.
     """
 
-    separator_position = 1000
+    separator_position = .67
     main_db = False
     general_font = '30px "Ubuntu"'
     monospace_font = '35px "Ubuntu Mono"'

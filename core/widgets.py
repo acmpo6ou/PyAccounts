@@ -216,11 +216,13 @@ class Window(Gtk.Window, GladeTemplate):
 
     def load_separator(self):
         """Loads separator position from settings.json"""
-        self.separator.position = self.config.separator_position
+        position = self.size.width * self.config.separator_position
+        self.separator.position = position
 
     def on_separator_moved(self, separator: Gtk.Paned, _):
         """Saves separator position to settings.json"""
-        self.config.separator_position = separator.position
+        position = separator.position / self.window.width
+        self.config.separator_position = position
         self.config.save()
 
     def on_preferences(self, _):
