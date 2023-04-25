@@ -28,7 +28,7 @@ def dialog(main_window, src_dir, monkeypatch):
 
 def test_load_settings_empty_config(dialog):
     config = Config()
-    assert config.separator_position == 1000
+    assert config.separator_position == 0.67
     assert not config.main_db
     assert config.general_font == '30px "Ubuntu"'
     assert config.monospace_font == '35px "Ubuntu Mono"'
@@ -38,7 +38,7 @@ def test_load_settings(dialog, src_dir):
     shutil.copyfile("tests/data/settings.json", src_dir / "settings.json")
     config = Config()
 
-    assert config.separator_position == 2000
+    assert config.separator_position == 0.7
     assert config.main_db
     assert config.general_font == '32px "Ubuntu"'
     assert config.monospace_font == '32px "Ubuntu Mono"'
@@ -49,7 +49,7 @@ def test_save_settings(dialog, src_dir):
     settings.touch()
     config = Config()
 
-    config.separator_position = 2000
+    config.separator_position = 0.7
     config.main_db = True
     config.general_font = '32px "Ubuntu"'
     config.monospace_font = '32px "Ubuntu Mono"'

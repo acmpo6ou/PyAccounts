@@ -57,7 +57,7 @@ def test_load_account_icon(db_window):
     assert icon.pixbuf.get_pixels() == github_pixbuf.get_pixels()
 
     # if the icon wasn't found the default one should be loaded
-    default = load_icon("cs-user-accounts", 50).pixbuf
+    default = load_icon("list-add-user", 50).pixbuf
     icon = db_window.load_account_icon("afjkdsjfjsjkfdjalsjfl")
     assert icon.pixbuf.get_pixels() == default.get_pixels()
 
