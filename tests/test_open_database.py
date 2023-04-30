@@ -48,6 +48,15 @@ def test_clear_password(form):
     assert not form.password.text
 
 
+def test_password_prefill(databases, main_window):
+    form = OpenDatabase(main_window.databases[2], main_window)
+    assert not form.password.text
+
+    main_window.safe_clipboard = "passw0rd"
+    form = OpenDatabase(main_window.databases[2], main_window)
+    assert form.password.text == "passw0rd"
+
+
 def test_open_database_success(form: OpenDatabase):
     form.password.text = "123"
     form.on_open_database()
