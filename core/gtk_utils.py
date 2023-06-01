@@ -210,12 +210,19 @@ class GladeTemplate(Gtk.Bin):
         return _getattr(self, item)
 
 
-def load_icon(icon_name: str, size: int) -> Gtk.Image:
+def load_icon(icon_name: str, size: int, allow_fail=False) -> Gtk.Image:
     """
     Returns icon from default theme.
+
+    :param allow_fail: If True, throws exception when the icon wasn't found; otherwise, returns a default icon.
     """
     icon_theme = Gtk.IconTheme.get_default()
-    icon = icon_theme.load_icon(icon_name, size, Gtk.IconLookupFlags.FORCE_SIZE)
+    try:
+        icon = icon_theme.load_icon(icon_name, size, Gtk.IconLookupFlags.FORCE_SIZE)
+    except Exception as err:
+        if allow_fail:
+            raise err
+        icon = GdkPixbuf.Pixbuf.new_from_file("img/image-missing.svg")
     return Gtk.Image.new_from_pixbuf(icon)
 
 
@@ -231,7 +238,7 @@ def get_mime_icon(path: str) -> Gtk.Image:
     icon = None
     for icon_name in info.icon.names:
         try:
-            icon = load_icon(icon_name, 64)
+            icon = load_icon(icon_name, 64, allow_fail=True)
             break
         except GLib.GError:
             # if this icon wasn't found in the theme,
