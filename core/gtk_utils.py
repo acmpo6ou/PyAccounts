@@ -17,8 +17,10 @@
 """
 Contains various utilities to simplify development with GTK.
 """
+
 from __future__ import annotations
 
+import contextlib
 import logging
 import time
 import traceback
@@ -27,10 +29,8 @@ from typing import Callable
 
 from gi.repository import GObject, Gtk, Gio, GdkPixbuf, GLib
 
-try:
+with contextlib.suppress(ImportError):
     import pytest
-except ImportError:
-    pass
 
 # noinspection PyUnresolvedReferences
 def _getattr(self, attr_name):
