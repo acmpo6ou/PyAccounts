@@ -1,3 +1,10 @@
+pyaccounts (1.2.11) jammy; urgency=medium
+
+  * improved Apple icon
+  * updated cryptography
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Wed, 16 Aug 2023 14:12:01 +0200
+
 pyaccounts (1.2.9-1) jammy; urgency=medium
 
   * updated cryptography 
