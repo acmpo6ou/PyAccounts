@@ -18,6 +18,7 @@ from __future__ import annotations
 import glob
 import logging
 import os
+import platform
 import shutil
 import tempfile
 import traceback
@@ -232,8 +233,16 @@ class MainWindow(Gtk.ApplicationWindow, Window):
         dba_filter.add_mime_type("application/account-database")
         dialog.add_filter(dba_filter)
 
+        all_filter = Gtk.FileFilter()
+        all_filter.name = "All files"
+        all_filter.add_mime_type("*/*")
+        dialog.add_filter(all_filter)
+
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         dialog.add_button("Import", Gtk.ResponseType.ACCEPT)
+
+        if platform.system() != "Linux":
+            dialog = Gtk.FileChooserNative()
 
         response = dialog.run()
         dialog.hide()
@@ -282,6 +291,13 @@ class MainWindow(Gtk.ApplicationWindow, Window):
 
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         dialog.add_button("Export", Gtk.ResponseType.ACCEPT)
+
+        if platform.system() != "Linux":
+            dialog = Gtk.FileChooserNative(
+                title=EXPORT_DATABASE_TITLE,
+                action=Gtk.FileChooserAction.SAVE,
+            )
+            dialog.current_name = selected_db.dba_file.name
 
         response = dialog.run()
         dialog.hide()
