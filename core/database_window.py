@@ -56,6 +56,9 @@ CONFIRM_ACCOUNT_REPLACE = "Account <b>{}</b> already exists in this database, re
 
 class DatabaseWindow(Window):
     # <editor-fold>
+    image1: Gtk.Image
+    image3: Gtk.Image
+    image4: Gtk.Image
     parent_widget: Gtk.Box
     menubar_toolbar: Gtk.Box
     menubar: Gtk.MenuBar

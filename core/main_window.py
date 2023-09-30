@@ -61,6 +61,10 @@ ERROR_DB_DELETION = "Error deleting the database!"
 
 class MainWindow(Gtk.ApplicationWindow, Window):
     # <editor-fold>
+    image1: Gtk.Image
+    image2: Gtk.Image
+    image3: Gtk.Image
+    image4: Gtk.Image
     parent_widget: Gtk.Box
     menubar_toolbar: Gtk.Box
     menubar: Gtk.MenuBar

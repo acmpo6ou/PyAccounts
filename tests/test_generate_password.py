@@ -46,13 +46,17 @@ def test_generate_password(nums, lower, upper, punct):
 
 
 def test_save_load_password_length():
-    GenPassDialog.PASSWORD_LENGTH = 8
+    GenPassDialog.MIN_PASSWORD_LENGTH = 8
+    GenPassDialog.MAX_PASSWORD_LENGTH = 16
     dialog = GenPassDialog(Gtk.Entry(), Gtk.Entry())
-    assert dialog.length.value == 8.0
+    assert dialog.min_length.value == 8.0
+    assert dialog.max_length.value == 16.0
 
-    dialog.length.value = 32.0
+    dialog.min_length.value = 32.0
+    dialog.max_length.value = 64.0
     dialog.on_generate()
-    assert GenPassDialog.PASSWORD_LENGTH == 32.0
+    assert GenPassDialog.MIN_PASSWORD_LENGTH == 32.0
+    assert GenPassDialog.MAX_PASSWORD_LENGTH == 64.0
 
 
 def test_save_load_checkboxes_state():
@@ -67,3 +71,23 @@ def test_save_load_checkboxes_state():
     dialog.upper.active = False
     dialog.on_generate()
     assert GenPassDialog.CHECKBOXES_STATE == (True, False, False, False)
+
+
+# the test WILL some times generate 2 passwords of the same length in a row,
+# so just rerunning it again should be fine
+@pytest.mark.flaky(reruns=5)
+def test_password_length():
+    pass1 = Gtk.Entry()
+    pass2 = Gtk.Entry()
+    dialog = GenPassDialog(pass1, pass2)
+
+    dialog.on_generate()
+    assert pass1.text == pass2.text
+    assert pass1.text_length >= dialog.min_length.value
+    assert pass1.text_length <= dialog.max_length.value
+
+    # generating the password again shouldn't generate a password of the same length
+    old_length = pass1.text_length
+    dialog.on_generate()
+    assert old_length != pass1.text_length
+

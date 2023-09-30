@@ -14,6 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import secrets
+from random import SystemRandom
 from string import digits, ascii_lowercase, ascii_uppercase, punctuation
 
 from gi.repository import Gtk
@@ -23,17 +24,21 @@ from core.gtk_utils import GladeTemplate
 
 class GenPassDialog(GladeTemplate):
     # <editor-fold>
-    length_adj: Gtk.Adjustment
+    length_adj_max: Gtk.Adjustment
+    length_adj_min: Gtk.Adjustment
     parent_widget: Gtk.Dialog
-    length: Gtk.SpinButton
+    min_length: Gtk.SpinButton
+    max_length: Gtk.SpinButton
     numbers: Gtk.CheckButton
     upper: Gtk.CheckButton
     lower: Gtk.CheckButton
     punctuation: Gtk.CheckButton
     # </editor-fold>
 
-    PASSWORD_LENGTH = 16
+    MIN_PASSWORD_LENGTH = 16
+    MAX_PASSWORD_LENGTH = 32
     CHECKBOXES_STATE = (True, True, True, True)
+
     """
     A dialog to generate password.
     """
@@ -45,7 +50,8 @@ class GenPassDialog(GladeTemplate):
         self.pass2 = pass2
 
         # load last values of length and checkboxes
-        self.length.value = self.PASSWORD_LENGTH
+        self.min_length.value = self.MIN_PASSWORD_LENGTH
+        self.max_length.value = self.MAX_PASSWORD_LENGTH
         (
             self.numbers.active,
             self.lower.active,
@@ -56,20 +62,28 @@ class GenPassDialog(GladeTemplate):
     def on_cancel(self, _):
         self.parent_widget.hide()
 
-    def genpass(self, length, chars) -> str:
+    def genpass(self, min_length, max_length, chars) -> str:
         """
-        Generates random password.
+        Generates random password of length between [min_length] and [max_length].
 
-        :param length: length of password to generate.
-        :param chars: list of strings with characters from which to generate password.
+        :param min_length: minimum password length.
+        :param max_length: maximum password length.
+        :param chars: list of strings with characters from which to generate the password.
         """
+
         if not chars:
             return ""
 
         # concatenate all character strings from `chars` into one big string
         chars_str = "".join(chars)
+
+        # the password of a random length will be generated since this is more secure
+        min_length = int(min_length)
+        max_length = int(max_length)
+        length = SystemRandom().randint(min_length, max_length)
+
         # generate purely random password from characters of chars_str
-        password = "".join(secrets.choice(chars_str) for _ in range(int(length)))
+        password = "".join(secrets.choice(chars_str) for _ in range(length))
 
         # Because password generates randomly it won't necessarily contain
         # all characters that are specified in `chars`.
@@ -80,7 +94,7 @@ class GenPassDialog(GladeTemplate):
             is_good = is_good and any(c in password for c in s)
 
         if not is_good:
-            password = self.genpass(length, chars)
+            password = self.genpass(min_length, max_length, chars)
         return password
 
     def on_generate(self, _=None):
@@ -94,12 +108,13 @@ class GenPassDialog(GladeTemplate):
             all_chars[i] for i, checkbox in enumerate(checkboxes) if checkbox.active
         ]
 
-        password = self.genpass(self.length.value, chars)
+        password = self.genpass(self.min_length.value, self.max_length.value, chars)
         self.pass1.text = password
         self.pass2.text = password
 
         # save last used length and checkboxes values
-        GenPassDialog.PASSWORD_LENGTH = self.length.value
+        GenPassDialog.MIN_PASSWORD_LENGTH = self.min_length.value
+        GenPassDialog.MAX_PASSWORD_LENGTH = self.max_length.value
         GenPassDialog.CHECKBOXES_STATE = (
             self.numbers.active,
             self.lower.active,
