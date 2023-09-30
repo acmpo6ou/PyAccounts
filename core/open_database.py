@@ -90,6 +90,9 @@ class OpenDatabase(GladeTemplate):
 
     def toggle_password_visibility(self):
         self.password.visibility = not self.password.visibility
+        visibility = self.password.visibility
+        icon_name = "view-conceal-symbolic" if visibility else "view-reveal-symbolic"
+        self.password.set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY, icon_name)
 
     def clear_password(self):
         self.password.text = ""

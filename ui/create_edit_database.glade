@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.39.0 
+<!-- Generated with glade 3.38.2 
 
 Copyright (C) 2021. Bohdan Kolvakh
 
@@ -102,8 +102,8 @@ Author: Bohdan Kolvakh
             <property name="can-focus">True</property>
             <property name="margin-bottom">8</property>
             <property name="visibility">False</property>
-            <property name="primary-icon-name">visibility</property>
-            <property name="secondary-icon-name">dialog-close</property>
+            <property name="primary-icon-name">view-reveal-symbolic</property>
+            <property name="secondary-icon-name">gtk-close</property>
             <property name="input-purpose">password</property>
             <signal name="changed" handler="on_apply_enabled" swapped="no"/>
             <signal name="icon-press" handler="on_icon_press" swapped="no"/>
@@ -132,8 +132,8 @@ Author: Bohdan Kolvakh
             <property name="can-focus">True</property>
             <property name="margin-bottom">8</property>
             <property name="visibility">False</property>
-            <property name="primary-icon-name">visibility</property>
-            <property name="secondary-icon-name">dialog-close</property>
+            <property name="primary-icon-name">view-reveal-symbolic</property>
+            <property name="secondary-icon-name">gtk-close</property>
             <property name="input-purpose">password</property>
             <signal name="changed" handler="on_apply_enabled" swapped="no"/>
             <signal name="icon-press" handler="on_icon_press" swapped="no"/>
