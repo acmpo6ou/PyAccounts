@@ -225,7 +225,8 @@ class DatabaseWindow(Window):
         Returns account icon associated with given [accountname].
         """
 
-        icon = load_icon("list-add-user", 50)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size("img/account_icons/account.svg", 50, 50)
+        icon = Gtk.Image.new_from_pixbuf(pixbuf)
         for icon_name in self.account_icons:
             if icon_name in accountname.lower():
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
