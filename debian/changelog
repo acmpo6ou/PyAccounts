@@ -1,3 +1,12 @@
+pyaccounts (1.3.3-1) jammy; urgency=medium
+
+  * Updated PyGObject and cryptography
+  * Implemented random password length generation
+  * Fixed broken icons
+  * Improved dialogs on Mac
+
+ -- Astro Boy <acmpo6ou@gmail.com>  Sun, 01 Oct 2023 15:01:28 +0200
+
 pyaccounts (1.2.11) jammy; urgency=medium
 
   * improved Apple icon
