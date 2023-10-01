@@ -63,7 +63,7 @@ Author: Bohdan Kolvakh
         <property name="selectable">True</property>
         <property name="xalign">0</property>
         <attributes>
-          <attribute name="font-desc" value="Ubuntu Mono 35"/>
+          <attribute name="font-desc" value="Ubuntu Mono Regular 30"/>
         </attributes>
       </object>
       <packing>
@@ -81,7 +81,7 @@ Author: Bohdan Kolvakh
         <property name="selectable">True</property>
         <property name="xalign">0</property>
         <attributes>
-          <attribute name="font-desc" value="Ubuntu Mono 35"/>
+          <attribute name="font-desc" value="Ubuntu Mono Regular 30"/>
         </attributes>
       </object>
       <packing>
@@ -99,7 +99,7 @@ Author: Bohdan Kolvakh
         <property name="selectable">True</property>
         <property name="xalign">0</property>
         <attributes>
-          <attribute name="font-desc" value="Ubuntu Mono 35"/>
+          <attribute name="font-desc" value="Ubuntu Mono Regular 30"/>
         </attributes>
       </object>
       <packing>
@@ -116,7 +116,7 @@ Author: Bohdan Kolvakh
         <property name="label" translatable="yes">📋️ To copy: e-mail</property>
         <property name="xalign">0</property>
         <attributes>
-          <attribute name="font-desc" value="Ubuntu Mono 35"/>
+          <attribute name="font-desc" value="Ubuntu Mono Regular 30"/>
         </attributes>
       </object>
       <packing>
@@ -138,7 +138,7 @@ Author: Bohdan Kolvakh
             <property name="label" translatable="yes">🔒️ Password: ●●●●●●●●●●●●●●●●●●●●●●●●</property>
             <property name="xalign">0</property>
             <attributes>
-              <attribute name="font-desc" value="Ubuntu Mono 35"/>
+              <attribute name="font-desc" value="Ubuntu Mono Regular 30"/>
             </attributes>
           </object>
           <packing>
@@ -180,7 +180,7 @@ Author: Bohdan Kolvakh
         <property name="selectable">True</property>
         <property name="xalign">0</property>
         <attributes>
-          <attribute name="font-desc" value="Ubuntu Mono 35"/>
+          <attribute name="font-desc" value="Ubuntu Mono Regular 30"/>
         </attributes>
       </object>
       <packing>
