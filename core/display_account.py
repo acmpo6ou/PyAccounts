@@ -15,6 +15,7 @@
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
 import base64
 import logging
+import platform
 import traceback
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -41,6 +42,7 @@ ERROR_SAVING_FILE = "Error saving the file!"
 SUCCESS_SAVING_FILE = "File saved successfully!"
 SUCCESS_PASSWORD_COPY = "Password and email/username are successfully copied!"
 SUCCESS_NOTES_COPY = "Notes are successfully copied!"
+SAVE_ATTACHED_FILE_TITLE = "Save attached file"
 
 
 class DisplayAccount(GladeTemplate, AttachedFilesMixin):
@@ -146,7 +148,7 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
         """
 
         dialog = Gtk.FileChooserDialog(
-            title="Save attached file",
+            title=SAVE_ATTACHED_FILE_TITLE,
             action=Gtk.FileChooserAction.SAVE,
         )
         filename = item_name(row)
@@ -154,6 +156,13 @@ class DisplayAccount(GladeTemplate, AttachedFilesMixin):
 
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT)
+
+        if platform.system() != "Linux":
+            dialog = Gtk.FileChooserNative(
+                title=SAVE_ATTACHED_FILE_TITLE,
+                action=Gtk.FileChooserAction.SAVE,
+            )
+            dialog.current_name = filename
 
         response = dialog.run()
         dialog.hide()

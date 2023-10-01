@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import base64
 import logging
+import platform
 import traceback
 import typing
 from pathlib import Path
@@ -33,6 +34,7 @@ from core.gtk_utils import (
 )
 from core.widgets import CreateForm, DateChooserDialog, WarningDialog, ErrorDialog
 
+
 if typing.TYPE_CHECKING:
     from core.database_window import DatabaseWindow
 
@@ -41,6 +43,7 @@ CONFIRM_ATTACH_EXISTING_FILE = "File <b>{}</b> is already attached, replace?"
 SELECT_FILES_TO_DETACH = "Please select some files to detach."
 CONFIRM_FILES_DETACH = "Detach selected files?"
 ERROR_READING_FILE = "Error reading file <b>{}</b>."
+ATTACH_FILE_TITLE = "Attach file"
 
 
 class CreateAccount(CreateForm):
@@ -159,13 +162,20 @@ class CreateAccount(CreateForm):
         """
 
         dialog = Gtk.FileChooserDialog(
-            title="Attach file",
+            title=ATTACH_FILE_TITLE,
             action=Gtk.FileChooserAction.OPEN,
         )
-        dialog.select_multiple = True
 
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         dialog.add_button("Open", Gtk.ResponseType.ACCEPT)
+
+        if platform.system() != "Linux":
+            dialog = Gtk.FileChooserNative(
+                title=ATTACH_FILE_TITLE,
+                action=Gtk.FileChooserAction.OPEN,
+            )
+
+        dialog.select_multiple = True
         response = dialog.run()
         dialog.hide()
 
