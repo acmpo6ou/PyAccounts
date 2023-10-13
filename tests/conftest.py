@@ -13,6 +13,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with PyAccounts.  If not, see <https://www.gnu.org/licenses/>.
+import platform
 import shutil
 
 import pytest
@@ -61,3 +62,12 @@ def account():
         copy_email=False,
         attached_files={"file1": "ZmlsZTEgY29udGVudAo=", "file2": "ZmlsZTIgY29udGVudAo="},
     )
+
+
+@pytest.fixture(scope="session", autouse=True)
+def mock_platform():
+    """
+    Always use Linux during tests to make dialogs consistent
+    no matter on which OS you're running the tests.
+    """
+    platform.system = lambda: "Linux"

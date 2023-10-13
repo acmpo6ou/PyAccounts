@@ -214,15 +214,17 @@ def load_icon(icon_name: str, size: int, allow_fail=False) -> Gtk.Image:
     """
     Returns icon from default theme.
 
-    :param allow_fail: If True, throws exception when the icon wasn't found; otherwise, returns a default icon.
+    :param allow_fail: If True, throws exception when the icon wasn't found;
+    otherwise, returns a default icon.
     """
+
     icon_theme = Gtk.IconTheme.get_default()
     try:
         icon = icon_theme.load_icon(icon_name, size, Gtk.IconLookupFlags.FORCE_SIZE)
     except Exception as err:
         if allow_fail:
             raise err
-        icon = GdkPixbuf.Pixbuf.new_from_file("img/image-missing.svg")
+        icon = GdkPixbuf.Pixbuf.new_from_file_at_size("img/image-missing.svg", size, size)
     return Gtk.Image.new_from_pixbuf(icon)
 
 

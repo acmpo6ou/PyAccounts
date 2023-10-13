@@ -109,6 +109,17 @@ def test_clear_password(form):
     assert not form.repeat_password.text
 
 
+def test_password_prefill(main_window):
+    form = CreateDatabase(main_window)
+    assert not form.password.text
+    assert not form.repeat_password.text
+
+    main_window.safe_clipboard = "passw0rd"
+    form = CreateDatabase(main_window)
+    assert form.password.text == "passw0rd"
+    assert form.repeat_password.text == "passw0rd"
+
+
 def test_apply_button_enabled(form):
     # enter correct name and password
     form.name.text = "good name"

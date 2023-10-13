@@ -386,11 +386,11 @@ class CreateForm(GladeTemplate, ValidateNameMixin):
         Toggles password visibility of both password fields.
         """
 
-        visibility = self.password.visibility
-        self.password.visibility = not visibility
-        self.repeat_password.visibility = not visibility
+        visibility = not self.password.visibility
+        self.password.visibility = visibility
+        self.repeat_password.visibility = visibility
 
-        icon_name = "visibility" if visibility else "image-red-eye"
+        icon_name = "view-conceal-symbolic" if visibility else "view-reveal-symbolic"
         self.password.set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY, icon_name)
         self.repeat_password.set_icon_from_icon_name(
             Gtk.EntryIconPosition.PRIMARY, icon_name

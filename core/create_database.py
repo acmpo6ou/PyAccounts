@@ -51,6 +51,8 @@ class CreateDatabase(CreateForm, FilterDbNameMixin):
     def __init__(self, main_window: "MainWindow"):
         super().__init__("create_edit_database")
         self.main_window = main_window
+        self.password.text = main_window.safe_clipboard
+        self.repeat_password.text = main_window.safe_clipboard
 
     def on_apply(self, _=None):
         """
