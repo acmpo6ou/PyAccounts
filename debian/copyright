@@ -4,7 +4,7 @@ Upstream-Contact: Astro Boy <ampo6ou@gmail.com>
 Source: https://github.com/acmpo6ou/PyAccounts
 
 Files: *
-Copyright: Copyright 2021-2022 Bohdan Kolvakh
+Copyright: Copyright 2021-2023 Bohdan Kolvakh
 License: GPL-3+
 
 Files: img/account_icons/*

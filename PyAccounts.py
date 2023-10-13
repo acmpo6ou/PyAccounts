@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.10
 
-#  Copyright (c) 2021-2022. Bohdan Kolvakh
+#  Copyright (c) 2021-2023. Bohdan Kolvakh
 #  This file is part of PyAccounts.
 #
 #  PyAccounts is free software: you can redistribute it and/or modify
