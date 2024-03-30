@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.10
+#!/usr/bin/env python3
 
 #  Copyright (c) 2021-2023. Bohdan Kolvakh
 #  This file is part of PyAccounts.
