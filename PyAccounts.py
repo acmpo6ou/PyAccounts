@@ -45,7 +45,7 @@ else:
 CUSTOM_KEYS_PARENT_SCHEMA = "org.cinnamon.desktop.keybindings"
 CUSTOM_KEYS_BASENAME = "/org/cinnamon/desktop/keybindings/custom-keybindings"
 CUSTOM_KEYS_SCHEMA = "org.cinnamon.desktop.keybindings.custom-keybinding"
-PASTE_SCRIPT = "/usr/share/pyaccounts/PyAccounts/paste.sh"
+PASTE_SCRIPT = f"{Path.home()}/Developer/PyAccounts/paste.sh"
 
 
 class Application(Gtk.Application):

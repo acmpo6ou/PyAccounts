@@ -4,7 +4,6 @@
     <plugin id="IdeaVIM" />
     <plugin id="izhangzhihao.rainbow.brackets" />
     <plugin id="org.intellij.plugins.markdown" />
-    <plugin id="org.jetbrains.settingsRepository" />
     <plugin id="org.tonybaloney.security.pycharm-security" />
     <plugin id="sourcery.pycharm-plugin" />
   </component>
