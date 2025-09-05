@@ -29,12 +29,12 @@ from core.widgets import AttachedFilesMixin, ErrorDialog
 if TYPE_CHECKING:
     from core.database_window import DatabaseWindow
 
-ACCOUNT_NAME = "👤 Account name: {}"
-USERNAME = "✏️ Username: {}"
-EMAIL = "✉️ E-mail: {}"
-TO_COPY = "📋️ To copy: {}"
-PASSWORD = "🔒️ Password: {}"
-BIRTH_DATE = "📅 Date of birth: {}"
+ACCOUNT_NAME = " Account name: {}"
+USERNAME = " Username: {}"
+EMAIL = " E-mail: {}"
+TO_COPY = " To copy: {}"
+PASSWORD = " Password: {}"
+BIRTH_DATE = " Date of birth: {}"
 NOTES_PLACEHOLDER = "Text is hidden, use eye button to toggle its visibility."
 DOTS = '●' * 24
 
