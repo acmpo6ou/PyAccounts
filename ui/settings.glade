@@ -179,7 +179,7 @@ Author: Bohdan Kolvakh
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="margin-left">10</property>
-                <property name="label" translatable="yes">🌟 Autoselect main database if it is present.</property>
+                <property name="label" translatable="yes"> Autoselect main database if it is present.</property>
               </object>
               <packing>
                 <property name="expand">False</property>

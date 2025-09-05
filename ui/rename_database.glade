@@ -61,7 +61,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">✏️ Database name: </property>
+            <property name="label" translatable="yes"> Database name: </property>
             <property name="mnemonic-widget">name</property>
             <property name="xalign">0</property>
           </object>
@@ -102,7 +102,7 @@ Author: Bohdan Kolvakh
         </child>
         <child>
           <object class="GtkButton" id="apply">
-            <property name="label" translatable="yes">✨ _Save</property>
+            <property name="label" translatable="yes"> _Save</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
@@ -121,7 +121,7 @@ Author: Bohdan Kolvakh
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">ℹ️ Note: you need to open the database to edit its password.</property>
+            <property name="label" translatable="yes">Note: you need to open the database to edit its password.</property>
             <property name="wrap">True</property>
             <property name="xalign">0</property>
           </object>
